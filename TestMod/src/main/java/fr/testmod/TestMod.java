@@ -26,4 +26,9 @@ public class TestMod extends SimplePlugin {
     public void onBoot(BootEvent event) {
         getLogger().at(Level.INFO).log("[TESTMOD] Server has booted!");
     }
+
+    @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")
+    public void onHello(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
+        ctx.sender().sendMessage(com.hypixel.hytale.server.core.Message.raw("Hello World!"));
+    }
 }

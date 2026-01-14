@@ -17,6 +17,7 @@ public class DamageSystem extends DamageEventSystem {
     @Override
     public void handle(int index, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store,
             CommandBuffer<EntityStore> commandBuffer, Damage event) {
+        // Handle Victim is Player
         Player player = chunk.getComponent(index, Player.getComponentType());
         if (player != null) {
             PlayerRef playerRef = chunk.getComponent(index, PlayerRef.getComponentType());

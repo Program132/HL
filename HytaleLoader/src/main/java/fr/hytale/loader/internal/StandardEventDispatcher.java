@@ -14,7 +14,6 @@ import com.hypixel.hytale.logger.HytaleLogger;
 
 public class StandardEventDispatcher implements SimpleListener {
 
-    @EventHandler
     public void onPlayerJoin(AddPlayerToWorldEvent event) {
         if (event.getHolder() == null)
             return;
@@ -30,9 +29,33 @@ public class StandardEventDispatcher implements SimpleListener {
         }
     }
 
-    @EventHandler
     public void onPlayerQuit(PlayerDisconnectEvent event) {
         PlayerQuitEvent newEvent = new PlayerQuitEvent(event);
         HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
+    }
+
+    public void onPlayerCraft(com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent event) {
+        HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] PlayerCraftEvent received!");
+        try {
+            fr.hytale.loader.event.types.PlayerCraftEvent newEvent = new fr.hytale.loader.event.types.PlayerCraftEvent(
+                    event);
+            HytaleLogger.getLogger().at(java.util.logging.Level.INFO)
+                    .log("[HytaleLoader] Created PlayerCraftEvent wrapper");
+
+            HytaleServer.get().getEventBus().dispatchFor(fr.hytale.loader.event.types.PlayerCraftEvent.class, null)
+                    .dispatch(newEvent);
+            HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Dispatched PlayerCraftEvent");
+        } catch (Exception e) {
+            HytaleLogger.getLogger().at(java.util.logging.Level.SEVERE)
+                    .log("[HytaleLoader] Error dispatching PlayerCraftEvent: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void onPlayerChat(com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent event) {
+        HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] PlayerChatEvent received!");
+        fr.hytale.loader.event.types.PlayerChatEvent newEvent = new fr.hytale.loader.event.types.PlayerChatEvent(event);
+        HytaleServer.get().getEventBus().dispatchFor(fr.hytale.loader.event.types.PlayerChatEvent.class, null)
+                .dispatch(newEvent);
     }
 }

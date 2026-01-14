@@ -15,9 +15,33 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
     @Override
     protected void start() {
         super.start();
-        // Register core event dispatcher
-        fr.hytale.loader.event.EventScanner.registerListeners(this,
-                new fr.hytale.loader.internal.StandardEventDispatcher());
+
+        // Register core event dispatcher for internal Hytale events
+        fr.hytale.loader.internal.StandardEventDispatcher dispatcher = new fr.hytale.loader.internal.StandardEventDispatcher();
+
+        // Register for native Hytale events
+        getEventRegistry().registerGlobal(
+                com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent.class,
+                dispatcher::onPlayerJoin);
+        getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered AddPlayerToWorldEvent");
+        getEventRegistry().registerGlobal(
+                com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent.class,
+                dispatcher::onPlayerQuit);
+        getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerDisconnectEvent");
+
+        getEventRegistry().registerGlobal(
+                com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent.class,
+                dispatcher::onPlayerCraft);
+        getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerCraftEvent");
+
+        getEventRegistry().registerAsyncGlobal(
+                com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent.class,
+                future -> ((java.util.concurrent.CompletableFuture<com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent>) future)
+                        .thenApply(event -> {
+                            dispatcher.onPlayerChat(event);
+                            return event;
+                        }));
+        getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerChatEvent");
 
         // Register core ECS systems
         this.getEntityStoreRegistry().registerSystem(

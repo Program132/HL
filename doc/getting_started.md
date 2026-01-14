@@ -100,3 +100,7 @@ Create a `manifest.json` file in `src/main/resources`:
 1.  Run `mvn package`.
 2.  Copy the generated JAR (e.g., `target/MyFirstMod-1.0.0.jar`) to the `mods` folder of your Hytale server.
 3.  Start the server!
+
+## Run the server
+
+Read [Server](doc/server.md) for more information.

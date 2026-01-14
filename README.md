@@ -39,7 +39,9 @@ Comprehensive documentation is available in the `doc/` directory:
 
 -   [Getting Started](doc/getting_started.md)
 -   [Event System](doc/events.md)
+-   [Standard Events](doc/standard_events.md)
 -   [Command System](doc/commands.md)
+-   [Server](doc/server.md)
 
 ## Example
 

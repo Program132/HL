@@ -1,0 +1,22 @@
+{
+  "Group": "fr.testmod",
+  "Name": "TestMod",
+  "Version": "1.0.0",
+  "Description": "A simple test mod using SimpleHytaleLib",
+  "Authors": [
+    {
+      "Name": "TestUser",
+      "Email": "test@test.com",
+      "Url": ""
+    }
+  ],
+  "Website": "",
+  "Main": "fr.testmod.TestMod",
+  "ServerVersion": "0.0.0",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false,
+  "SubPlugins": []
+}

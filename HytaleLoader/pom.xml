@@ -17,13 +17,12 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>com.hypixel.hytale</groupId>
-      <artifactId>HytaleServer</artifactId>
-      <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/../libs/HytaleServer.jar</systemPath>
-    </dependency>
+        <dependency>
+            <groupId>com.hypixel.hytale</groupId>
+            <artifactId>HytaleServer</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
   </dependencies>
 
   <build>

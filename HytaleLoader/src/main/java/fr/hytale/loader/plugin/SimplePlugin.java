@@ -15,6 +15,14 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
     @Override
     protected void start() {
         super.start();
+        // Register core event dispatcher
+        fr.hytale.loader.event.EventScanner.registerListeners(this,
+                new fr.hytale.loader.internal.StandardEventDispatcher());
+
+        // Register core ECS systems
+        this.getEntityStoreRegistry().registerSystem(
+                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageSystem());
+
         // Auto register main class as listener and command container
         EventScanner.registerListeners(this, this);
         CommandScanner.registerCommands(this, this);

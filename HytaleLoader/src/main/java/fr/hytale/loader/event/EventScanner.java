@@ -59,7 +59,7 @@ public class EventScanner {
                 e.printStackTrace();
             }
         };
-        registry.register(priority, (Class) eventClass, consumer);
+        registry.registerGlobal(priority, (Class) eventClass, consumer);
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +74,7 @@ public class EventScanner {
             return event;
         });
 
-        registry.registerAsync(priority, (Class) eventClass, function);
+        registry.registerAsyncGlobal(priority, (Class) eventClass, function);
     }
 
 }

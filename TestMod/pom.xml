@@ -21,8 +21,7 @@
       <groupId>com.hypixel.hytale</groupId>
       <artifactId>HytaleServer</artifactId>
       <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/../libs/HytaleServer.jar</systemPath>
+      <scope>provided</scope>
     </dependency>
     <dependency>
         <groupId>fr.hytale.loader</groupId>

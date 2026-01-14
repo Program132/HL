@@ -27,6 +27,22 @@ public class TestMod extends SimplePlugin {
         getLogger().at(Level.INFO).log("[TESTMOD] Server has booted!");
     }
 
+    @EventHandler
+    public void onJoin(fr.hytale.loader.event.types.PlayerJoinEvent event) {
+        getLogger().at(Level.INFO).log("[TESTMOD] Join: " + event.getPlayerName());
+    }
+
+    @EventHandler
+    public void onQuit(fr.hytale.loader.event.types.PlayerQuitEvent event) {
+        getLogger().at(Level.INFO).log("[TESTMOD] Quit: " + event.getPlayerName());
+    }
+
+    @EventHandler
+    public void onDamage(fr.hytale.loader.event.types.PlayerDamageEvent event) {
+        getLogger().at(Level.INFO)
+                .log("[TESTMOD] Damage: " + event.getPlayerName() + " took " + event.getDamage().getAmount());
+    }
+
     @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")
     public void onHello(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
         ctx.sender().sendMessage(com.hypixel.hytale.server.core.Message.raw("Hello World!"));

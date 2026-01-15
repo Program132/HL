@@ -46,9 +46,13 @@ public class Player {
     }
 
     /**
-     * Gets the player reference.
+     * Gets the native Hytale player reference.
+     * <p>
+     * The PlayerRef is used for operations that don't require the full entity to be loaded,
+     * such as sending messages or checking online status.
+     * </p>
      * 
-     * @return the player reference
+     * @return the native player reference
      */
     public PlayerRef getPlayerRef() {
         return playerRef;

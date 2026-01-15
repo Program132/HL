@@ -42,7 +42,15 @@ public class PlayerQuitEvent implements IEvent<Void> {
     }
 
 
-
+    /**
+     * Gets the native Hytale player reference.
+     * <p>
+     * The PlayerRef is used for operations that don't require the full entity to be loaded,
+     * such as sending messages or checking online status.
+     * </p>
+     *
+     * @return the native player reference
+     */
     public PlayerRef getNativePlayerRef() {
         return this.originalEvent.getPlayerRef();
     }

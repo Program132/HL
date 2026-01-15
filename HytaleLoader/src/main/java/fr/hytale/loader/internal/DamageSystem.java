@@ -12,8 +12,30 @@ import com.hypixel.hytale.component.Store;
 
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
+/**
+ * Internal ECS system for handling player damage events.
+ * <p>
+ * This system hooks into Hytale's damage event processing to detect when
+ * players
+ * take damage and dispatches HytaleLoader's PlayerDamageEvent for mods to
+ * listen to.
+ * </p>
+ * 
+ * @author HytaleLoader
+ * @version 1.0.1
+ * @since 1.0.0
+ */
 public class DamageSystem extends DamageEventSystem {
 
+    /**
+     * Handles damage events from the ECS and dispatches PlayerDamageEvent.
+     * 
+     * @param index         the index in the archetype chunk
+     * @param chunk         the archetype chunk containing entity data
+     * @param store         the entity store
+     * @param commandBuffer the command buffer for entity operations
+     * @param event         the damage event
+     */
     @Override
     public void handle(int index, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store,
             CommandBuffer<EntityStore> commandBuffer, Damage event) {
@@ -26,9 +48,13 @@ public class DamageSystem extends DamageEventSystem {
         }
     }
 
+    /**
+     * Gets the query for this system to determine which entities it processes.
+     * 
+     * @return the component query for player entities
+     */
     @Override
     public com.hypixel.hytale.component.query.Query<EntityStore> getQuery() {
         return (com.hypixel.hytale.component.query.Query<EntityStore>) Player.getComponentType();
     }
 }
-

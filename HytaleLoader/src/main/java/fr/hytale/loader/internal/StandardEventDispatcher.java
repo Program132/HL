@@ -12,8 +12,25 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.logger.HytaleLogger;
 
+/**
+ * Internal dispatcher for standard player events.
+ * <p>
+ * This class receives native Hytale player events, wraps them in HytaleLoader
+ * event objects,
+ * and dispatches them through the HytaleLoader event bus for mods to listen to.
+ * </p>
+ * 
+ * @author HytaleLoader
+ * @version 1.0.1
+ * @since 1.0.0
+ */
 public class StandardEventDispatcher implements SimpleListener {
 
+    /**
+     * Handles player join events from the native Hytale event system.
+     * 
+     * @param event the native add player to world event
+     */
     public void onPlayerJoin(AddPlayerToWorldEvent event) {
         if (event.getHolder() == null)
             return;
@@ -29,11 +46,23 @@ public class StandardEventDispatcher implements SimpleListener {
         }
     }
 
+    /**
+     * Handles player disconnect events from the native Hytale event system.
+     * 
+     * @param event the native player disconnect event
+     */
     public void onPlayerQuit(PlayerDisconnectEvent event) {
         PlayerQuitEvent newEvent = new PlayerQuitEvent(event);
         HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
     }
 
+    /**
+     * Handles player crafting events from the native Hytale event system.
+     * 
+     * @param event the native player craft event
+     * @deprecated The underlying Hytale event is deprecated
+     */
+    @Deprecated
     public void onPlayerCraft(com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent event) {
         HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] PlayerCraftEvent received!");
         try {
@@ -42,7 +71,8 @@ public class StandardEventDispatcher implements SimpleListener {
             HytaleLogger.getLogger().at(java.util.logging.Level.INFO)
                     .log("[HytaleLoader] Created PlayerCraftEvent wrapper");
 
-            HytaleServer.get().getEventBus().dispatchFor(fr.hytale.loader.event.types.player.PlayerCraftEvent.class, null)
+            HytaleServer.get().getEventBus()
+                    .dispatchFor(fr.hytale.loader.event.types.player.PlayerCraftEvent.class, null)
                     .dispatch(newEvent);
             HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Dispatched PlayerCraftEvent");
         } catch (Exception e) {
@@ -52,11 +82,16 @@ public class StandardEventDispatcher implements SimpleListener {
         }
     }
 
+    /**
+     * Handles player chat events from the native Hytale event system.
+     * 
+     * @param event the native player chat event
+     */
     public void onPlayerChat(com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent event) {
         HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] PlayerChatEvent received!");
-        fr.hytale.loader.event.types.player.PlayerChatEvent newEvent = new fr.hytale.loader.event.types.player.PlayerChatEvent(event);
+        fr.hytale.loader.event.types.player.PlayerChatEvent newEvent = new fr.hytale.loader.event.types.player.PlayerChatEvent(
+                event);
         HytaleServer.get().getEventBus().dispatchFor(fr.hytale.loader.event.types.player.PlayerChatEvent.class, null)
                 .dispatch(newEvent);
     }
 }
-

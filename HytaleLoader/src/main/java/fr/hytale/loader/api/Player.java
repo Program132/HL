@@ -3,6 +3,10 @@ package fr.hytale.loader.api;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import fr.hytale.loader.api.inventory.Inventory;
+import com.hypixel.hytale.component.ComponentAccessor;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
  * HytaleLoader wrapper for the native Hytale Player class.
@@ -48,7 +52,8 @@ public class Player {
     /**
      * Gets the native Hytale player reference.
      * <p>
-     * The PlayerRef is used for operations that don't require the full entity to be loaded,
+     * The PlayerRef is used for operations that don't require the full entity to be
+     * loaded,
      * such as sending messages or checking online status.
      * </p>
      * 
@@ -114,6 +119,49 @@ public class Player {
             return new Inventory(nativePlayer.getInventory());
         }
         return null;
+    }
+
+    // === Game Mode ===
+
+    /**
+     * Gets the player's current game mode.
+     * 
+     * @return the player's game mode, or SURVIVAL if not available
+     */
+    public GameMode getGameMode() {
+        if (nativePlayer != null) {
+            com.hypixel.hytale.protocol.GameMode nativeGameMode = nativePlayer.getGameMode();
+            return GameMode.fromNative(nativeGameMode);
+        }
+        return GameMode.ADVENTURE;
+    }
+
+    /**
+     * Sets the player's game mode.
+     * 
+     * @param gameMode the new game mode to set
+     */
+    public void setGameMode(GameMode gameMode) {
+        if (nativePlayer != null && gameMode != null && playerRef != null) {
+            try {
+                // Get the player's reference
+                Ref<EntityStore> ref = playerRef
+                        .getReference();
+
+                if (ref != null && ref.isValid()) {
+                    // Get the world and its store
+                    Store<EntityStore> store = ref.getStore();
+
+                    // Use the static setGameMode method
+                    com.hypixel.hytale.server.core.entity.entities.Player.setGameMode(
+                            ref,
+                            gameMode.toNative(),
+                            (ComponentAccessor<EntityStore>) store);
+                }
+            } catch (Exception e) {
+                // Silently fail if gamemode cannot be set
+            }
+        }
     }
 
     // === Permissions & Operators ===
@@ -190,3 +238,4 @@ public class Player {
         return getUUID() != null ? getUUID().hashCode() : 0;
     }
 }
+

@@ -111,3 +111,4 @@ public class DamageBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

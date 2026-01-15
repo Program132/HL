@@ -56,3 +56,4 @@ public class DiscoverZoneEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

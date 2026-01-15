@@ -1,7 +1,7 @@
 package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import fr.hytale.loader.api.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 
 /**
@@ -17,24 +17,27 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
  */
 public class PlayerQuitEvent implements IEvent<Void> {
 
+    private final Player player;
     private final PlayerDisconnectEvent originalEvent;
 
     /**
      * Constructs a new PlayerQuitEvent.
      * 
+     * @param player        the HytaleLoader player wrapper
      * @param originalEvent the original Hytale disconnect event
      */
-    public PlayerQuitEvent(PlayerDisconnectEvent originalEvent) {
+    public PlayerQuitEvent(Player player, PlayerDisconnectEvent originalEvent) {
+        this.player = player;
         this.originalEvent = originalEvent;
     }
 
     /**
      * Gets the player who left the server.
      * 
-     * @return the player entity
+     * @return the HytaleLoader player wrapper
      */
     public Player getPlayer() {
-        return originalEvent.getPlayerRef().getComponent(Player.getComponentType());
+        return player;
     }
 
     /**
@@ -43,7 +46,7 @@ public class PlayerQuitEvent implements IEvent<Void> {
      * @return the username of the player who left
      */
     public String getPlayerName() {
-        return originalEvent.getPlayerRef().getUsername();
+        return player.getName();
     }
 
     /**
@@ -55,3 +58,4 @@ public class PlayerQuitEvent implements IEvent<Void> {
         return originalEvent;
     }
 }
+

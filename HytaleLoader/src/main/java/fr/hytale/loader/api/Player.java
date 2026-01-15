@@ -2,6 +2,7 @@ package fr.hytale.loader.api;
 
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import fr.hytale.loader.api.inventory.Inventory;
 
 /**
  * HytaleLoader wrapper for the native Hytale Player class.
@@ -97,6 +98,20 @@ public class Player {
         }
     }
 
+    // === Inventory ===
+
+    /**
+     * Gets the player's inventory.
+     * 
+     * @return the player's inventory
+     */
+    public Inventory getInventory() {
+        if (nativePlayer != null) {
+            return new Inventory(nativePlayer.getInventory());
+        }
+        return null;
+    }
+
     // === Permissions & Operators ===
 
     /**
@@ -171,4 +186,3 @@ public class Player {
         return getUUID() != null ? getUUID().hashCode() : 0;
     }
 }
-

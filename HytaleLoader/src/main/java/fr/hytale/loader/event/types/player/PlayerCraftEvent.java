@@ -2,7 +2,7 @@ package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a player crafts an item.
@@ -22,6 +22,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
  * @deprecated The underlying Hytale event is deprecated
  */
 @Deprecated
+@SuppressWarnings("removal")
 public class PlayerCraftEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent originalEvent;
@@ -31,7 +32,7 @@ public class PlayerCraftEvent implements IEvent<Void> {
     }
 
     public Player getPlayer() {
-        return originalEvent.getPlayer();
+        return new Player(this.originalEvent.getPlayer(), null);
     }
 
     public CraftingRecipe getCraftedRecipe() {
@@ -47,6 +48,6 @@ public class PlayerCraftEvent implements IEvent<Void> {
     }
 
     public String getPlayerName() {
-        return originalEvent.getPlayer() != null ? originalEvent.getPlayer().toString() : "Unknown";
+        return originalEvent.getPlayer() != null ? originalEvent.getPlayer().getDisplayName() : "Unknown";
     }
 }

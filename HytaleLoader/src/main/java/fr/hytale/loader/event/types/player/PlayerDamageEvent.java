@@ -1,10 +1,8 @@
 package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import fr.hytale.loader.api.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
-
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 
 /**
  * Called when a player takes damage.
@@ -21,30 +19,44 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 public class PlayerDamageEvent implements IEvent<Void> {
 
     private final Player player;
-    private final PlayerRef playerRef;
     private final Damage damage;
 
-    public PlayerDamageEvent(Player player, PlayerRef playerRef, Damage damage) {
+    /**
+     * Constructs a new PlayerDamageEvent.
+     * 
+     * @param player the HytaleLoader player wrapper
+     * @param damage the damage information
+     */
+    public PlayerDamageEvent(Player player, Damage damage) {
         this.player = player;
-        this.playerRef = playerRef;
         this.damage = damage;
     }
 
+    /**
+     * Gets the player who took damage.
+     * 
+     * @return the HytaleLoader player wrapper
+     */
     public Player getPlayer() {
         return player;
     }
 
-    public PlayerRef getPlayerRef() {
-        return playerRef;
-    }
-
+    /**
+     * Gets the player's username.
+     * 
+     * @return the player's name
+     */
     public String getPlayerName() {
-        return playerRef.getUsername();
+        return player.getName();
     }
 
+    /**
+     * Gets the damage information.
+     * 
+     * @return the damage object containing amount, source, etc.
+     */
     public Damage getDamage() {
         return damage;
     }
 }
-
 

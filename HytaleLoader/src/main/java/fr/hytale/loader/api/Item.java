@@ -62,23 +62,48 @@ public class Item {
         return nativeItemStack != null ? nativeItemStack.getQuantity() : 0;
     }
 
+    /**
+     * Checks if the item is broken.
+     * 
+     * @return true if the item is broken, false otherwise
+     */
     public boolean isBroken() {
         return this.nativeItemStack.isBroken();
     }
 
+    /**
+     * Gets the maximum durability of the item.
+     * 
+     * @return the maximum durability
+     */
     public double maxDurability() {
         return this.nativeItemStack.getMaxDurability();
     }
 
+    /**
+     * Gets the block key associated with this item, if any.
+     * 
+     * @return the block key, or null if not applicable
+     */
     public String getBlockKey() {
         return this.nativeItemStack.getBlockKey();
     }
 
+    /**
+     * Checks if this item is of an equivalent type to another item.
+     * <p>
+     * This checks if the item IDs match, ignoring quantity and other metadata.
+     * </p>
+     * 
+     * @param item the other item to compare with
+     * @return true if the items are of equivalent type
+     */
     public boolean isEquivalentType(Item item) {
-        return this.nativeItemStack.isEquivalentType(item.getNativeItemStack());
+        return item != null && this.nativeItemStack.isEquivalentType(item.getNativeItemStack());
     }
 
+    @Override
     public String toString() {
-        return "{ITEM=" + getId() + "|" + " | " + getQuantity() + "}";
+        return "{ITEM=" + getId() + " | QTY=" + getQuantity() + "}";
     }
 }

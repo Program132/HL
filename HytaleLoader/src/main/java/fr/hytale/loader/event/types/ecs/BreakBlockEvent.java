@@ -85,3 +85,4 @@ public class BreakBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

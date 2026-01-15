@@ -1,6 +1,8 @@
 package fr.hytale.loader.internal;
 
-import fr.hytale.loader.event.EventHandler;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import fr.hytale.loader.event.SimpleListener;
 import fr.hytale.loader.event.types.player.PlayerJoinEvent;
 import fr.hytale.loader.event.types.player.PlayerQuitEvent;
@@ -11,6 +13,8 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.logger.HytaleLogger;
+
+import java.util.Objects;
 
 /**
  * Internal dispatcher for standard player events.
@@ -32,13 +36,13 @@ public class StandardEventDispatcher implements SimpleListener {
      * @param event the native add player to world event
      */
     public void onPlayerJoin(AddPlayerToWorldEvent event) {
-        if (event.getHolder() == null)
-            return;
-        Player player = (Player) event.getHolder().getComponent(Player.getComponentType());
-        PlayerRef playerRef = (PlayerRef) event.getHolder().getComponent(PlayerRef.getComponentType());
+        Player nativePlayer = event.getHolder().getComponent(Player.getComponentType());
+        PlayerRef playerRef = event.getHolder().getComponent(PlayerRef.getComponentType());
 
-        if (player != null && playerRef != null) {
-            PlayerJoinEvent newEvent = new PlayerJoinEvent(player, playerRef, event);
+        if (nativePlayer != null && playerRef != null) {
+            // Create HytaleLoader Player wrapper
+            fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+            PlayerJoinEvent newEvent = new PlayerJoinEvent(player, event);
             HytaleServer.get().getEventBus().dispatchFor(PlayerJoinEvent.class, null).dispatch(newEvent);
         } else {
             HytaleLogger.getLogger().at(java.util.logging.Level.WARNING)
@@ -52,8 +56,17 @@ public class StandardEventDispatcher implements SimpleListener {
      * @param event the native player disconnect event
      */
     public void onPlayerQuit(PlayerDisconnectEvent event) {
-        PlayerQuitEvent newEvent = new PlayerQuitEvent(event);
-        HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
+        // Get player components
+        // Note: getComponent on PlayerRef is deprecated but necessary here until a replacement is found
+        PlayerRef playerRef = event.getPlayerRef();
+        Store<EntityStore> store = Objects.requireNonNull(event.getPlayerRef().getReference()).getStore();
+        Player nativePlayer = (Player)event.getPlayerRef().getReference().getStore().getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
+
+        if (nativePlayer != null) {
+            fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+            PlayerQuitEvent newEvent = new PlayerQuitEvent(player, event);
+            HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
+        }
     }
 
     /**
@@ -63,6 +76,7 @@ public class StandardEventDispatcher implements SimpleListener {
      * @deprecated The underlying Hytale event is deprecated
      */
     @Deprecated
+    @SuppressWarnings("removal")
     public void onPlayerCraft(com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent event) {
         HytaleLogger.getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] PlayerCraftEvent received!");
         try {

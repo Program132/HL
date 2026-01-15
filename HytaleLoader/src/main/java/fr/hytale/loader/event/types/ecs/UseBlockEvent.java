@@ -86,3 +86,4 @@ public class UseBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

@@ -40,11 +40,15 @@ public class DamageSystem extends DamageEventSystem {
     public void handle(int index, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store,
             CommandBuffer<EntityStore> commandBuffer, Damage event) {
         // Handle Victim is Player
-        Player player = chunk.getComponent(index, Player.getComponentType());
-        if (player != null) {
+        Player nativePlayer = chunk.getComponent(index, Player.getComponentType());
+        if (nativePlayer != null) {
             PlayerRef playerRef = chunk.getComponent(index, PlayerRef.getComponentType());
-            PlayerDamageEvent damageEvent = new PlayerDamageEvent(player, playerRef, event);
-            HytaleServer.get().getEventBus().dispatchFor(PlayerDamageEvent.class, null).dispatch(damageEvent);
+            if (playerRef != null) {
+                // Create HytaleLoader Player wrapper
+                fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+                PlayerDamageEvent damageEvent = new PlayerDamageEvent(player, event);
+                HytaleServer.get().getEventBus().dispatchFor(PlayerDamageEvent.class, null).dispatch(damageEvent);
+            }
         }
     }
 
@@ -58,3 +62,4 @@ public class DamageSystem extends DamageEventSystem {
         return (com.hypixel.hytale.component.query.Query<EntityStore>) Player.getComponentType();
     }
 }
+

@@ -90,3 +90,4 @@ public @interface Command {
      */
     boolean requiresConfirmation() default false;
 }
+

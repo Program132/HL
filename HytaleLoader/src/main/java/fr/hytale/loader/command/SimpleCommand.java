@@ -27,3 +27,4 @@ public class SimpleCommand extends AbstractCommand {
         return CompletableFuture.completedFuture(null);
     }
 }
+

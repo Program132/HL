@@ -78,3 +78,4 @@ public class CraftRecipeEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

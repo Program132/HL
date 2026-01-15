@@ -94,3 +94,4 @@ public class PlaceBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
+

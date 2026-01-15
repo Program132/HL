@@ -1,7 +1,7 @@
 package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import fr.hytale.loader.api.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 
@@ -20,26 +20,23 @@ import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 public class PlayerJoinEvent implements IEvent<Void> {
 
     private final Player player;
-    private final PlayerRef playerRef;
     private final AddPlayerToWorldEvent originalEvent;
 
     /**
      * Constructs a new PlayerJoinEvent.
      * 
-     * @param player        the player entity
-     * @param playerRef     the player reference
+     * @param player        the HytaleLoader player wrapper
      * @param originalEvent the original Hytale event
      */
-    public PlayerJoinEvent(Player player, PlayerRef playerRef, AddPlayerToWorldEvent originalEvent) {
+    public PlayerJoinEvent(Player player, AddPlayerToWorldEvent originalEvent) {
         this.player = player;
-        this.playerRef = playerRef;
         this.originalEvent = originalEvent;
     }
 
     /**
-     * Gets the player entity.
+     * Gets the player who joined.
      * 
-     * @return the player who joined
+     * @return the HytaleLoader player wrapper
      */
     public Player getPlayer() {
         return player;
@@ -51,7 +48,7 @@ public class PlayerJoinEvent implements IEvent<Void> {
      * @return the player reference
      */
     public PlayerRef getPlayerRef() {
-        return playerRef;
+        return player.getPlayerRef();
     }
 
     /**
@@ -60,7 +57,7 @@ public class PlayerJoinEvent implements IEvent<Void> {
      * @return the player's username
      */
     public String getPlayerName() {
-        return playerRef.getUsername();
+        return player.getName();
     }
 
     /**
@@ -82,3 +79,4 @@ public class PlayerJoinEvent implements IEvent<Void> {
         originalEvent.setBroadcastJoinMessage(broadcast);
     }
 }
+

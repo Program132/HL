@@ -59,8 +59,7 @@ public class StandardEventDispatcher implements SimpleListener {
         // Get player components
         // Note: getComponent on PlayerRef is deprecated but necessary here until a replacement is found
         PlayerRef playerRef = event.getPlayerRef();
-        Store<EntityStore> store = Objects.requireNonNull(event.getPlayerRef().getReference()).getStore();
-        Player nativePlayer = (Player)event.getPlayerRef().getReference().getStore().getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
+        Player nativePlayer = (Player) event.getPlayerRef().getReference().getStore().getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
 
         if (nativePlayer != null) {
             fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);

@@ -117,4 +117,25 @@ public class Inventory {
         }
         return items;
     }
+
+    /**
+     * Sets the item at the specified slot in the inventory.
+     * <p>
+     * This method automatically determines whether to place the item in the hotbar (slots 0-8)
+     * or the main storage (slots 9+) based on the slot index provided.
+     * </p>
+     * 
+     * @param item the item to place in the inventory
+     * @param slot the target slot index (0-8 for hotbar, 9+ for storage)
+     */
+    public void setItem(Item item, int slot) {
+        com.hypixel.hytale.server.core.inventory.Inventory inv = this.nativeInventory;
+        if (inv != null) {
+            if (slot >= 9 && slot < inv.getStorage().getCapacity()) {
+                inv.getStorage().setItemStackForSlot((short) slot, item.getNativeItemStack());
+            } else if (slot >= 0 && slot < 9) {
+                inv.getHotbar().setItemStackForSlot((short) slot, item.getNativeItemStack());
+            }
+        }
+    }
 }

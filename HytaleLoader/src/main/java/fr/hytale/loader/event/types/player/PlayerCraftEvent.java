@@ -1,4 +1,4 @@
-package fr.hytale.loader.event.types;
+package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
@@ -32,3 +32,4 @@ public class PlayerCraftEvent implements IEvent<Void> {
         return originalEvent.getPlayer() != null ? originalEvent.getPlayer().toString() : "Unknown";
     }
 }
+

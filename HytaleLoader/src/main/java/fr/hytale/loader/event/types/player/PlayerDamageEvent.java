@@ -1,4 +1,4 @@
-package fr.hytale.loader.event.types;
+package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -34,3 +34,4 @@ public class PlayerDamageEvent implements IEvent<Void> {
         return damage;
     }
 }
+

@@ -1,7 +1,10 @@
 package fr.hytale.loader.event.types.player;
 
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import fr.hytale.loader.api.Player;
 
 /**
@@ -32,7 +35,8 @@ public class PlayerCraftEvent implements IEvent<Void> {
     }
 
     public Player getPlayer() {
-        return new Player(this.originalEvent.getPlayer(), null);
+        PlayerRef ref = originalEvent.getPlayer().getPlayerRef();
+        return new Player(this.originalEvent.getPlayer(), ref);
     }
 
     public CraftingRecipe getCraftedRecipe() {

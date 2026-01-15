@@ -7,7 +7,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import fr.hytale.loader.event.types.PlayerDamageEvent;
+import fr.hytale.loader.event.types.player.PlayerDamageEvent;
 import com.hypixel.hytale.component.Store;
 
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -31,3 +31,4 @@ public class DamageSystem extends DamageEventSystem {
         return (com.hypixel.hytale.component.query.Query<EntityStore>) Player.getComponentType();
     }
 }
+

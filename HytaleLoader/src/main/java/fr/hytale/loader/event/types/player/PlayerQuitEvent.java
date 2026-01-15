@@ -1,6 +1,7 @@
 package fr.hytale.loader.event.types.player;
 
 import com.hypixel.hytale.event.IEvent;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import fr.hytale.loader.api.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 
@@ -38,6 +39,12 @@ public class PlayerQuitEvent implements IEvent<Void> {
      */
     public Player getPlayer() {
         return player;
+    }
+
+
+
+    public PlayerRef getNativePlayerRef() {
+        return this.originalEvent.getPlayerRef();
     }
 
     /**

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  * @see Command
  */
@@ -69,4 +69,3 @@ public class CommandScanner {
         }
     }
 }
-

@@ -10,11 +10,10 @@ package fr.hytale.loader.api;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
- * @since 1.0.1
+ * @version 1.0.2
+ * @since 1.0.2
  */
 public enum GameMode {
-
 
     /**
      * Creative mode - players have unlimited resources and cannot take damage.
@@ -26,7 +25,6 @@ public enum GameMode {
      * breaking/placing.
      */
     ADVENTURE(1);
-
 
     private final int id;
 

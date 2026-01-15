@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class CraftRecipeEvent implements IEvent<Void> {
@@ -78,4 +78,3 @@ public class CraftRecipeEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
-

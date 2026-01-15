@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  * @see EventPriority
  */
@@ -50,4 +50,3 @@ public @interface EventHandler {
      */
     EventPriority priority() default EventPriority.NORMAL;
 }
-

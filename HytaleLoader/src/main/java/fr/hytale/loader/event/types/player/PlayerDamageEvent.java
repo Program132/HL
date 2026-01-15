@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class PlayerDamageEvent implements IEvent<Void> {
@@ -59,4 +59,3 @@ public class PlayerDamageEvent implements IEvent<Void> {
         return damage;
     }
 }
-

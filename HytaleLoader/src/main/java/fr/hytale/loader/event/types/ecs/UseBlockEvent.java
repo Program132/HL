@@ -16,7 +16,7 @@ import com.hypixel.hytale.server.core.entity.InteractionContext;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class UseBlockEvent implements IEvent<Void> {
@@ -86,4 +86,3 @@ public class UseBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
-

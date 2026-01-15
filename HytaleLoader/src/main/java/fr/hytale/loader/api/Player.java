@@ -18,7 +18,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class Player {
@@ -238,4 +238,3 @@ public class Player {
         return getUUID() != null ? getUUID().hashCode() : 0;
     }
 }
-

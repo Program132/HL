@@ -25,7 +25,7 @@ import java.util.Objects;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class StandardEventDispatcher implements SimpleListener {
@@ -57,9 +57,11 @@ public class StandardEventDispatcher implements SimpleListener {
      */
     public void onPlayerQuit(PlayerDisconnectEvent event) {
         // Get player components
-        // Note: getComponent on PlayerRef is deprecated but necessary here until a replacement is found
+        // Note: getComponent on PlayerRef is deprecated but necessary here until a
+        // replacement is found
         PlayerRef playerRef = event.getPlayerRef();
-        Player nativePlayer = (Player) event.getPlayerRef().getReference().getStore().getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
+        Player nativePlayer = (Player) event.getPlayerRef().getReference().getStore()
+                .getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
 
         if (nativePlayer != null) {
             fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);

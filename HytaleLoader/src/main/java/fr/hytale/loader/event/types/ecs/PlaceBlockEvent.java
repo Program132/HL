@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class PlaceBlockEvent implements IEvent<Void> {
@@ -94,4 +94,3 @@ public class PlaceBlockEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
-

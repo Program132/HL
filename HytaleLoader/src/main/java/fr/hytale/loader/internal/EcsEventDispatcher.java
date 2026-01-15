@@ -12,7 +12,7 @@ import com.hypixel.hytale.logger.HytaleLogger;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class EcsEventDispatcher {
@@ -118,4 +118,3 @@ public class EcsEventDispatcher {
                                 .dispatch(newEvent);
         }
 }
-

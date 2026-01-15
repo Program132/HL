@@ -13,7 +13,7 @@ import java.util.List;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class Inventory {
@@ -121,7 +121,8 @@ public class Inventory {
     /**
      * Sets the item at the specified slot in the inventory.
      * <p>
-     * This method automatically determines whether to place the item in the hotbar (slots 0-8)
+     * This method automatically determines whether to place the item in the hotbar
+     * (slots 0-8)
      * or the main storage (slots 9+) based on the slot index provided.
      * </p>
      * 

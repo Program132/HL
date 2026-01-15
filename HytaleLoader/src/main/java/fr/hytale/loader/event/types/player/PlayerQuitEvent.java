@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class PlayerQuitEvent implements IEvent<Void> {
@@ -41,11 +41,11 @@ public class PlayerQuitEvent implements IEvent<Void> {
         return player;
     }
 
-
     /**
      * Gets the native Hytale player reference.
      * <p>
-     * The PlayerRef is used for operations that don't require the full entity to be loaded,
+     * The PlayerRef is used for operations that don't require the full entity to be
+     * loaded,
      * such as sending messages or checking online status.
      * </p>
      *
@@ -73,4 +73,3 @@ public class PlayerQuitEvent implements IEvent<Void> {
         return originalEvent;
     }
 }
-

@@ -16,8 +16,9 @@ import java.lang.annotation.Target;
  * 
  * <h2>Usage Example:</h2>
  * 
- * <pre>{@code
- * @Command(name = "hello", description = "Greets the player")
+ * <pre>
+ * {@code
+ * &#64;Command(name = "hello", description = "Greets the player")
  * public void onHello(CommandContext ctx) {
  *     ctx.sender().sendMessage(Message.raw("Hello!"));
  * }
@@ -27,10 +28,11 @@ import java.lang.annotation.Target;
  * public void onTeleport(CommandContext ctx) {
  *     // Teleport logic
  * }
- * }</pre>
+ * }
+ * </pre>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -90,4 +92,3 @@ public @interface Command {
      */
     boolean requiresConfirmation() default false;
 }
-

@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.universe.world.WorldMapTracker;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public class DiscoverZoneEvent implements IEvent<Void> {
@@ -56,4 +56,3 @@ public class DiscoverZoneEvent implements IEvent<Void> {
         originalEvent.setCancelled(cancelled);
     }
 }
-

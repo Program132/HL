@@ -14,7 +14,7 @@ import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class PlayerJoinEvent implements IEvent<Void> {
@@ -79,4 +79,3 @@ public class PlayerJoinEvent implements IEvent<Void> {
         originalEvent.setBroadcastJoinMessage(broadcast);
     }
 }
-

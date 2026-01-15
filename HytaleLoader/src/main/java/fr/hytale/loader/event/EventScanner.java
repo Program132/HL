@@ -20,7 +20,7 @@ import java.util.function.Function;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  * @see EventHandler
  */
@@ -102,4 +102,3 @@ public class EventScanner {
     }
 
 }
-

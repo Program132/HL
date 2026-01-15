@@ -10,12 +10,13 @@ import fr.hytale.loader.command.CommandScanner;
  * Base class for HytaleLoader plugins.
  * <p>
  * This class provides a simplified API for creating Hytale server mods.
- * It automatically handles event registration, command registration, and provides
+ * It automatically handles event registration, command registration, and
+ * provides
  * lifecycle hooks through onEnable() and onDisable().
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public abstract class SimplePlugin extends JavaPlugin implements SimpleListener {
@@ -115,20 +116,20 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
         }
 
         /**
-     * Called when the plugin is enabled.
-     * <p>
-     * Override this method to perform initialization tasks when your plugin starts.
-     * </p>
-     */
-    public abstract void onEnable();
+         * Called when the plugin is enabled.
+         * <p>
+         * Override this method to perform initialization tasks when your plugin starts.
+         * </p>
+         */
+        public abstract void onEnable();
 
         /**
-     * Called when the plugin is disabled.
-     * <p>
-     * Override this method to perform cleanup tasks when your plugin stops.
-     * </p>
-     */
-    public abstract void onDisable();
+         * Called when the plugin is disabled.
+         * <p>
+         * Override this method to perform cleanup tasks when your plugin stops.
+         * </p>
+         */
+        public abstract void onDisable();
 
         public void registerListener(SimpleListener listener) {
                 EventScanner.registerListeners(this, listener);
@@ -138,6 +139,3 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
                 CommandScanner.registerCommands(this, commandContainer);
         }
 }
-
-
-

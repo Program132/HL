@@ -6,6 +6,18 @@ import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
+/**
+ * Called when a player takes damage.
+ * <p>
+ * This event is fired when a player receives damage from any source,
+ * including combat, fall damage, environmental hazards, etc.
+ * It provides access to the damage information.
+ * </p>
+ * 
+ * @author HytaleLoader
+ * @version 1.0.1
+ * @since 1.0.0
+ */
 public class PlayerDamageEvent implements IEvent<Void> {
 
     private final Player player;
@@ -34,4 +46,5 @@ public class PlayerDamageEvent implements IEvent<Void> {
         return damage;
     }
 }
+
 

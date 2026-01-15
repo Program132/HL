@@ -10,8 +10,32 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Utility class for scanning and registering event handlers.
+ * <p>
+ * This class automatically discovers methods annotated with
+ * {@link EventHandler}
+ * and registers them with the Hytale event bus. It handles both sync and async
+ * events, as well as event priorities.
+ * </p>
+ * 
+ * @author HytaleLoader
+ * @version 1.0.1
+ * @since 1.0.0
+ * @see EventHandler
+ */
 public class EventScanner {
 
+    /**
+     * Registers all event handler methods in a listener object.
+     * <p>
+     * Scans the listener for methods annotated with {@link EventHandler} and
+     * automatically registers them with the plugin's event registry.
+     * </p>
+     * 
+     * @param plugin   the plugin that owns this listener
+     * @param listener the object containing event handler methods
+     */
     public static void registerListeners(SimplePlugin plugin, SimpleListener listener) {
         EventRegistry registry = plugin.getEventRegistry();
 

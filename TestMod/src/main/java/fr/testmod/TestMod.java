@@ -1,5 +1,6 @@
 package fr.testmod;
 
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import fr.hytale.loader.api.Item;
 import fr.hytale.loader.api.Player;
 import fr.hytale.loader.api.inventory.InventoryPlayer;
@@ -42,6 +43,11 @@ public class TestMod extends SimplePlugin {
              inv.clear();
              getLogger().at(Level.INFO).log("[TESTMOD] Cleared inventory for " +
                      event.getPlayerName());
+
+             Item item = new Item(new ItemStack("Weapon_Sword_Cobalt"));
+             inv.setItem(item, 5);
+             inv.setItem(item, 13);
+             inv.addItem(item);
          }
     }
 

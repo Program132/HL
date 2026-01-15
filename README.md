@@ -51,6 +51,11 @@ Comprehensive documentation is available in the `doc/` directory:
 -   [Command System](doc/commands.md)
 -   [Server](doc/server.md)
 
+If you want to compile & copy your mod, I use this command line (Windows):
+```powershell
+mvn clean install -f HytaleLoader/pom.xml; mvn clean package -f TestMod/pom.xml; Copy-Item -Force TestMod/target/TestMod-1.0.1.jar server/mods/
+```
+
 ## Example
 
 ```java

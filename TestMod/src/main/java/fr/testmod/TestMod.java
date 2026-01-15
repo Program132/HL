@@ -1,9 +1,14 @@
 package fr.testmod;
 
+import fr.hytale.loader.api.Item;
+import fr.hytale.loader.api.Player;
+import fr.hytale.loader.api.inventory.InventoryPlayer;
 import fr.hytale.loader.plugin.SimplePlugin;
 import fr.hytale.loader.event.EventHandler;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.event.events.BootEvent;
+
+import java.util.List;
 import java.util.logging.Level;
 
 public class TestMod extends SimplePlugin {
@@ -30,6 +35,14 @@ public class TestMod extends SimplePlugin {
     @EventHandler
     public void onJoin(fr.hytale.loader.event.types.player.PlayerJoinEvent event) {
         getLogger().at(Level.INFO).log("[TESTMOD] Join: " + event.getPlayerName());
+
+         Player player = event.getPlayer();
+         InventoryPlayer inv = new InventoryPlayer(player);
+         if (inv != null) {
+             inv.clear();
+             getLogger().at(Level.INFO).log("[TESTMOD] Cleared inventory for " +
+                     event.getPlayerName());
+         }
     }
 
     @EventHandler

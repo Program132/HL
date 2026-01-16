@@ -6,6 +6,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import fr.hytale.loader.event.SimpleListener;
 import fr.hytale.loader.event.types.player.PlayerJoinEvent;
 import fr.hytale.loader.event.types.player.PlayerQuitEvent;
+import fr.hytale.loader.event.types.player.PlayerMouseButtonEvent;
+import fr.hytale.loader.event.types.player.PlayerMouseMotionEvent;
 import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
@@ -110,5 +112,49 @@ public class StandardEventDispatcher implements SimpleListener {
                 event);
         HytaleServer.get().getEventBus().dispatchFor(fr.hytale.loader.event.types.player.PlayerChatEvent.class, null)
                 .dispatch(newEvent);
+    }
+
+    /**
+     * Handles player mouse button events from the native Hytale event system.
+     * 
+     * @param event the native player mouse button event
+     */
+    public void onPlayerMouseButton(com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent event) {
+        Ref<EntityStore> plrRef = event.getPlayerRef();
+        PlayerRef playerRef = plrRef.getStore().getComponent(plrRef, PlayerRef.getComponentType());
+
+        Player nativePlayer = null;
+        try {
+            nativePlayer = playerRef.getComponent(Player.getComponentType());
+        } catch (IllegalStateException e) {
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+        } catch (Exception e) {
+
+        }
+        fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+        PlayerMouseButtonEvent newEvent = new PlayerMouseButtonEvent(event, player);
+        HytaleServer.get().getEventBus().dispatchFor(PlayerMouseButtonEvent.class, null).dispatch(newEvent);
+    }
+
+    /**
+     * Handles player mouse motion events from the native Hytale event system.
+     * 
+     * @param event the native player mouse motion event
+     */
+    public void onPlayerMouseMotion(com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent event) {
+        Ref<EntityStore> plrRef = event.getPlayerRef();
+        PlayerRef playerRef = plrRef.getStore().getComponent(plrRef, PlayerRef.getComponentType());
+
+        Player nativePlayer = null;
+        try {
+            nativePlayer = playerRef.getComponent(Player.getComponentType());
+        } catch (IllegalStateException e) {
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+        } catch (Exception e) {
+
+        }
+        fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+        PlayerMouseMotionEvent newEvent = new PlayerMouseMotionEvent(event, player);
+        HytaleServer.get().getEventBus().dispatchFor(PlayerMouseMotionEvent.class, null).dispatch(newEvent);
     }
 }

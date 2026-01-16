@@ -14,7 +14,7 @@ import fr.hytale.loader.command.CommandScanner;
  * provides
  * lifecycle hooks through onEnable() and onDisable().
  * </p>
- * 
+ *
  * @author HytaleLoader
  * @version 1.0.2
  * @since 1.0.0
@@ -23,7 +23,7 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
 
         /**
          * Constructs a new SimplePlugin instance.
-         * 
+         *
          * @param init the plugin initialization data provided by the Hytale server
          */
         public SimplePlugin(JavaPluginInit init) {
@@ -39,69 +39,48 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
 
                 // Register for native Hytale events
                 getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent.class,
-                                dispatcher::onPlayerJoin);
+                        com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent.class,
+                        dispatcher::onPlayerJoin);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered AddPlayerToWorldEvent");
                 getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent.class,
-                                dispatcher::onPlayerQuit);
+                        com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent.class,
+                        dispatcher::onPlayerQuit);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerDisconnectEvent");
 
                 getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent.class,
-                                dispatcher::onPlayerCraft);
+                        com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent.class,
+                        dispatcher::onPlayerCraft);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerCraftEvent");
 
                 getEventRegistry().registerAsyncGlobal(
-                                com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent.class,
-                                future -> ((java.util.concurrent.CompletableFuture<com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent>) future)
-                                                .thenApply(event -> {
-                                                        dispatcher.onPlayerChat(event);
-                                                        return event;
-                                                }));
+                        com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent.class,
+                        future -> ((java.util.concurrent.CompletableFuture<com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent>) future)
+                                .thenApply(event -> {
+                                        dispatcher.onPlayerChat(event);
+                                        return event;
+                                }));
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerChatEvent");
 
-                // Register ECS event dispatcher
-                fr.hytale.loader.internal.EcsEventDispatcher ecsDispatcher = new fr.hytale.loader.internal.EcsEventDispatcher();
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent.class,
-                                ecsDispatcher::onBreakBlock);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered BreakBlockEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent.class,
-                                ecsDispatcher::onPlaceBlock);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlaceBlockEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre.class,
-                                ecsDispatcher::onUseBlock);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered UseBlockEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent.class,
-                                ecsDispatcher::onDamageBlock);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered DamageBlockEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop.class,
-                                ecsDispatcher::onDropItem);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered DropItemEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display.class,
-                                ecsDispatcher::onDiscoverZone);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered DiscoverZoneEvent");
-
-                getEventRegistry().registerGlobal(
-                                com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre.class,
-                                ecsDispatcher::onCraftRecipe);
-                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered CraftRecipeEvent");
-
                 // Register core ECS systems
+                // These systems handle ECS events and dispatch them to the HytaleLoader event bus
                 this.getEntityStoreRegistry().registerSystem(
-                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageSystem());
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.BreakBlockSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.PlaceBlockSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.UseBlockSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageBlockSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DropItemSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DiscoverZoneSystem());
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.CraftRecipeSystem());
+                
+                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered ECS Systems");
 
                 // Auto register main class as listener and command container
                 EventScanner.registerListeners(this, this);

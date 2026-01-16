@@ -1,5 +1,6 @@
 package fr.hytale.loader.plugin;
 
+import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import fr.hytale.loader.event.EventScanner;
@@ -79,7 +80,9 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
                         (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DiscoverZoneSystem());
                 this.getEntityStoreRegistry().registerSystem(
                         (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.CraftRecipeSystem());
-                
+                this.getEntityStoreRegistry().registerSystem(
+                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.SwitchActiveSlotSystem());
+
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered ECS Systems");
 
                 // Auto register main class as listener and command container

@@ -2,6 +2,7 @@ package fr.hytale.loader.api;
 
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import fr.hytale.loader.api.inventory.Inventory;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
@@ -214,6 +215,36 @@ public class Player {
      */
     public boolean isOnline() {
         return playerRef != null && nativePlayer != null;
+    }
+
+    /**
+     * Show to the player a title at the top of the screen
+     *
+     * @param title the title you want to show to the player
+     */
+    public void sendTitle(String title) {
+        EventTitleUtil.showEventTitleToPlayer(
+                this.playerRef,
+                Message.raw(title),
+                Message.raw(""),
+                true
+        );
+    }
+
+    /**
+     * Show to the player a title at the top of the screen
+     *
+     *
+     * @param title the title you want to show to the player
+     * @param subtitle the subtitle you want to show to the player
+    **/
+    public void sendTitleWithSubtitle(String title, String subtitle) {
+        EventTitleUtil.showEventTitleToPlayer(
+                this.playerRef,
+                Message.raw(title),
+                Message.raw(subtitle),
+                true
+        );
     }
 
     // === Utility ===

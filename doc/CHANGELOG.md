@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Javadoc for `SimpleCommand` class
 - Javadoc for `SimpleListener` interface
 - **SwitchActiveSlotEvent** from ECS
+- Added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent` (Player Events)
 
 ### Changed
 - Updated `@version` tags to 1.0.2 in affected classes

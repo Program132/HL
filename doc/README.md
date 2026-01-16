@@ -14,6 +14,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - 🚧 **GameMode API** - Get and set player game modes
 - 🚧 **Enhanced Player API** - Extended gamemode management
 - 🚧 **Fixs ECS Events** - Used `EntityEventSystem`
+- 🚧 **Player Events** added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent`
 
 ## Quick Links
 

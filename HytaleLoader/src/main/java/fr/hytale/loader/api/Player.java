@@ -8,6 +8,12 @@ import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import fr.hytale.loader.permission.Permission;
+import fr.hytale.loader.permission.PermissionManager;
 
 /**
  * HytaleLoader wrapper for the native Hytale Player class.
@@ -176,22 +182,114 @@ public class Player {
      * @return true if the player has operator permissions
      */
     public boolean isOp() {
-        // TODO: Implement when Hytale adds permission system
         return false;
     }
 
     /**
      * Checks if the player has a specific permission.
-     * <p>
-     * Note: This feature is not yet implemented in Hytale.
-     * </p>
      * 
      * @param permission the permission node to check
      * @return true if the player has the permission
      */
     public boolean hasPermission(String permission) {
-        // TODO: Implement when Hytale adds permission system
+        return hasPermission(Permission.of(permission));
+    }
+
+    /**
+     * Checks if the player has a specific permission.
+     * 
+     * @param permission the permission to check
+     * @return true if the player has the permission
+     * @since 1.0.3
+     */
+    public boolean hasPermission(Permission permission) {
+        UUID uuid = getUUID();
+        if (uuid == null) {
+            return isOp();
+        }
+
+        // Check permission manager first
+        if (PermissionManager.getInstance().hasPermission(uuid, permission)) {
+            return true;
+        }
+
+        // Fallback to operator status
         return isOp();
+    }
+
+    /**
+     * Adds a permission to this player.
+     * 
+     * @param permission the permission to add
+     * @since 1.0.3
+     */
+    public void addPermission(Permission permission) {
+        UUID uuid = getUUID();
+        if (uuid != null) {
+            PermissionManager.getInstance().addPermission(uuid, permission);
+        }
+    }
+
+    /**
+     * Adds a permission to this player.
+     * 
+     * @param permission the permission node to add
+     * @since 1.0.3
+     */
+    public void addPermission(String permission) {
+        addPermission(Permission.of(permission));
+    }
+
+    /**
+     * Removes a permission from this player.
+     * 
+     * @param permission the permission to remove
+     * @return true if the permission was removed
+     * @since 1.0.3
+     */
+    public boolean removePermission(Permission permission) {
+        UUID uuid = getUUID();
+        if (uuid != null) {
+            return PermissionManager.getInstance().removePermission(uuid, permission);
+        }
+        return false;
+    }
+
+    /**
+     * Removes a permission from this player.
+     * 
+     * @param permission the permission node to remove
+     * @return true if the permission was removed
+     * @since 1.0.3
+     */
+    public boolean removePermission(String permission) {
+        return removePermission(fr.hytale.loader.permission.Permission.of(permission));
+    }
+
+    /**
+     * Gets all permissions this player has.
+     * 
+     * @return an unmodifiable set of permissions
+     * @since 1.0.3
+     */
+    public java.util.Set<fr.hytale.loader.permission.Permission> getPermissions() {
+        java.util.UUID uuid = getUUID();
+        if (uuid != null) {
+            return fr.hytale.loader.permission.PermissionManager.getInstance().getPermissions(uuid);
+        }
+        return java.util.Collections.emptySet();
+    }
+
+    /**
+     * Clears all permissions from this player.
+     * 
+     * @since 1.0.3
+     */
+    public void clearPermissions() {
+        java.util.UUID uuid = getUUID();
+        if (uuid != null) {
+            fr.hytale.loader.permission.PermissionManager.getInstance().clearPermissions(uuid);
+        }
     }
 
     // === Connection ===
@@ -227,24 +325,22 @@ public class Player {
                 this.playerRef,
                 Message.raw(title),
                 Message.raw(""),
-                true
-        );
+                true);
     }
 
     /**
      * Show to the player a title at the top of the screen
      *
      *
-     * @param title the title you want to show to the player
+     * @param title    the title you want to show to the player
      * @param subtitle the subtitle you want to show to the player
-    **/
+     **/
     public void sendTitleWithSubtitle(String title, String subtitle) {
         EventTitleUtil.showEventTitleToPlayer(
                 this.playerRef,
                 Message.raw(title),
                 Message.raw(subtitle),
-                true
-        );
+                true);
     }
 
     // === Utility ===

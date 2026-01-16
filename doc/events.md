@@ -13,6 +13,10 @@ HytaleLoader provides a robust event system allowing plugins to react to game ev
 | `PlayerChatEvent` | Fired when a player sends a chat message. |
 | `PlayerDamageEvent` | Fired when a player takes damage. |
 | `PlayerCraftEvent` | **Deprecated**. Use `CraftRecipeEvent` instead. |
+| `PlayerMouseButtonEvent` | Fired when a player clicks a mouse button. |
+| `PlayerMouseMotionEvent` | Fired when a player moves their mouse. |
+
+
 
 ### ECS / World Events (`fr.hytale.loader.event.types.ecs`)
 

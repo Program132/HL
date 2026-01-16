@@ -2,6 +2,7 @@ package fr.hytale.loader.event.types.ecs;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a crafting recipe is executed (ECS event).
@@ -23,14 +24,17 @@ import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
 public class CraftRecipeEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new CraftRecipeEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who crafted the recipe, or null if not a player
      */
-    public CraftRecipeEvent(com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre originalEvent) {
+    public CraftRecipeEvent(com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -76,5 +80,14 @@ public class CraftRecipeEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who crafted the recipe.
+     * 
+     * @return the player, or null if the recipe was not crafted by a player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

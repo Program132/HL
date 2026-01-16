@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.0
  * @see Command
  */

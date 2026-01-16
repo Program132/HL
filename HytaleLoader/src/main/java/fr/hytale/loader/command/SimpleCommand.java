@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.0
  */
 public class SimpleCommand extends AbstractCommand {

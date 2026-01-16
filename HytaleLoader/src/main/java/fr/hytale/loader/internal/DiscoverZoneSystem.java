@@ -15,6 +15,10 @@ import javax.annotation.Nonnull;
 
 /**
  * Internal ECS system for handling zone discovery events.
+ *
+ *  @author HytaleLoader
+ *  @version 1.0.3
+ *  @since 1.0.2
  */
 public class DiscoverZoneSystem extends EntityEventSystem<EntityStore, DiscoverZoneEvent.Display> {
 

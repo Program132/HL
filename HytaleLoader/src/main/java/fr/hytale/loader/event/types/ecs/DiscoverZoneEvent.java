@@ -14,7 +14,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.1
  */
 public class DiscoverZoneEvent implements IEvent<Void> {

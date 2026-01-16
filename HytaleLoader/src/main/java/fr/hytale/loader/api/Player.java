@@ -19,7 +19,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.1
  */
 public class Player {

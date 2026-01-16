@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * @author HytaleLoader
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)

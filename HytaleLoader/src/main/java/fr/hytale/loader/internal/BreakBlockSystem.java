@@ -19,6 +19,10 @@ import javax.annotation.Nonnull;
  * This system hooks into Hytale's ECS to capture block break events along with
  * the entity that caused them.
  * </p>
+ *
+ *  @author HytaleLoader
+ *  @version 1.0.3
+ *  @since 1.0.2
  */
 public class BreakBlockSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {
 

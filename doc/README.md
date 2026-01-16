@@ -2,19 +2,24 @@
 
 Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale servers!
 
-## Current Version: 1.0.1
+## Current Version: 1.0.2
 
-### Latest Features (v1.0.1)
+### v1.0.1
 - ✅ **Item & Inventory API** - Manage player inventories
 - ✅ **Complete Event System** - Player and ECS events
 - ✅ **Command System** - Easy command registration
 - ✅ **Full Javadoc** - Complete documentation
 
-### Coming in 1.0.2 (In Development)
-- 🚧 **GameMode API** - Get and set player game modes
-- 🚧 **Enhanced Player API** - Extended gamemode management
-- 🚧 **Fixs ECS Events** - Used `EntityEventSystem`
-- 🚧 **Player Events** added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent`
+### Latest Features (1.0.2)
+- ✅ **GameMode API** - Get and set player game modes
+- ✅ **Enhanced Player API** - Extended gamemode management
+- ✅ **Fixs ECS Events** - Used `EntityEventSystem`
+- ✅ **Player Events** added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent`
+
+
+## Coming into 1.0.3
+- 🚧 **Scheduler**
+- 🚧 **Permissions Management**
 
 ## Quick Links
 
@@ -92,6 +97,8 @@ public void teleportCommand(CommandContext context) {
 - `PlayerChatEvent` - When a player sends a chat message
 - `PlayerDamageEvent` - When a player takes damage
 - `PlayerCraftEvent` - When a player crafts (deprecated)
+- `PlayerMouseButtonEvent` - When a player clicked (left or right click)
+- `PlayerMouseMotionEvent` - When a player moved the mouse
 
 ### ECS Block Events
 - `BreakBlockEvent` - When a block is broken
@@ -103,6 +110,7 @@ public void teleportCommand(CommandContext context) {
 - `DropItemEvent` - When an item is dropped
 - `DiscoverZoneEvent` - When a zone is discovered
 - `CraftRecipeEvent` - When a recipe is crafted
+- `SwitchActiveSlotEvent` - When switching elements in inventory
 
 ## Project Structure
 

@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.0.1] - 2026-01-15
+## [1.0.1](https://github.com/Program132/HL/compare/V1.0.0...V1.0.1) - 2026-01-15
 
 ### Added
 - **Item API** (`fr.hytale.loader.api.Item`)
@@ -56,7 +56,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.0.0] - 2026-01-14
+## 1.0.0 - 2026-01-14
 
 ### Added
 - Initial release of HytaleLoader

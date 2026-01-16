@@ -2,32 +2,20 @@
 
 Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale servers!
 
-## Current Version: 1.0.2
-
-### v1.0.1
-- ✅ **Item & Inventory API** - Manage player inventories
-- ✅ **Complete Event System** - Player and ECS events
-- ✅ **Command System** - Easy command registration
-- ✅ **Full Javadoc** - Complete documentation
-
-### Latest Features (1.0.2)
-- ✅ **GameMode API** - Get and set player game modes
-- ✅ **Enhanced Player API** - Extended gamemode management
-- ✅ **Fixes ECS Events** - Used `EntityEventSystem`
-- ✅ **Player Events** added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent`
-
-
-## Coming into 1.0.3
-- 🚧 **Scheduler**
-- 🚧 **Permissions Management**
-
 ## Quick Links
 
+### Core Documentation
 - [Getting Started](getting_started.md) - Installation and first plugin
 - [Events](events.md) - Event system overview
 - [Standard Events](standard_events.md) - Player events reference
 - [Commands](commands.md) - Command system guide
 - [Server Setup](server.md) - Server configuration
+
+### v1.0.2 Documentation
+- **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
+- **[Permission API](permission_api.md)** - Permission management system
+- **[Command Utils](command_utils.md)** - Command helper utilities
+- [CHANGELOG](CHANGELOG.md) - Version history
 
 ## Key Features
 
@@ -125,34 +113,6 @@ HytaleLoader/
 │   ├── internal/         # Internal dispatchers
 │   └── plugin/           # Plugin base classes
 ```
-
-## Version History
-
-## V1.0.3 (In development)
-- 
-
-## V1.0.2 (Current Release)
-- Everything from 1.0.1
-- Fixs on ECS events
-- Added more events: `SwitchActiveSlotEvent`, `PlayerMouseButtonEvent`, `PlayerMouseMotionEvent`
-- Gamemode API
-- Updated Player API
-
-### 1.0.1 
-- Everything from 1.0.0
-- Item and Inventory API
-- Player.getInventory() method
-- InventoryPlayer, InventoryBlock, InventoryHotbar
-- Item wrapper class
-- Complete Javadoc for all event classes
-- Enhanced Player API
-
-### 1.0.0
-- Initial release
-- Event system with @EventHandler
-- Command system with @Command
-- SimplePlugin base class
-- Event dispatchers
 
 ## Installation
 

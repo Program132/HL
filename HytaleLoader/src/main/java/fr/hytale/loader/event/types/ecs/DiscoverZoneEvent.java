@@ -2,6 +2,7 @@ package fr.hytale.loader.event.types.ecs;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.universe.world.WorldMapTracker;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a player discovers a new zone.
@@ -19,14 +20,17 @@ import com.hypixel.hytale.server.core.universe.world.WorldMapTracker;
 public class DiscoverZoneEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new DiscoverZoneEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who discovered the zone
      */
-    public DiscoverZoneEvent(com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display originalEvent) {
+    public DiscoverZoneEvent(com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -54,5 +58,14 @@ public class DiscoverZoneEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who discovered the zone.
+     * 
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

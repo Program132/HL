@@ -1,6 +1,5 @@
 package fr.hytale.loader.plugin;
 
-import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import fr.hytale.loader.event.EventScanner;
@@ -61,6 +60,16 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
                                         return event;
                                 }));
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerChatEvent");
+
+                getEventRegistry().registerGlobal(
+                        com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent.class,
+                        dispatcher::onPlayerMouseButton);
+                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerMouseButtonEvent");
+
+                getEventRegistry().registerGlobal(
+                        com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent.class,
+                        dispatcher::onPlayerMouseMotion);
+                getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerMouseMotionEvent");
 
                 // Register core ECS systems
                 // These systems handle ECS events and dispatch them to the HytaleLoader event bus

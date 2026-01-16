@@ -20,7 +20,7 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 ### Building locally
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Program132/HL.git
 cd HytaleLoader
 mvn clean install
 ```

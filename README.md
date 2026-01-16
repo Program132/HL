@@ -81,6 +81,7 @@ Comprehensive documentation is available in the `doc/` directory:
 -   [📦 Standard Events](doc/standard_events.md) - Available events
 -   [⚔️ Command System](doc/commands.md) - Command registration
 -   [🎮 GameMode API](doc/gamemode_api.md) - GameMode API (v1.0.2 - In Dev)
+-   [JavaDoc](https://program132.github.io/HL/) - Javadoc
 
 ## Development Workflow
 

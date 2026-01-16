@@ -84,6 +84,9 @@ public class TestMod extends SimplePlugin {
     @EventHandler
     public void onPlaceBlock(fr.hytale.loader.event.types.ecs.PlaceBlockEvent event) {
         getLogger().at(Level.INFO).log("[TESTMOD] PlaceBlock: block at " + event.getTargetBlock());
+
+        Player p = event.getPlayer();
+        p.sendTitle("Welcome to Hytale");
     }
 
     @EventHandler

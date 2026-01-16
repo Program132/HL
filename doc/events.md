@@ -1,41 +1,61 @@
-# Event System
+# Events Reference
 
-HytaleLoader provides an annotation-based event system similar to Bukkit/Spigot.
+HytaleLoader provides a robust event system allowing plugins to react to game events.
 
-## The `@EventHandler` Annotation
+## Event Types
 
-To listen for an event, simply create a method and annotate it with `@EventHandler`. The method must have exactly one parameter: the event you want to listen to.
+### Player Events (`fr.hytale.loader.event.types.player`)
 
-### Example
+| Event | Description |
+|-------|-------------|
+| `PlayerJoinEvent` | Fired when a player joins the server. |
+| `PlayerQuitEvent` | Fired when a player leaves the server. |
+| `PlayerChatEvent` | Fired when a player sends a chat message. |
+| `PlayerDamageEvent` | Fired when a player takes damage. |
+| `PlayerCraftEvent` | **Deprecated**. Use `CraftRecipeEvent` instead. |
+
+### ECS / World Events (`fr.hytale.loader.event.types.ecs`)
+
+These events are triggered by the Entity Component System (ECS) and handle interactions with the world.
+
+| Event | Description | Cancellable |
+|-------|-------------|-------------|
+| `BreakBlockEvent` | Fired when a block is broken. | Yes |
+| `PlaceBlockEvent` | Fired when a block is placed. | Yes |
+| `UseBlockEvent` | Fired when a block is interacted with (right-click). | Yes |
+| `DamageBlockEvent` | Fired when a block is damaged (mining progress). | Yes |
+| `DropItemEvent` | Fired when an item is dropped. | Yes |
+| `DiscoverZoneEvent` | Fired when a player discovers a new zone. | Yes |
+| `CraftRecipeEvent` | Fired when a recipe is crafted. | Yes |
+
+## Listening to Events
+
+To listen to an event, create a method with the `@EventHandler` annotation in a class that implements `SimpleListener` (like your main plugin class).
 
 ```java
-import fr.hytale.loader.event.EventHandler;
-import com.hypixel.hytale.server.core.event.events.BootEvent;
-
-public class MyListener implements SimpleListener {
+public class MyPlugin extends SimplePlugin {
+    
+    // ... constructor ...
 
     @EventHandler
-    public void onServerBoot(BootEvent event) {
-        System.out.println("The server has booted!");
+    public void onBlockBreak(BreakBlockEvent event) {
+        Player player = event.getPlayer();
+        if (player != null) {
+            player.sendMessage("You broke a block: " + event.getBlockType().getId());
+        }
+        
+        // Cancel breaking bedrock
+        if (event.getBlockType().getId().equals("bedrock")) {
+            event.setCancelled(true);
+        }
     }
 }
 ```
 
-## Registering Listeners
+## Event Priorities
 
-### In Main Class
-If your listener methods are in your main class (extending `SimplePlugin`), they are automatically registered when the plugin starts!
+Events are dispatched to all registered listeners. Currently, there is no priority system; listeners are called in the order they were registered.
 
-### In Separate Classes
-If you create separate listener classes, they must implement the marker interface `SimpleListener`. You can then register them in your `onEnable` method:
+## Async Events
 
-```java
-@Override
-public void onEnable() {
-    registerListener(new MyListener());
-}
-```
-
-## Supported Events
-
-You can listen to any event that extends `IBaseEvent` (synchronous) or `IAsyncEvent` (asynchronous). The library automatically detects the type and registers it correctly.
+Some events, like `PlayerChatEvent`, may be fired asynchronously. Be careful when accessing non-thread-safe APIs within these events.

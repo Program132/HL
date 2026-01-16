@@ -13,6 +13,7 @@ Fired when a player successfully joins the world.
 Fired when a player disconnects from the server.
 - **Method**: `getPlayer()` returns the `Player` object.
 - **Underlying Event**: `PlayerDisconnectEvent`.
+- **Note**: `event.getPlayer().getNativePlayer()` can be null
 
 ### PlayerDamageEvent
 Fired when a player takes damage.

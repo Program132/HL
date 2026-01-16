@@ -44,38 +44,28 @@ player.sendMessage(msg);
 ```
 Sends a formatted message object to the player.
 
-## Game Mode (v1.0.2 - In Development)
-
-### getGameMode()
+### sendTitle(String)
 ```java
-GameMode mode = player.getGameMode();
-if (mode == GameMode.CREATIVE) {
-    player.sendMessage("You are in creative mode!");
-}
+player.sendTitle("Welcome!");
 ```
-Returns the player's current game mode.
+Shows a title at the top of the player's screen.
 
-**Available modes:**
-- `GameMode.SURVIVAL` - Survival mode
-- `GameMode.CREATIVE` - Creative mode
-
-### setGameMode(GameMode)
+### sendTitleWithSubtitle(String, String)
 ```java
-player.setGameMode(GameMode.CREATIVE);
-player.sendMessage("Game mode set to CREATIVE");
+player.sendTitleWithSubtitle("Welcome!", "Enjoy your stay");
 ```
-Sets the player's game mode.
-
-**Note:** Requires the player to be in a valid world.
+Shows a title and a subtitle at the top of the player's screen.
 
 ## Inventory
 
 ### getInventory()
 ```java
 Inventory inv = player.getInventory();
-List<Item> items = inv.getItems();
+if (inv != null) {
+    // Access inventory
+}
 ```
-Returns the player's inventory.
+Returns the player's inventory wrapper.
 
 See [Inventory API](inventory_api.md) for more details.
 
@@ -127,13 +117,13 @@ com.hypixel.hytale.server.core.entity.entities.Player nativePlayer = player.getN
 ```
 Returns the wrapped native Hytale player instance.
 
-Use this if you need direct access to the native Hytale API.
+**Note:** May return `null` if the player is offline or during certain events (like `PlayerQuitEvent`).
 
 ### getPlayerRef()
 ```java
 PlayerRef ref = player.getPlayerRef();
 ```
-Returns the player reference for advanced operations.
+Returns the native player reference. This is generally safe to use even if `getNativePlayer()` returns null.
 
 ## Utility Methods
 
@@ -167,13 +157,13 @@ public void onPlayerJoin(PlayerJoinEvent event) {
     
     // Welcome message
     player.sendMessage("§aWelcome " + player.getName() + "!");
-    
-    // Set to creative mode (v1.0.2)
-    player.setGameMode(GameMode.CREATIVE);
+    player.sendTitleWithSubtitle("Welcome!", "Enjoy your stay");
     
     // Check inventory
     Inventory inv = player.getInventory();
-    player.sendMessage("You have " + inv.getItems().size() + " items");
+    if (inv != null) {
+        player.sendMessage("You have " + inv.getItems().size() + " items");
+    }
     
     // Permission check
     if (player.hasPermission("myplugin.vip")) {
@@ -184,12 +174,11 @@ public void onPlayerJoin(PlayerJoinEvent event) {
 
 ## Version History
 
-- **v1.0.2** (In Development): Added `getGameMode()` and `setGameMode()`
+- **v1.0.2**: Added `sendTitle` and `sendTitleWithSubtitle`
 - **v1.0.1**: Added `getInventory()`
 - **v1.0.0**: Initial Player API
 
 ## See Also
 
-- [GameMode API](gamemode_api.md) (v1.0.2)
 - [Inventory API](inventory_api.md)
 - [Events Documentation](events.md)

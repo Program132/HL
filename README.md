@@ -33,7 +33,7 @@ Add the following to your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -116,7 +116,8 @@ Contributions are welcome! Feel free to:
 
 ## Version History
 
-- **1.0.1** (Current): Item & Inventory API, Complete Javadoc
+- **1.0.2** (current): More events (+ fixes), Player API & Gamemode API
+- **1.0.1**: Item & Inventory API, Complete Javadoc
 - **1.0.0**: Initial release with events and commands
 
 See [CHANGELOG.md](doc/CHANGELOG.md) for detailed version history.

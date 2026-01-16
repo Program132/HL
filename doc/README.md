@@ -13,7 +13,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 ### Latest Features (1.0.2)
 - ✅ **GameMode API** - Get and set player game modes
 - ✅ **Enhanced Player API** - Extended gamemode management
-- ✅ **Fixs ECS Events** - Used `EntityEventSystem`
+- ✅ **Fixes ECS Events** - Used `EntityEventSystem`
 - ✅ **Player Events** added `PlayerMouseMotionEvent` and `PlayerMouseButtonEvent`
 
 
@@ -128,7 +128,18 @@ HytaleLoader/
 
 ## Version History
 
-### 1.0.1 (Current)
+## V1.0.3 (In development)
+- 
+
+## V1.0.2 (Current Release)
+- Everything from 1.0.1
+- Fixs on ECS events
+- Added more events: `SwitchActiveSlotEvent`, `PlayerMouseButtonEvent`, `PlayerMouseMotionEvent`
+- Gamemode API
+- Updated Player API
+
+### 1.0.1 
+- Everything from 1.0.0
 - Item and Inventory API
 - Player.getInventory() method
 - InventoryPlayer, InventoryBlock, InventoryHotbar
@@ -141,7 +152,6 @@ HytaleLoader/
 - Event system with @EventHandler
 - Command system with @Command
 - SimplePlugin base class
-- Player and ECS events
 - Event dispatchers
 
 ## Installation
@@ -152,7 +162,7 @@ Add HytaleLoader as a dependency in your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <scope>provided</scope>
 </dependency>
 ```

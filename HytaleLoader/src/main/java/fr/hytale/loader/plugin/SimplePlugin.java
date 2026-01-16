@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import fr.hytale.loader.event.EventScanner;
 import fr.hytale.loader.event.SimpleListener;
 import fr.hytale.loader.command.CommandScanner;
+import fr.hytale.loader.scheduler.Scheduler;
 
 /**
  * Base class for HytaleLoader plugins.
@@ -21,6 +22,8 @@ import fr.hytale.loader.command.CommandScanner;
  */
 public abstract class SimplePlugin extends JavaPlugin implements SimpleListener {
 
+        private final Scheduler scheduler;
+
         /**
          * Constructs a new SimplePlugin instance.
          *
@@ -28,6 +31,7 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
          */
         public SimplePlugin(JavaPluginInit init) {
                 super(init);
+                this.scheduler = new Scheduler();
         }
 
         @Override
@@ -39,58 +43,59 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
 
                 // Register for native Hytale events
                 getEventRegistry().registerGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent.class,
-                        dispatcher::onPlayerJoin);
+                                com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent.class,
+                                dispatcher::onPlayerJoin);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered AddPlayerToWorldEvent");
                 getEventRegistry().registerGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent.class,
-                        dispatcher::onPlayerQuit);
+                                com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent.class,
+                                dispatcher::onPlayerQuit);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerDisconnectEvent");
 
                 getEventRegistry().registerGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent.class,
-                        dispatcher::onPlayerCraft);
+                                com.hypixel.hytale.server.core.event.events.player.PlayerCraftEvent.class,
+                                dispatcher::onPlayerCraft);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerCraftEvent");
 
                 getEventRegistry().registerAsyncGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent.class,
-                        future -> ((java.util.concurrent.CompletableFuture<com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent>) future)
-                                .thenApply(event -> {
-                                        dispatcher.onPlayerChat(event);
-                                        return event;
-                                }));
+                                com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent.class,
+                                future -> ((java.util.concurrent.CompletableFuture<com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent>) future)
+                                                .thenApply(event -> {
+                                                        dispatcher.onPlayerChat(event);
+                                                        return event;
+                                                }));
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerChatEvent");
 
                 getEventRegistry().registerGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent.class,
-                        dispatcher::onPlayerMouseButton);
+                                com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent.class,
+                                dispatcher::onPlayerMouseButton);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerMouseButtonEvent");
 
                 getEventRegistry().registerGlobal(
-                        com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent.class,
-                        dispatcher::onPlayerMouseMotion);
+                                com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent.class,
+                                dispatcher::onPlayerMouseMotion);
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered PlayerMouseMotionEvent");
 
                 // Register core ECS systems
-                // These systems handle ECS events and dispatch them to the HytaleLoader event bus
+                // These systems handle ECS events and dispatch them to the HytaleLoader event
+                // bus
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.BreakBlockSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.BreakBlockSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.PlaceBlockSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.PlaceBlockSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.UseBlockSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.UseBlockSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageBlockSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DamageBlockSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DropItemSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DropItemSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DiscoverZoneSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.DiscoverZoneSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.CraftRecipeSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.CraftRecipeSystem());
                 this.getEntityStoreRegistry().registerSystem(
-                        (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.SwitchActiveSlotSystem());
+                                (com.hypixel.hytale.component.system.ISystem) new fr.hytale.loader.internal.SwitchActiveSlotSystem());
 
                 getLogger().at(java.util.logging.Level.INFO).log("[HytaleLoader] Registered ECS Systems");
 
@@ -103,6 +108,7 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
         @Override
         protected void shutdown() {
                 onDisable();
+                scheduler.shutdown();
                 super.shutdown();
         }
 
@@ -128,5 +134,19 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
 
         public void registerCommand(Object commandContainer) {
                 CommandScanner.registerCommands(this, commandContainer);
+        }
+
+        /**
+         * Gets the scheduler for this plugin.
+         * <p>
+         * The scheduler can be used to run tasks asynchronously, with delays, or
+         * repeatedly.
+         * </p>
+         * 
+         * @return the plugin's scheduler
+         * @since 1.0.3
+         */
+        public Scheduler getScheduler() {
+                return scheduler;
         }
 }

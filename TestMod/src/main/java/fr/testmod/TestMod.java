@@ -4,7 +4,6 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import fr.hytale.loader.api.Item;
 import fr.hytale.loader.api.Player;
 import fr.hytale.loader.api.inventory.InventoryPlayer;
-import fr.hytale.loader.command.Command;
 import fr.hytale.loader.plugin.SimplePlugin;
 import fr.hytale.loader.event.EventHandler;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -125,7 +124,18 @@ public class TestMod extends SimplePlugin {
                 + " -> " + event.getNewSlot() + " (server: " + event.isServerRequest() + ")");
     }
 
-    @Command(name = "hello", description = "Says hello")
+    @EventHandler
+    public void onPlayerMouseButton(fr.hytale.loader.event.types.player.PlayerMouseButtonEvent event) {
+        getLogger().at(Level.INFO).log("[TESTMOD] MouseButton: "
+                + " button: " + event.getMouseButton().mouseButtonType + " player: " + event.getPlayer().getName());
+    }
+
+    @EventHandler
+    public void onPlayerMouseMotion(fr.hytale.loader.event.types.player.PlayerMouseMotionEvent event) {
+        getLogger().at(Level.INFO).log("[TESTMOD] MouseMotion: x=" + event.getScreenPoint().x + " y=" + event.getScreenPoint().y);
+    }
+
+    @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")
     public void onHello(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
         ctx.sender().sendMessage(com.hypixel.hytale.server.core.Message.raw("Hello World!"));
     }

@@ -5,6 +5,7 @@ import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a block is used/interacted with.
@@ -22,14 +23,17 @@ import com.hypixel.hytale.server.core.entity.InteractionContext;
 public class UseBlockEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new UseBlockEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who used the block, or null if not a player
      */
-    public UseBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre originalEvent) {
+    public UseBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -84,5 +88,14 @@ public class UseBlockEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who used the block.
+     * 
+     * @return the player, or null if the block was not used by a player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

@@ -4,6 +4,65 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - In Development
 
+### Added
+
+#### 🕐 Scheduler System
+- **`Scheduler`** class - Task scheduling and execution
+  - `runTask(Runnable)` - Execute task immediately
+  - `runTaskLater(Runnable, delayMillis)` - Execute after delay
+  - `runTaskTimer(Runnable, initialDelay, periodMillis)` - Repeating tasks
+  - `runTaskAsync(Runnable)` - Async execution (non-blocking)
+  - `runTaskAsync(Callable<T>)` - Async with return value
+- **`ScheduledTask`** class - Task control wrapper
+  - `cancel()` - Cancel task
+  - `cancelAndInterrupt()` - Force cancel
+  - `isCancelled()`, `isDone()`, `isActive()` - Status checks
+- `SimplePlugin.getScheduler()` - Access plugin scheduler
+- Automatic scheduler lifecycle management (shutdown on plugin disable)
+
+#### 🔐 Permission System
+- **`Permission`** class - Permission object wrapper
+  - `Permission.of(String)` - Create from node
+  - `Permission.fromNative(String)` - Convert from Hytale native
+  - `Permission.forCommand(namespace, command)` - Command permissions
+  - `Permission.hytaleCommand(command)` - Hytale native command perms
+  - `toNative()` - Convert to native string
+  - `getParent()` - Get parent permission
+  - `isChildOf()`, `isParentOf()` - Hierarchy checks
+- **`PermissionManager`** singleton - Centralized permission storage
+  - Stores permissions by player UUID
+  - Thread-safe with `ConcurrentHashMap`
+  - Persists across Player instance creations
+  - Supports wildcard permissions (`*`)
+  - Supports hierarchical permissions (parent grants children)
+
+#### 👤 Enhanced Player API
+- `Player.addPermission(Permission)` - Add permission to player
+- `Player.addPermission(String)` - Add permission by node
+- `Player.removePermission(Permission)` - Remove permission
+- `Player.removePermission(String)` - Remove permission by node
+- `Player.hasPermission(Permission)` - Check permission (object)
+- `Player.getPermissions()` - Get all player permissions
+- `Player.clearPermissions()` - Remove all permissions
+
+#### 🛠️ Command Utilities
+- **`CommandUtils`** class - Command helper methods
+  - `isPlayer(CommandContext)` - Check if sender is player
+  - `getPlayer(CommandContext)` - Get Player wrapper (nullable)
+  - `requirePlayer(CommandContext)` - Get Player or throw exception
+
+### Changed
+- Updated `@version` tags to 1.0.3 in affected classes
+- `Player.hasPermission()` now delegates to `PermissionManager`
+- Permission storage moved from Player instances to centralized manager
+
+### Technical
+- Scheduler uses Java `ScheduledExecutorService` with custom thread pools
+- Daemon threads for scheduler (auto-cleanup on shutdown)
+- Permission system uses Singleton pattern for global state
+- All permission operations are thread-safe
+- Permissions stored in `ConcurrentHashMap<UUID, Set<Permission>>`
+
 ---
 
 ## [1.0.2](https://github.com/Program132/HL/compare/V1.0.1...V1.0.2) - 2026-01-16

@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - `GameMode` enum with SURVIVAL and CREATIVE modes
 - `Player.getGameMode()` - Get current player game mode
 - `Player.setGameMode(GameMode)` - Set player game mode
+- `Player.sendTitle(String)` - Send a title to the player
+- `Player.sendTitleWithSubtitle(String, String)` - Send a title and subtitle to the player
 - Complete Javadoc for all `inventory` classes
 - Javadoc for `SimpleCommand` class
 - Javadoc for `SimpleListener` interface
@@ -15,10 +17,12 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Updated `@version` tags to 1.0.2 in affected classes
 - Enhanced `Player` API documentation
+- Improved `PlayerQuitEvent` handling to prevent crashes during async disconnects
 
 ### Technical
 - Uses `com.hypixel.hytale.protocol.GameMode` for native integration
 - GameMode conversion methods: `toNative()` and `fromNative()`
+- Migrated ECS event handling to dedicated `EntityEventSystem`
 
 ---
 

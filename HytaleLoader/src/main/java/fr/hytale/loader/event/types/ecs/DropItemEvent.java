@@ -2,6 +2,7 @@ package fr.hytale.loader.event.types.ecs;
 
 import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when an item is dropped.
@@ -18,14 +19,17 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 public class DropItemEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new DropItemEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who dropped the item, or null if not a player
      */
-    public DropItemEvent(com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop originalEvent) {
+    public DropItemEvent(com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -80,5 +84,14 @@ public class DropItemEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who dropped the item.
+     * 
+     * @return the player, or null if the item was not dropped by a player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

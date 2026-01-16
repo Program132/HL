@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased](https://github.com/Program132/HL/compare/main%40%7B1day%7D...main) - Version 1.0.2 (In Development)
 
 ### Added
-- `GameMode` enum with SURVIVAL and CREATIVE modes
+- `GameMode` enum with ADVENTURE and CREATIVE modes
 - `Player.getGameMode()` - Get current player game mode
 - `Player.setGameMode(GameMode)` - Set player game mode
 - `Player.sendTitle(String)` - Send a title to the player
@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Complete Javadoc for all `inventory` classes
 - Javadoc for `SimpleCommand` class
 - Javadoc for `SimpleListener` interface
+- **SwitchActiveSlotEvent** from ECS
 
 ### Changed
 - Updated `@version` tags to 1.0.2 in affected classes

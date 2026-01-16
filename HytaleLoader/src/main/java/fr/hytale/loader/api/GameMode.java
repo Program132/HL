@@ -21,7 +21,7 @@ public enum GameMode {
     CREATIVE(0),
 
     /**
-     * Adventure mode - similar to survival but with restrictions on block
+     * Adventure mode - default mode for players, similar to survival from Minecraft
      * breaking/placing.
      */
     ADVENTURE(1);

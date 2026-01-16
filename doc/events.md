@@ -18,15 +18,16 @@ HytaleLoader provides a robust event system allowing plugins to react to game ev
 
 These events are triggered by the Entity Component System (ECS) and handle interactions with the world.
 
-| Event | Description | Cancellable |
-|-------|-------------|-------------|
-| `BreakBlockEvent` | Fired when a block is broken. | Yes |
-| `PlaceBlockEvent` | Fired when a block is placed. | Yes |
+| Event | Description                                          | Cancellable |
+|-------|------------------------------------------------------|-------------|
+| `BreakBlockEvent` | Fired when a block is broken.                        | Yes |
+| `PlaceBlockEvent` | Fired when a block is placed.                        | Yes |
 | `UseBlockEvent` | Fired when a block is interacted with (right-click). | Yes |
-| `DamageBlockEvent` | Fired when a block is damaged (mining progress). | Yes |
-| `DropItemEvent` | Fired when an item is dropped. | Yes |
-| `DiscoverZoneEvent` | Fired when a player discovers a new zone. | Yes |
-| `CraftRecipeEvent` | Fired when a recipe is crafted. | Yes |
+| `DamageBlockEvent` | Fired when a block is damaged (mining progress).     | Yes |
+| `DropItemEvent` | Fired when an item is dropped.                       | Yes |
+| `DiscoverZoneEvent` | Fired when a player discovers a new zone.            | Yes |
+| `CraftRecipeEvent` | Fired when a recipe is crafted.                      | Yes |
+| `SwitchActiveSlotEvent ` | Fired when switching two elements in the inventory.  | Yes |
 
 ## Listening to Events
 

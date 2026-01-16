@@ -8,6 +8,7 @@ import fr.hytale.loader.plugin.SimplePlugin;
 import fr.hytale.loader.event.EventHandler;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.event.events.BootEvent;
+import fr.hytale.loader.scheduler.ScheduledTask;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -37,18 +38,32 @@ public class TestMod extends SimplePlugin {
     public void onJoin(fr.hytale.loader.event.types.player.PlayerJoinEvent event) {
         getLogger().at(Level.INFO).log("[TESTMOD] Join: " + event.getPlayerName());
 
-         Player player = event.getPlayer();
-         InventoryPlayer inv = new InventoryPlayer(player);
-         if (inv != null) {
-             inv.clear();
-             getLogger().at(Level.INFO).log("[TESTMOD] Cleared inventory for " +
-                     event.getPlayerName());
+        Player player = event.getPlayer();
+        InventoryPlayer inv = new InventoryPlayer(player);
+        if (inv != null) {
+            inv.clear();
+            getLogger().at(Level.INFO).log("[TESTMOD] Cleared inventory for " +
+                    event.getPlayerName());
 
-             Item item = new Item(new ItemStack("Weapon_Sword_Cobalt"));
-             inv.setItem(item, 5);
-             inv.setItem(item, 13);
-             inv.addItem(item);
-         }
+            Item item = new Item(new ItemStack("Weapon_Sword_Cobalt"));
+            inv.setItem(item, 5);
+            inv.setItem(item, 13);
+            inv.addItem(item);
+        }
+
+        getScheduler().runTask(() -> {
+            player.sendMessage("Welcome!");
+        });
+
+        getScheduler().runTaskLater(() -> {
+            player.sendMessage("5 seconds passed!");
+        }, 5000);
+
+        ScheduledTask task = getScheduler().runTaskTimer(() -> {
+            player.sendMessage("Tick!");
+        }, 0, 1000); // every second
+
+        getScheduler().runTaskLater(task::cancel, 10000);
     }
 
     @EventHandler
@@ -132,7 +147,8 @@ public class TestMod extends SimplePlugin {
 
     @EventHandler
     public void onPlayerMouseMotion(fr.hytale.loader.event.types.player.PlayerMouseMotionEvent event) {
-        getLogger().at(Level.INFO).log("[TESTMOD] MouseMotion: x=" + event.getScreenPoint().x + " y=" + event.getScreenPoint().y);
+        getLogger().at(Level.INFO)
+                .log("[TESTMOD] MouseMotion: x=" + event.getScreenPoint().x + " y=" + event.getScreenPoint().y);
     }
 
     @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")

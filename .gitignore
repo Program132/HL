@@ -62,3 +62,7 @@ hytale-downloader.exe
 # Antigravity
 
 .antigravity/
+
+# IntelliJ IDEA
+
+.idea

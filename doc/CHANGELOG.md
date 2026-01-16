@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/Program132/HL/compare/main%40%7B1day%7D...main) - Version 1.0.2 (In Development)
+## [Unreleased] - In Development
+
+---
+
+## [1.0.2](https://github.com/Program132/HL/compare/V1.0.1...V1.0.2) - 2026-01-16
 
 ### Added
 - `GameMode` enum with ADVENTURE and CREATIVE modes

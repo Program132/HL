@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - Version 1.0.2 (In Development)
+## [Unreleased](https://github.com/Program132/HL/compare/main%40%7B1day%7D...main) - Version 1.0.2 (In Development)
 
 ### Added
 - `GameMode` enum with SURVIVAL and CREATIVE modes

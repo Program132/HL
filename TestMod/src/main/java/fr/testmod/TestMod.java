@@ -4,6 +4,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import fr.hytale.loader.api.Item;
 import fr.hytale.loader.api.Player;
 import fr.hytale.loader.api.inventory.InventoryPlayer;
+import fr.hytale.loader.command.Command;
 import fr.hytale.loader.plugin.SimplePlugin;
 import fr.hytale.loader.event.EventHandler;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -118,7 +119,13 @@ public class TestMod extends SimplePlugin {
                 + " x" + event.getQuantity());
     }
 
-    @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")
+    @EventHandler
+    public void onSwitchActiveSlot(fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent event) {
+        getLogger().at(Level.INFO).log("[TESTMOD] SwitchActiveSlot: " + event.getPreviousSlot()
+                + " -> " + event.getNewSlot() + " (server: " + event.isServerRequest() + ")");
+    }
+
+    @Command(name = "hello", description = "Says hello")
     public void onHello(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
         ctx.sender().sendMessage(com.hypixel.hytale.server.core.Message.raw("Hello World!"));
     }

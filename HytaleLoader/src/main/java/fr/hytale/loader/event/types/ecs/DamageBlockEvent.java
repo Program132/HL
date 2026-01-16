@@ -4,6 +4,7 @@ import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a block takes damage.
@@ -20,14 +21,17 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 public class DamageBlockEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new DamageBlockEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who damaged the block, or null if not a player
      */
-    public DamageBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent originalEvent) {
+    public DamageBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -109,5 +113,14 @@ public class DamageBlockEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who damaged the block.
+     * 
+     * @return the player, or null if the block was not damaged by a player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

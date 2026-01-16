@@ -1,0 +1,8 @@
+fr.hytale.loader.api
+fr.hytale.loader.api.inventory
+fr.hytale.loader.command
+fr.hytale.loader.event
+fr.hytale.loader.event.types.ecs
+fr.hytale.loader.event.types.player
+fr.hytale.loader.internal
+fr.hytale.loader.plugin

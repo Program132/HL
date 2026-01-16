@@ -6,12 +6,13 @@ import fr.hytale.loader.api.Player;
 import fr.hytale.loader.api.inventory.InventoryPlayer;
 import fr.hytale.loader.plugin.SimplePlugin;
 import fr.hytale.loader.event.EventHandler;
+import fr.hytale.loader.scheduler.ScheduledTask;
+import fr.hytale.loader.permission.Permission;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.event.events.BootEvent;
-import fr.hytale.loader.scheduler.ScheduledTask;
-
 import java.util.List;
 import java.util.logging.Level;
+import fr.hytale.loader.command.CommandUtils;
 
 public class TestMod extends SimplePlugin {
 
@@ -64,6 +65,10 @@ public class TestMod extends SimplePlugin {
         }, 0, 1000); // every second
 
         getScheduler().runTaskLater(task::cancel, 10000);
+
+        Permission permission = Permission.of("testmod.test");
+        player.addPermission(permission);
+        player.sendMessage("You have been given the permission testmod.test: " + player.hasPermission("testmod.test"));
     }
 
     @EventHandler
@@ -154,5 +159,11 @@ public class TestMod extends SimplePlugin {
     @fr.hytale.loader.command.Command(name = "hello", description = "Says hello")
     public void onHello(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
         ctx.sender().sendMessage(com.hypixel.hytale.server.core.Message.raw("Hello World!"));
+
+        if (CommandUtils.isPlayer(ctx)) {
+            Player player = CommandUtils.getPlayer(ctx);
+            player.sendMessage("Has permission: " + player.hasPermission("testmod.test"));
+        }
+
     }
 }

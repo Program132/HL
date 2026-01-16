@@ -56,18 +56,20 @@ public class StandardEventDispatcher implements SimpleListener {
      * @param event the native player disconnect event
      */
     public void onPlayerQuit(PlayerDisconnectEvent event) {
-        // Get player components
-        // Note: getComponent on PlayerRef is deprecated but necessary here until a
-        // replacement is found
         PlayerRef playerRef = event.getPlayerRef();
-        Player nativePlayer = (Player) event.getPlayerRef().getReference().getStore()
-                .getComponent(event.getPlayerRef().getReference(), Player.getComponentType());
+        
+        Player nativePlayer = null;
+        try {
+             nativePlayer = playerRef.getComponent(Player.getComponentType());
+        } catch (IllegalStateException e) {
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+        } catch (Exception e) {
 
-        if (nativePlayer != null) {
-            fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
-            PlayerQuitEvent newEvent = new PlayerQuitEvent(player, event);
-            HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
         }
+
+        fr.hytale.loader.api.Player player = new fr.hytale.loader.api.Player(nativePlayer, playerRef);
+        PlayerQuitEvent newEvent = new PlayerQuitEvent(player, event);
+        HytaleServer.get().getEventBus().dispatchFor(PlayerQuitEvent.class, null).dispatch(newEvent);
     }
 
     /**

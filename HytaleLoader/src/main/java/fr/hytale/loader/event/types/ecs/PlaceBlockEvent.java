@@ -4,6 +4,7 @@ import com.hypixel.hytale.event.IEvent;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import fr.hytale.loader.api.Player;
 
 /**
  * Called when a block is placed.
@@ -21,14 +22,17 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 public class PlaceBlockEvent implements IEvent<Void> {
 
     private final com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent originalEvent;
+    private final Player player;
 
     /**
      * Constructs a new PlaceBlockEvent.
      * 
      * @param originalEvent the original Hytale ECS event
+     * @param player        the player who placed the block, or null if not a player
      */
-    public PlaceBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent originalEvent) {
+    public PlaceBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent originalEvent, Player player) {
         this.originalEvent = originalEvent;
+        this.player = player;
     }
 
     /**
@@ -92,5 +96,14 @@ public class PlaceBlockEvent implements IEvent<Void> {
      */
     public void setCancelled(boolean cancelled) {
         originalEvent.setCancelled(cancelled);
+    }
+
+    /**
+     * Gets the player who placed the block.
+     * 
+     * @return the player, or null if the block was not placed by a player
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

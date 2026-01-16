@@ -2,18 +2,6 @@
 
 **HytaleLoader** is a Java library designed to simplify the development of mods for the Hytale server. It provides an abstraction layer inspired by the Bukkit/Spigot API, allowing developers to create mods using annotations for event handling and command registration.
 
-## 🚀 Current Version: 1.0.1
-
-### ✨ Latest Features (v1.0.1)
-- ✅ **Item & Inventory API** - Manage player inventories and items
-- ✅ **Enhanced Player API** - Extended player wrapper with inventory support
-- ✅ **Complete Event System** - Player and ECS events with full Javadoc
-- ✅ **Command System** - Easy command registration with annotations
-
-### 🚧 Coming in v1.0.2 (In Development)
-- **GameMode API** - Get and set player game modes
-- More Player API enhancements
-
 ## ⚠️ Disclaimer
 
 This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may change.
@@ -86,12 +74,12 @@ public class MyMod extends SimplePlugin {
 Comprehensive documentation is available in the `doc/` directory:
 
 -   [📖 README](doc/README.md) - Complete documentation overview
+-   [📝 Changelog](doc/CHANGELOG.md) - Version history
 -   [🚀 Getting Started](doc/getting_started.md) - Installation and first plugin
 -   [🎪 Event System](doc/events.md) - Event system guide
 -   [👤 Player API](doc/player_api.md) - Player API reference
 -   [📦 Standard Events](doc/standard_events.md) - Available events
 -   [⚔️ Command System](doc/commands.md) - Command registration
--   [📝 Changelog](doc/CHANGELOG.md) - Version history
 -   [🎮 GameMode API](doc/gamemode_api.md) - GameMode API (v1.0.2 - In Dev)
 
 ## Development Workflow

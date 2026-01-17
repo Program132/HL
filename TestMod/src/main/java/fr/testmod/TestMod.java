@@ -162,7 +162,15 @@ public class TestMod extends SimplePlugin {
 
         if (CommandUtils.isPlayer(ctx)) {
             Player player = CommandUtils.getPlayer(ctx);
+
             player.sendMessage("Has permission: " + player.hasPermission("testmod.test"));
+
+            System.out.println("Health: " + player.getHealth());
+            System.out.println("Stamina: " + player.getStamina());
+            player.setHealth(20);
+            player.setStamina(0);
+            System.out.println("Health: " + player.getHealth());
+            System.out.println("Stamina: " + player.getStamina());
         }
 
     }

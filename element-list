@@ -5,4 +5,6 @@ fr.hytale.loader.event
 fr.hytale.loader.event.types.ecs
 fr.hytale.loader.event.types.player
 fr.hytale.loader.internal
+fr.hytale.loader.permission
 fr.hytale.loader.plugin
+fr.hytale.loader.scheduler

@@ -13,6 +13,8 @@ import com.hypixel.hytale.server.core.event.events.BootEvent;
 import java.util.List;
 import java.util.logging.Level;
 import fr.hytale.loader.command.CommandUtils;
+import java.io.IOException;
+import fr.hytale.loader.config.Config;
 
 public class TestMod extends SimplePlugin {
 
@@ -23,6 +25,22 @@ public class TestMod extends SimplePlugin {
     @Override
     public void onEnable() {
         getLogger().at(Level.INFO).log("[TESTMOD] TestMod enabled!");
+
+        if (getConfig().contains("features.welcomeMessage")) {
+            getLogger().at(Level.INFO)
+                    .log("[TESTMOD] FOUND Welcome message: " + getConfig().getBoolean("features.welcomeMessage"));
+        } else {
+            getLogger().at(Level.INFO)
+                    .log("[TESTMOD] NOT FOUND Welcome message. Adding it...");
+            getConfig().set("features.welcomeMessage", true);
+
+            try {
+                saveConfig();
+            } catch (IOException e) {
+                getLogger().at(Level.SEVERE)
+                        .log("[TESTMOD] Failed to save config: " + e.getMessage());
+            }
+        }
     }
 
     @Override

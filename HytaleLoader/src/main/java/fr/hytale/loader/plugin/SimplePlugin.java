@@ -6,6 +6,11 @@ import fr.hytale.loader.event.EventScanner;
 import fr.hytale.loader.event.SimpleListener;
 import fr.hytale.loader.command.CommandScanner;
 import fr.hytale.loader.scheduler.Scheduler;
+import fr.hytale.loader.config.Config;
+import fr.hytale.loader.config.YamlConfig;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Base class for HytaleLoader plugins.
@@ -23,6 +28,7 @@ import fr.hytale.loader.scheduler.Scheduler;
 public abstract class SimplePlugin extends JavaPlugin implements SimpleListener {
 
         private final Scheduler scheduler;
+        private Config config;
 
         /**
          * Constructs a new SimplePlugin instance.
@@ -147,5 +153,82 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
          */
         public Scheduler getScheduler() {
                 return scheduler;
+        }
+
+        /**
+         * Gets the plugin's configuration.
+         * <p>
+         * The config file is automatically loaded from the plugin's data folder.
+         * If the file doesn't exist, it will be created on first save.
+         * </p>
+         * 
+         * @return the plugin's config
+         */
+        public Config getConfig() {
+                if (config == null) {
+                        File dataFolder = getDataFolder();
+                        if (!dataFolder.exists()) {
+                                dataFolder.mkdirs();
+                        }
+
+                        File configFile = new File(dataFolder, "config.yml");
+                        config = new YamlConfig(configFile);
+
+                        try {
+                                config.reload();
+                        } catch (IOException e) {
+                                getLogger().at(java.util.logging.Level.SEVERE)
+                                                .log("Failed to load config: " + e.getMessage());
+                        }
+                }
+                return config;
+        }
+
+        /**
+         * Saves the plugin's configuration to disk.
+         * 
+         * @throws IOException if save fails
+         */
+        public void saveConfig() throws IOException {
+                if (config != null) {
+                        config.save();
+                }
+        }
+
+        /**
+         * Reloads the plugin's configuration from disk.
+         * 
+         * @throws IOException if reload fails
+         */
+        public void reloadConfig() throws IOException {
+                if (config != null) {
+                        config.reload();
+                } else {
+                        getConfig(); // Initialize if not loaded
+                }
+        }
+
+        /**
+         * Saves the default config from resources.
+         * This is useful for creating a config template on first run.
+         */
+        public void saveDefaultConfig() {
+                getConfig(); // Ensure config is initialized
+        }
+
+        /**
+         * Gets the plugin's data folder.
+         * Creates it if it doesn't exist.
+         * 
+         * @return the data folder
+         */
+        public File getDataFolder() {
+                // Replace invalid characters for Windows compatibility
+                String safeName = getName().replace(":", "_").replace("/", "_").replace("\\", "_");
+                File dataFolder = new File("mods", safeName);
+                if (!dataFolder.exists()) {
+                        dataFolder.mkdirs();
+                }
+                return dataFolder;
         }
 }

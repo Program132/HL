@@ -45,6 +45,16 @@ All notable changes to this project will be documented in this file.
 - `Player.getPermissions()` - Get all player permissions
 - `Player.clearPermissions()` - Remove all permissions
 
+#### 📊 Player Stats API
+- **Health** - `getHealth()`, `setHealth(float)`
+- **Stamina** - `getStamina()`, `setStamina(float)`
+- **Oxygen** - `getOxygen()`, `setOxygen(float)`
+- **Mana** - `getMana()`, `setMana(float)`
+- **Signature Energy** - `getSignatureEnergy()`, `setSignatureEnergy(float)`
+- **Ammo** - `getAmmo()`, `setAmmo(float)`
+- Thread-safe using `world.execute()` internally
+- Async setters, blocking getters (max 5s timeout)
+
 #### 🛠️ Command Utilities
 - **`CommandUtils`** class - Command helper methods
   - `isPlayer(CommandContext)` - Check if sender is player

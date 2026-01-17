@@ -1,12 +1,14 @@
 package fr.hytale.loader.api;
 
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import fr.hytale.loader.api.inventory.Inventory;
-import com.hypixel.hytale.component.ComponentAccessor;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import java.util.Collections;
 import java.util.HashSet;
@@ -149,6 +151,7 @@ public class Player {
      * @param gameMode the new game mode to set
      */
     public void setGameMode(GameMode gameMode) {
+
         if (nativePlayer != null && gameMode != null && playerRef != null) {
             try {
                 // Get the player's reference
@@ -168,6 +171,241 @@ public class Player {
             } catch (Exception e) {
                 // Silently fail if gamemode cannot be set
             }
+        }
+    }
+
+    // === Health & Stats ===
+
+    /**
+     * Gets the player's current health.
+     * 
+     * @return the player's current health, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getHealth() {
+        return getStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth());
+    }
+
+    /**
+     * Sets the player's health.
+     * 
+     * @param health the new health value
+     * @since 1.0.3
+     */
+    public void setHealth(float health) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth(), health);
+    }
+
+    /**
+     * Gets the player's current stamina.
+     * 
+     * @return the player's current stamina, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getStamina() {
+        return getStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getStamina());
+    }
+
+    /**
+     * Sets the player's stamina.
+     * 
+     * @param stamina the new stamina value
+     * @since 1.0.3
+     */
+    public void setStamina(float stamina) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getStamina(), stamina);
+    }
+
+    /**
+     * Gets the player's current oxygen.
+     * 
+     * @return the player's current oxygen, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getOxygen() {
+        return getStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getOxygen());
+    }
+
+    /**
+     * Sets the player's oxygen.
+     * 
+     * @param oxygen the new oxygen value
+     * @since 1.0.3
+     */
+    public void setOxygen(float oxygen) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getOxygen(), oxygen);
+    }
+
+    /**
+     * Gets the player's current mana.
+     * 
+     * @return the player's current mana, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getMana() {
+        return getStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getMana());
+    }
+
+    /**
+     * Sets the player's mana.
+     * 
+     * @param mana the new mana value
+     * @since 1.0.3
+     */
+    public void setMana(float mana) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getMana(), mana);
+    }
+
+    /**
+     * Gets the player's current signature energy.
+     * 
+     * @return the player's current signature energy, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getSignatureEnergy() {
+        return getStat(
+                com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getSignatureEnergy());
+    }
+
+    /**
+     * Sets the player's signature energy.
+     * 
+     * @param energy the new signature energy value
+     * @since 1.0.3
+     */
+    public void setSignatureEnergy(float energy) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getSignatureEnergy(),
+                energy);
+    }
+
+    /**
+     * Gets the player's current ammo.
+     * 
+     * @return the player's current ammo, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    public float getAmmo() {
+        return getStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getAmmo());
+    }
+
+    /**
+     * Sets the player's ammo.
+     * 
+     * @param ammo the new ammo value
+     * @since 1.0.3
+     */
+    public void setAmmo(float ammo) {
+        setStat(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getAmmo(), ammo);
+    }
+
+    /**
+     * Gets an entity stat value by its index.
+     * 
+     * @param statIndex the stat index from DefaultEntityStatTypes
+     * @return the stat value, or 0.0 if unavailable
+     * @since 1.0.3
+     */
+    private float getStat(int statIndex) {
+        if (nativePlayer == null || playerRef == null) {
+            return 0.0f;
+        }
+
+        try {
+            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
+            if (world == null) {
+                return 0.0f;
+            }
+
+            // Use CompletableFuture to get result from world thread
+            java.util.concurrent.CompletableFuture<Float> future = new java.util.concurrent.CompletableFuture<>();
+
+            world.execute(() -> {
+                try {
+                    com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = world
+                            .getEntityStore().getStore();
+                    com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = nativePlayer
+                            .getReference();
+
+                    if (ref == null || !ref.isValid()) {
+                        future.complete(0.0f);
+                        return;
+                    }
+
+                    com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap entityStatMap = (com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap) store
+                            .getComponent(
+                                    ref,
+                                    com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule.get()
+                                            .getEntityStatMapComponentType());
+
+                    if (entityStatMap == null) {
+                        future.complete(0.0f);
+                        return;
+                    }
+
+                    com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue value = entityStatMap
+                            .get(statIndex);
+                    future.complete((value != null) ? value.get() : 0.0f);
+                } catch (Exception e) {
+                    future.complete(0.0f);
+                }
+            });
+
+            // Wait for result (max 5 seconds)
+            return future.get(5, java.util.concurrent.TimeUnit.SECONDS);
+
+        } catch (Exception e) {
+            return 0.0f;
+        }
+    }
+
+    /**
+     * Sets an entity stat value by its index.
+     * 
+     * @param statIndex the stat index from DefaultEntityStatTypes
+     * @param value     the new value
+     * @since 1.0.3
+     */
+    private void setStat(int statIndex, float value) {
+        if (nativePlayer == null || playerRef == null) {
+            return;
+        }
+
+        try {
+            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
+            if (world == null) {
+                return;
+            }
+
+            // Execute in world thread like ReviveMe does
+            world.execute(() -> {
+                try {
+                    com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = world
+                            .getEntityStore().getStore();
+                    com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = nativePlayer
+                            .getReference();
+
+                    if (ref == null || !ref.isValid()) {
+                        return;
+                    }
+
+                    com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap entityStatMap = (com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap) store
+                            .getComponent(
+                                    ref,
+                                    com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule.get()
+                                            .getEntityStatMapComponentType());
+
+                    if (entityStatMap == null) {
+                        return;
+                    }
+
+                    entityStatMap.setStatValue(statIndex, value);
+                } catch (Exception e) {
+                    // Silently fail
+                }
+            });
+
+        } catch (Exception e) {
+            // Silently fail
         }
     }
 
@@ -263,7 +501,7 @@ public class Player {
      * @since 1.0.3
      */
     public boolean removePermission(String permission) {
-        return removePermission(fr.hytale.loader.permission.Permission.of(permission));
+        return removePermission(Permission.of(permission));
     }
 
     /**
@@ -272,12 +510,12 @@ public class Player {
      * @return an unmodifiable set of permissions
      * @since 1.0.3
      */
-    public java.util.Set<fr.hytale.loader.permission.Permission> getPermissions() {
-        java.util.UUID uuid = getUUID();
+    public Set<Permission> getPermissions() {
+        UUID uuid = getUUID();
         if (uuid != null) {
-            return fr.hytale.loader.permission.PermissionManager.getInstance().getPermissions(uuid);
+            return PermissionManager.getInstance().getPermissions(uuid);
         }
-        return java.util.Collections.emptySet();
+        return Collections.emptySet();
     }
 
     /**
@@ -286,9 +524,9 @@ public class Player {
      * @since 1.0.3
      */
     public void clearPermissions() {
-        java.util.UUID uuid = getUUID();
+        UUID uuid = getUUID();
         if (uuid != null) {
-            fr.hytale.loader.permission.PermissionManager.getInstance().clearPermissions(uuid);
+            PermissionManager.getInstance().clearPermissions(uuid);
         }
     }
 

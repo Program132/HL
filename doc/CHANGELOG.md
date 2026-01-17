@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2026-01-17
+
+### Added
+
+#### 📝 Config System
+- **`Config`** interface - Main configuration interface
+  - `get(String path)` - Get value by path
+  - `getString(String path)` - Get string value
+  - `getInt(String path)` - Get integer value
+  - `getDouble(String path)` - Get double value
+  - `getBoolean(String path)` - Get boolean value
+  - `getList(String path)` - Get list value
+  - `getStringList(String path)` - Get string list
+  - `getSection(String path)` - Get config section
+  - `set(String path, Object value)` - Set value
+  - `save()` / `reload()` - File operations
+  - `contains(String path)` - Check if key exists
+  - All methods support default values
+- **`ConfigSection`** interface - Nested sections support
+  - Same read methods as Config for scoped access
+  - `getKeys(boolean deep)` - Get all keys in section
+  - `getValues()` - Get all values as map
+- **`YamlConfig`** class - YAML implementation
+  - Custom YAML parser (no external dependencies)
+  - Supports nested maps and lists
+  - 2-space indentation
+  - Auto-quoting for special characters
+  - Default values system
+- **SimplePlugin integration**:
+  - `getConfig()` - Get plugin config (auto-loads from `mods/<PluginName>/config.yml`)
+  - `saveConfig()` - Save config to disk
+  - `reloadConfig()` - Reload from disk
+  - `saveDefaultConfig()` - Create config with defaults
+  - `getDataFolder()` - Get plugin data folder (Windows-safe names)
+
+### Changed
+- Updated `@version` tags to 1.0.4 in all classes
+
+---
+
 ## [1.0.3] - 2026-01-17
 
 ### Added

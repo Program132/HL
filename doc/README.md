@@ -4,17 +4,15 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 
 ## Quick Links
 
-### Core Documentation
 - [Getting Started](getting_started.md) - Installation and first plugin
 - [Events](events.md) - Event system overview
 - [Standard Events](standard_events.md) - Player events reference
 - [Commands](commands.md) - Command system guide
 - [Server Setup](server.md) - Server configuration
-
-### v1.0.2 Documentation
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities
+- **[Player Stats API](player_stats_api.md)** - Health, stamina, mana management
 - [CHANGELOG](CHANGELOG.md) - Version history
 
 ## Key Features

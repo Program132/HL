@@ -13,6 +13,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities
 - **[Player Stats API](player_stats_api.md)** - Health, stamina, mana management
+- **[Config API](config_api.md)** - YAML configuration system
 - [CHANGELOG](CHANGELOG.md) - Version history
 
 ## Key Features

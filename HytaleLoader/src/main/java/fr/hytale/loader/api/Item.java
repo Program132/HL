@@ -9,7 +9,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class Item {

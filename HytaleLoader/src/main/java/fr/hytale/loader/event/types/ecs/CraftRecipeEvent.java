@@ -18,7 +18,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class CraftRecipeEvent implements IEvent<Void> {
@@ -30,9 +30,11 @@ public class CraftRecipeEvent implements IEvent<Void> {
      * Constructs a new CraftRecipeEvent.
      * 
      * @param originalEvent the original Hytale ECS event
-     * @param player        the player who crafted the recipe, or null if not a player
+     * @param player        the player who crafted the recipe, or null if not a
+     *                      player
      */
-    public CraftRecipeEvent(com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre originalEvent, Player player) {
+    public CraftRecipeEvent(com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Pre originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

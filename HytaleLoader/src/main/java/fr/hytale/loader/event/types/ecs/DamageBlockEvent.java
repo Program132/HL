@@ -15,7 +15,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class DamageBlockEvent implements IEvent<Void> {
@@ -27,9 +27,11 @@ public class DamageBlockEvent implements IEvent<Void> {
      * Constructs a new DamageBlockEvent.
      * 
      * @param originalEvent the original Hytale ECS event
-     * @param player        the player who damaged the block, or null if not a player
+     * @param player        the player who damaged the block, or null if not a
+     *                      player
      */
-    public DamageBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent originalEvent, Player player) {
+    public DamageBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

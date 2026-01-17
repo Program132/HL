@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
  * the entity that caused them.
  * </p>
  *
- *  @author HytaleLoader
- *  @version 1.0.3
- *  @since 1.0.2
+ * @author HytaleLoader
+ * @version 1.0.4
+ * @since 1.0.2
  */
 public class BreakBlockSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {
 
@@ -56,8 +56,8 @@ public class BreakBlockSystem extends EntityEventSystem<EntityStore, BreakBlockE
         }
 
         // Create and dispatch our custom event
-        fr.hytale.loader.event.types.ecs.BreakBlockEvent newEvent =
-                new fr.hytale.loader.event.types.ecs.BreakBlockEvent(event, playerWrapper);
+        fr.hytale.loader.event.types.ecs.BreakBlockEvent newEvent = new fr.hytale.loader.event.types.ecs.BreakBlockEvent(
+                event, playerWrapper);
 
         HytaleServer.get().getEventBus()
                 .dispatchFor(fr.hytale.loader.event.types.ecs.BreakBlockEvent.class, null)

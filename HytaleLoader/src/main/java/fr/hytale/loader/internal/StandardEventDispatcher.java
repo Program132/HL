@@ -27,7 +27,7 @@ import java.util.Objects;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  */
 public class StandardEventDispatcher implements SimpleListener {
@@ -59,12 +59,13 @@ public class StandardEventDispatcher implements SimpleListener {
      */
     public void onPlayerQuit(PlayerDisconnectEvent event) {
         PlayerRef playerRef = event.getPlayerRef();
-        
+
         Player nativePlayer = null;
         try {
-             nativePlayer = playerRef.getComponent(Player.getComponentType());
+            nativePlayer = playerRef.getComponent(Player.getComponentType());
         } catch (IllegalStateException e) {
-            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING)
+                    .log("Could not get Player component during quit: " + e.getMessage());
         } catch (Exception e) {
 
         }
@@ -127,7 +128,8 @@ public class StandardEventDispatcher implements SimpleListener {
         try {
             nativePlayer = playerRef.getComponent(Player.getComponentType());
         } catch (IllegalStateException e) {
-            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING)
+                    .log("Could not get Player component during quit: " + e.getMessage());
         } catch (Exception e) {
 
         }
@@ -149,7 +151,8 @@ public class StandardEventDispatcher implements SimpleListener {
         try {
             nativePlayer = playerRef.getComponent(Player.getComponentType());
         } catch (IllegalStateException e) {
-            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING).log("Could not get Player component during quit: " + e.getMessage());
+            HytaleLogger.getLogger().at(java.util.logging.Level.WARNING)
+                    .log("Could not get Player component during quit: " + e.getMessage());
         } catch (Exception e) {
 
         }

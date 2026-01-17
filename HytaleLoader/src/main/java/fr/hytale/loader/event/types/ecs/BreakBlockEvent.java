@@ -16,7 +16,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  *
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class BreakBlockEvent implements IEvent<Void> {
@@ -30,7 +30,8 @@ public class BreakBlockEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who broke the block, or null if not a player
      */
-    public BreakBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent originalEvent, Player player) {
+    public BreakBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

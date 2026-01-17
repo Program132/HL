@@ -10,7 +10,7 @@ import java.util.concurrent.ScheduledFuture;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.3
  */
 public class ScheduledTask {

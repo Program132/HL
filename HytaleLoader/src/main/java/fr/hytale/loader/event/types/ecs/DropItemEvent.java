@@ -13,7 +13,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class DropItemEvent implements IEvent<Void> {
@@ -27,7 +27,8 @@ public class DropItemEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who dropped the item, or null if not a player
      */
-    public DropItemEvent(com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop originalEvent, Player player) {
+    public DropItemEvent(com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent.Drop originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

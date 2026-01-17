@@ -10,7 +10,7 @@ package fr.hytale.loader.api;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.2
  */
 public enum GameMode {

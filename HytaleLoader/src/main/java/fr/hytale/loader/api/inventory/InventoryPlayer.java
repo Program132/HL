@@ -11,7 +11,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class InventoryPlayer extends Inventory {

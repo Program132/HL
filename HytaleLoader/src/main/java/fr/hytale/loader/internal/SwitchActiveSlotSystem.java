@@ -16,9 +16,9 @@ import javax.annotation.Nonnull;
 /**
  * Internal ECS system for handling active slot switch events.
  *
- *  @author HytaleLoader
- *  @version 1.0.3
- *  @since 1.0.2
+ * @author HytaleLoader
+ * @version 1.0.4
+ * @since 1.0.2
  */
 public class SwitchActiveSlotSystem extends EntityEventSystem<EntityStore, SwitchActiveSlotEvent> {
 
@@ -49,8 +49,8 @@ public class SwitchActiveSlotSystem extends EntityEventSystem<EntityStore, Switc
             }
         }
 
-        fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent newEvent =
-                new fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent(event, playerWrapper);
+        fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent newEvent = new fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent(
+                event, playerWrapper);
 
         HytaleServer.get().getEventBus()
                 .dispatchFor(fr.hytale.loader.event.types.ecs.SwitchActiveSlotEvent.class, null)

@@ -17,7 +17,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class UseBlockEvent implements IEvent<Void> {
@@ -31,7 +31,8 @@ public class UseBlockEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who used the block, or null if not a player
      */
-    public UseBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre originalEvent, Player player) {
+    public UseBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent.Pre originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

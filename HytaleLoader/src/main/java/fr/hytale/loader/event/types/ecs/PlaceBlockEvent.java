@@ -16,7 +16,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class PlaceBlockEvent implements IEvent<Void> {
@@ -30,7 +30,8 @@ public class PlaceBlockEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who placed the block, or null if not a player
      */
-    public PlaceBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent originalEvent, Player player) {
+    public PlaceBlockEvent(com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

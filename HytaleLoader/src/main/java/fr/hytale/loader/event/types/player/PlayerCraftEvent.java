@@ -20,7 +20,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  * @deprecated The underlying Hytale event is deprecated
  */

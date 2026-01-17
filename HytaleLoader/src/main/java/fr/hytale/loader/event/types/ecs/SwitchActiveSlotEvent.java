@@ -7,12 +7,13 @@ import fr.hytale.loader.api.Player;
  * Called when a player switches their active hotbar slot.
  * <p>
  * This event is fired when a player changes their selected slot in the hotbar.
- * It provides access to the new slot index, the previous slot index, and other details.
+ * It provides access to the new slot index, the previous slot index, and other
+ * details.
  * The event can be cancelled to prevent the slot switch.
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.2
  */
 public class SwitchActiveSlotEvent implements IEvent<Void> {
@@ -26,7 +27,8 @@ public class SwitchActiveSlotEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who switched slots, or null if not a player
      */
-    public SwitchActiveSlotEvent(com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent originalEvent, Player player) {
+    public SwitchActiveSlotEvent(com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

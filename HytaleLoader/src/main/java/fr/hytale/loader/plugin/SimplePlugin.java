@@ -17,7 +17,7 @@ import fr.hytale.loader.scheduler.Scheduler;
  * </p>
  *
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  */
 public abstract class SimplePlugin extends JavaPlugin implements SimpleListener {
@@ -144,7 +144,6 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
          * </p>
          * 
          * @return the plugin's scheduler
-         * @since 1.0.3
          */
         public Scheduler getScheduler() {
                 return scheduler;

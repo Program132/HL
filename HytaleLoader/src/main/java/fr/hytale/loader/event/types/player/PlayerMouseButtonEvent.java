@@ -12,11 +12,12 @@ import fr.hytale.loader.api.Player;
  * Called when a player clicks a mouse button.
  * <p>
  * This event is fired when a player presses or releases a mouse button.
- * It provides access to the button ID, the action (press/release), and interaction details.
+ * It provides access to the button ID, the action (press/release), and
+ * interaction details.
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.2
  */
 public class PlayerMouseButtonEvent implements IEvent<Void> {
@@ -30,7 +31,8 @@ public class PlayerMouseButtonEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale player mouse button event
      * @param player        the player who clicked the mouse button
      */
-    public PlayerMouseButtonEvent(com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent originalEvent, Player player) {
+    public PlayerMouseButtonEvent(
+            com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent originalEvent, Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

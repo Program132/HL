@@ -16,9 +16,9 @@ import javax.annotation.Nonnull;
 /**
  * Internal ECS system for handling crafting recipe events.
  *
- *  @author HytaleLoader
- *  @version 1.0.3
- *  @since 1.0.2
+ * @author HytaleLoader
+ * @version 1.0.4
+ * @since 1.0.2
  */
 public class CraftRecipeSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent.Pre> {
 
@@ -49,8 +49,8 @@ public class CraftRecipeSystem extends EntityEventSystem<EntityStore, CraftRecip
             }
         }
 
-        fr.hytale.loader.event.types.ecs.CraftRecipeEvent newEvent =
-                new fr.hytale.loader.event.types.ecs.CraftRecipeEvent(event, playerWrapper);
+        fr.hytale.loader.event.types.ecs.CraftRecipeEvent newEvent = new fr.hytale.loader.event.types.ecs.CraftRecipeEvent(
+                event, playerWrapper);
 
         HytaleServer.get().getEventBus()
                 .dispatchFor(fr.hytale.loader.event.types.ecs.CraftRecipeEvent.class, null)

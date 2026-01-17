@@ -14,7 +14,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.1
  */
 public class DiscoverZoneEvent implements IEvent<Void> {
@@ -28,7 +28,8 @@ public class DiscoverZoneEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale ECS event
      * @param player        the player who discovered the zone
      */
-    public DiscoverZoneEvent(com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display originalEvent, Player player) {
+    public DiscoverZoneEvent(com.hypixel.hytale.server.core.event.events.ecs.DiscoverZoneEvent.Display originalEvent,
+            Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

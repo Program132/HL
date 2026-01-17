@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  */
 public class PlayerQuitEvent implements IEvent<Void> {

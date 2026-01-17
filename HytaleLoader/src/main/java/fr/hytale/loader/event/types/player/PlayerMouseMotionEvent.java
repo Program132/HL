@@ -16,7 +16,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.2
  */
 public class PlayerMouseMotionEvent implements IEvent<Void> {
@@ -30,7 +30,8 @@ public class PlayerMouseMotionEvent implements IEvent<Void> {
      * @param originalEvent the original Hytale player mouse motion event
      * @param player        the player who moved the mouse
      */
-    public PlayerMouseMotionEvent(com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent originalEvent, Player player) {
+    public PlayerMouseMotionEvent(
+            com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent originalEvent, Player player) {
         this.originalEvent = originalEvent;
         this.player = player;
     }

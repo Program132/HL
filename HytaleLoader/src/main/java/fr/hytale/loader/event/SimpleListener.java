@@ -26,7 +26,7 @@ package fr.hytale.loader.event;
  * }</pre>
  * 
  * @author HytaleLoader
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.0
  * @see EventHandler
  */

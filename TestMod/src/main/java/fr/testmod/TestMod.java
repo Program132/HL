@@ -300,8 +300,8 @@ public class TestMod extends SimplePlugin {
             for (int y = (int) p.getPositionY(); y < p.getPositionY() + 3; y++) {
                 fr.hytale.loader.api.Location blockLoc = loc.clone();
                 // Simple wall relative to player
-                blockLoc.setX(blockLoc.getX() + 2 + x);
-                blockLoc.setY(blockLoc.getY() + y);
+                blockLoc.setX(x);
+                blockLoc.setY(y);
                 System.out.println("BLOCK PLACED: " + x + ", " + y);
 
                 blockLoc.getWorld().setBlock(blockLoc, "Rock_Magma_Cooled");

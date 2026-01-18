@@ -2,9 +2,44 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.4] - 2026-01-17
+## [Unreleased]
 
 ### Added
+
+#### Location & World API
+- **`Location`** class - 3D position with rotation and world
+  - `Location(World, x, y, z)` - Position-only constructor
+  - `Location(World, x, y, z, yaw, pitch)` - Full constructor with rotation
+  - `getX()`, `getY()`, `getZ()` - Get position coordinates
+  - `getYaw()`, `getPitch()` - Get rotation angles
+  - `getWorld()` - Get world reference
+  - `setX()`, `setY()`, `setZ()` - Set position coordinates
+  - `setYaw()`, `setPitch()` - Set rotation angles
+  - `distance(Location)` - Calculate distance between locations
+  - `distanceSquared(Location)` - Optimized distance calculation
+  - `clone()` - Create location copy
+- **`World`** class - World wrapper
+  - `World(native World)` - Wrapper constructor
+  - `getName()` - Get world name
+  - `getNativeWorld()` - Access native Hytale world object
+
+#### Player Teleportation & Location API
+- **`Player.getLocation()`** - Get player's current location
+  - Thread-safe access using `world.execute()` with `CountDownLatch`
+  - Returns `Location` with position (x, y, z) and rotation (yaw, pitch)
+  - Async-safe with 1 second timeout
+- **`Player.teleport(Location)`** - Teleport to location
+  - Uses native Hytale `Teleport` component via ECS
+  - Updates both position and rotation
+  - Thread-safe world execution
+- **`Player.teleport(double x, double y, double z)`** - Teleport to coordinates
+  - Convenience overload maintaining current rotation
+- **Player Position Helpers**:
+  - `getPositionX()` - Get X coordinate
+  - `getPositionY()` - Get Y coordinate
+  - `getPositionZ()` - Get Z coordinate
+  - `getYaw()` - Get yaw rotation
+  - `getPitch()` - Get pitch rotation
 
 #### 📝 Config System
 - **`Config`** interface - Main configuration interface

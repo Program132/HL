@@ -192,4 +192,24 @@ public class TestMod extends SimplePlugin {
         }
 
     }
+
+    @fr.hytale.loader.command.Command(name = "rtp", description = "Teleports you to a random location")
+    public void onRTP(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
+        if (CommandUtils.isPlayer(ctx)) {
+            Player player = CommandUtils.getPlayer(ctx);
+            System.out.println("Current position info:");
+            System.out.println(player.getPositionX());
+            System.out.println(player.getPositionY());
+            System.out.println(player.getPositionZ());
+            System.out.println(player.getYaw());
+            System.out.println(player.getPitch());
+            player.teleport(10, 180, 30);
+            System.out.println("Teleported to:");
+            System.out.println(player.getPositionX());
+            System.out.println(player.getPositionY());
+            System.out.println(player.getPositionZ());
+            System.out.println(player.getYaw());
+            System.out.println(player.getPitch());
+        }
+    }
 }

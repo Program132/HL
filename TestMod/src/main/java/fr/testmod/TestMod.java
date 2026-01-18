@@ -13,6 +13,8 @@ import com.hypixel.hytale.server.core.event.events.BootEvent;
 import java.util.List;
 import java.util.logging.Level;
 import fr.hytale.loader.command.CommandUtils;
+import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.Message;
 import java.io.IOException;
 import fr.hytale.loader.config.Config;
 
@@ -211,5 +213,67 @@ public class TestMod extends SimplePlugin {
             System.out.println(player.getYaw());
             System.out.println(player.getPitch());
         }
+    }
+
+    @fr.hytale.loader.command.Command(name = "servinfo", description = "Display server information")
+    public void servinfoCommand(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        Player player = CommandUtils.getPlayer(context);
+        if (player == null) {
+            context.sendMessage(Message.raw("This command can only be used by players!"));
+            return;
+        }
+
+        // Header
+        player.sendMessage("═══════════════════════════════");
+        player.sendMessage("         SERVER INFO");
+        player.sendMessage("═══════════════════════════════");
+        player.sendMessage("");
+
+        // Players section
+        int onlineCount = fr.hytale.loader.api.Server.getOnlineCount();
+        player.sendMessage("Players Online: " + onlineCount);
+
+        if (onlineCount > 0) {
+            List<Player> players = fr.hytale.loader.api.Server.getOnlinePlayers();
+            StringBuilder playerNames = new StringBuilder("   ");
+            for (int i = 0; i < players.size(); i++) {
+                playerNames.append(players.get(i).getName());
+                if (i < players.size() - 1) {
+                    playerNames.append(", ");
+                }
+            }
+            player.sendMessage(playerNames.toString());
+        }
+        player.sendMessage("");
+
+        // Worlds section
+        List<fr.hytale.loader.api.World> worlds = fr.hytale.loader.api.Server.getWorlds();
+        player.sendMessage("Loaded Worlds: " + worlds.size());
+
+        fr.hytale.loader.api.World defaultWorld = fr.hytale.loader.api.Server.getDefaultWorld();
+        String defaultWorldName = defaultWorld != null ? defaultWorld.getName() : "unknown";
+
+        for (fr.hytale.loader.api.World world : worlds) {
+            String worldName = world.getName();
+            List<Player> playersInWorld = fr.hytale.loader.api.Server.getPlayersInWorld(world);
+            int playerCount = playersInWorld.size();
+
+            String isDefault = worldName.equals(defaultWorldName) ? " [DEFAULT]" : "";
+            player.sendMessage(String.format("   • %s (%d players)%s",
+                    worldName, playerCount, isDefault));
+
+            // Show players in this world if any
+            if (playerCount > 0 && playerCount <= 5) {
+                StringBuilder worldPlayers = new StringBuilder("     Players: ");
+                for (int i = 0; i < playersInWorld.size(); i++) {
+                    worldPlayers.append(playersInWorld.get(i).getName());
+                    if (i < playersInWorld.size() - 1) {
+                        worldPlayers.append(", ");
+                    }
+                }
+                player.sendMessage(worldPlayers.toString());
+            }
+        }
+        player.sendMessage("═══════════════════════════════");
     }
 }

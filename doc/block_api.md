@@ -1,6 +1,6 @@
 # Block API Reference
 
-Complete reference for the HytaleLoader Block API (introduced in v1.0.5).
+Complete reference for the HytaleLoader Block API.
 
 ## Overview
 
@@ -25,7 +25,7 @@ Block block = world.getBlockAt(player.getLocation());
 Once you have a `Block` object, you can get its information.
 
 ```java
-// Get the block type ID (e.g. "hytale:stone", "hytale:grass")
+// Get the block type type
 String type = block.getType();
 
 // Check coordinates
@@ -45,14 +45,11 @@ Location loc = block.getLocation();
 You can change the type of block directly using the wrapper.
 
 ```java
-// Change to stone
-block.setType("hytale:stone");
-
 // Change to custom block or specific ID
 block.setType("Rock_Magma_Cooled");
 
-// Clear block (set to air)
-block.setType("hytale:air");
+// Clear block (set to air / void block)
+block.setType("Empty");
 ```
 
 ## Example: Magic Platform
@@ -73,7 +70,7 @@ public void onPlatform(CommandContext ctx) {
     for (int x = -1; x <= 1; x++) {
         for (int z = -1; z <= 1; z++) {
             Block block = world.getBlockAt(startX + x, startY, startZ);
-            block.setType("hytale:glass");
+            block.setType("Rock_Sand_Brick");
         }
     }
     

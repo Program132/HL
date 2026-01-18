@@ -53,7 +53,7 @@ Returns the underlying native Hytale world object.
 - Accessing native-only features
 
 
-## Block Manipulation (v1.0.5)
+## Block Manipulation
 
 The World API allows getting and setting blocks programmatically.
 
@@ -62,11 +62,12 @@ Change a block at specific coordinates.
 
 ```java
 // Using coordinates
-world.setBlock(100, 64, 200, "hytale:stone");
+world.setBlock(100, 64, 200, "Stone_Sandstone_Red_Brick");
 
 // Using Location
 world.setBlock(location, "Rock_Magma_Cooled"); // Supports custom IDs
 ```
+
 
 ### getBlockIdentifier()
 Get the identifier of a block as a string.
@@ -76,10 +77,38 @@ Get the identifier of a block as a string.
 String blockId = world.getBlockIdentifier(location);
 // Returns "hytale:air" if location is empty or invalid
 
-if (blockId.equals("hytale:stone")) {
+if (blockId.equals("Stone_Sandstone_Red_Brick")) {
     // It's a stone block
 }
 ```
+
+## Entity Management
+
+### spawnEntity()
+Spawns an entity of a given type at a specific location.
+
+```java
+// Spawn a generic entity (e.g. Antelope)
+Entity x = world.spawnEntity(location, "Antelope");
+
+if (x != null) {
+    // Entity successfully spawned
+    int id = x.getID();
+}
+```
+
+### getEntity()
+Retrieve an entity by its numeric Network ID or UUID.
+
+```java
+// Get by Network ID (int)
+Entity entity = world.getEntity(12345);
+
+// Get by UUID
+Entity entityByUuid = world.getEntity(uuid);
+```
+These methods are thread-safe and will handle cross-thread synchronization automatically.
+
 
 ## Common Use Cases
 

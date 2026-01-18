@@ -18,10 +18,17 @@ import com.hypixel.hytale.server.core.Message;
 import java.io.IOException;
 import fr.hytale.loader.config.Config;
 
+import fr.hytale.loader.config.ConfigFormat;
+
 public class TestMod extends SimplePlugin {
 
     public TestMod(JavaPluginInit init) {
         super(init);
+    }
+
+    @Override
+    public ConfigFormat getConfigFormat() {
+        return ConfigFormat.JSON;
     }
 
     @Override

@@ -15,6 +15,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - **[Location API](location_api.md)** - 3D position and rotation system
 - **[Entity API](entity_api.md)** - Entity management and interaction
 - **[World API](world_api.md)** - World wrapper and utilities
+- **[Redis API](redis_api.md)** - Remote Redis database management
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities
@@ -170,7 +171,7 @@ Add HytaleLoader as a dependency in your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <scope>provided</scope>
 </dependency>
 ```

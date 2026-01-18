@@ -10,6 +10,12 @@ All notable changes to this project will be documented in this file.
 - **World Entity Retrieval**: Added `world.getEntity(int id)` and `world.getEntity(UUID uuid)`.
 - **Player Inheritance**: `Player` now extends `Entity`, inheriting unified methods.
 - Added `World.spawnEntity(Location, String) method.`
+- **Redis API**
+  - `RedisClient` class for remote Redis database management
+  - Connection pooling with Jedis 5.1.0
+  - Full support for String, Hash, List, and Set operations
+  - Methods: `set()`, `get()`, `hset()`, `hget()`, `lpush()`, `sadd()`, etc.
+  - Automatic error handling and thread-safe operations
 - **Block API**
   - `world.setBlock(x, y, z, id)` - Set block at coordinates
   - `world.setBlock(Location, id)` - Set block at location

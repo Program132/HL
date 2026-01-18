@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Server API
+- **`Server`** utility class - Static server operations
+  - `getOnlinePlayers()` - Get list of online players
+  - `getPlayer(UUID/String)` - Find player by ID or name
+  - `broadcast(String)` - Send global message
+  - `broadcastPermission(String, String)` - Send message to permission group
+  - `getWorlds()` - Get all loaded worlds
+  - `getWorld(String)` - Get world by name
+  - `getDefaultWorld()` - Get default world
+  - `getOnlineCount()` - Get player count
+  - `getPlayersInWorld(World)` - Get players in specific world
+
+#### 📝 Config System
+- **JSON Support** - New JSON configuration format
+  - `ConfigFormat` enum - YAML and JSON support
+  - `SimplePlugin.getConfigFormat()` - Override to choose format
+  - `JsonConfig` implementation using Gson
+  - `BaseConfig` abstract class for shared logic
+
 #### Location & World API
 - **`Location`** class - 3D position with rotation and world
   - `Location(World, x, y, z)` - Position-only constructor

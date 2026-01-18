@@ -155,6 +155,130 @@ public class World {
         return getBlockAt((int) location.getX(), (int) location.getY(), (int) location.getZ());
     }
 
+    /**
+     * Gets an entity by its network ID.
+     * 
+     * @param id The entity's network ID
+     * @return The Entity, or null if not found
+     */
+    public Entity getEntity(int id) {
+        if (nativeWorld == null)
+            return null;
+
+        try {
+            return getEntityInternal(id);
+        } catch (IllegalStateException e) {
+            if (e.getMessage() != null && e.getMessage().contains("Assert not in thread")) {
+                final java.util.concurrent.CompletableFuture<Entity> future = new java.util.concurrent.CompletableFuture<>();
+                nativeWorld.execute(() -> {
+                    try {
+                        future.complete(getEntityInternal(id));
+                    } catch (Exception ex) {
+                        future.completeExceptionally(ex);
+                    }
+                });
+                try {
+                    return future.join();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return null;
+                }
+            }
+            throw e;
+        }
+    }
+
+    private Entity getEntityInternal(int id) {
+        com.hypixel.hytale.server.core.universe.world.storage.EntityStore entityStore = nativeWorld.getEntityStore();
+        com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = entityStore
+                .getRefFromNetworkId(id);
+        return createEntityFromRef(ref);
+    }
+
+    /**
+     * Gets an entity by its UUID.
+     * 
+     * @param uuid The entity's UUID
+     * @return The Entity, or null if not found
+     */
+    public Entity getEntity(java.util.UUID uuid) {
+        if (nativeWorld == null || uuid == null)
+            return null;
+
+        try {
+            return getEntityInternal(uuid);
+        } catch (IllegalStateException e) {
+            String msg = e.getMessage();
+            if (msg != null && msg.contains("Assert not in thread")) {
+                final java.util.concurrent.CompletableFuture<Entity> future = new java.util.concurrent.CompletableFuture<>();
+                nativeWorld.execute(() -> {
+                    try {
+                        future.complete(getEntityInternal(uuid));
+                    } catch (Exception ex) {
+                        future.completeExceptionally(ex);
+                    }
+                });
+                try {
+                    return future.join();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return null;
+                }
+            }
+            throw e;
+        }
+    }
+
+    private Entity getEntityInternal(java.util.UUID uuid) {
+        com.hypixel.hytale.server.core.universe.world.storage.EntityStore entityStore = nativeWorld.getEntityStore();
+        com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = entityStore
+                .getRefFromUUID(uuid);
+        return createEntityFromRef(ref);
+    }
+
+    /**
+     * Helper to create an API Entity from a Ref.
+     */
+    private Entity createEntityFromRef(
+            com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref) {
+        if (ref == null || !ref.isValid())
+            return null;
+
+        // Check for Player
+        com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = ref
+                .getStore();
+
+        // Try to get PlayerRef component
+        com.hypixel.hytale.server.core.universe.PlayerRef playerRef = (com.hypixel.hytale.server.core.universe.PlayerRef) store
+                .getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+
+        if (playerRef != null) {
+            // It's a player, get the Native Player Entity
+            com.hypixel.hytale.server.core.entity.entities.Player nativePlayer = (com.hypixel.hytale.server.core.entity.entities.Player) store
+                    .getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (nativePlayer != null) {
+                return new Player(nativePlayer, playerRef);
+            }
+        }
+
+        // It's a generic entity (or NPC). Find the Entity component.
+        com.hypixel.hytale.component.Archetype<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> archetype = store
+                .getArchetype(ref);
+        for (int i = archetype.getMinIndex(); i < archetype.length(); i++) {
+            com.hypixel.hytale.component.ComponentType type = archetype.get(i);
+            if (type != null
+                    && com.hypixel.hytale.server.core.entity.Entity.class.isAssignableFrom(type.getTypeClass())) {
+                com.hypixel.hytale.server.core.entity.Entity nativeEntity = (com.hypixel.hytale.server.core.entity.Entity) store
+                        .getComponent(ref, type);
+                if (nativeEntity != null) {
+                    return new Entity(nativeEntity);
+                }
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public int hashCode() {
         return nativeWorld != null ? nativeWorld.hashCode() : 0;

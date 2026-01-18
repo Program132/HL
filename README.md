@@ -121,9 +121,13 @@ HL/
 │   │   │   ├── Player.java    # Player wrapper with stats
 │   │   │   ├── GameMode.java  # GameMode enum
 │   │   │   ├── Item.java      # Item wrapper
+│   │   │   ├── World.java     # World wrapper
+│   │   │   ├── Location.java  # Location wrapper
 │   │   │   └── inventory/     # Inventory classes
 │   │   ├── command/           # Command system
 │   │   │   ├── CommandUtils.java  # Command utilities
+│   │   │   └── SimpleCommand.java # Command base
+│   │   │   └── CommandScanner.java # Command scannar
 │   │   │   └── SimpleCommand.java # Command base
 │   │   ├── event/             # Event system
 │   │   │   └── types/         # Event classes (Join, Quit, Chat, etc.)

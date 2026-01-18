@@ -53,6 +53,73 @@ public class World {
         return nativeWorld != null && nativeWorld.equals(other.nativeWorld);
     }
 
+    /**
+     * Gets the identifier of the block at the specified coordinates.
+     * 
+     * @param x The X coordinate
+     * @param y The Y coordinate
+     * @param z The Z coordinate
+     * @return The block identifier (e.g., "hytale:stone"), or "hytale:air" if not
+     *         found
+     */
+    public String getBlockIdentifier(int x, int y, int z) {
+        if (nativeWorld == null)
+            return "Empty";
+
+        long chunkIndex = com.hypixel.hytale.math.util.ChunkUtil.indexChunkFromBlock(x, z);
+        com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk chunk = nativeWorld.getChunk(chunkIndex);
+
+        if (chunk != null) {
+            com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType type = chunk.getBlockType(x, y, z);
+            return type != null ? type.getId() : "Empty";
+        }
+        return "Empty";
+    }
+
+    /**
+     * Gets the identifier of the block at the specified location.
+     * 
+     * @param location The location to check
+     * @return The block identifier
+     */
+    public String getBlockIdentifier(Location location) {
+        if (location == null)
+            return "Empty";
+        return getBlockIdentifier((int) location.getX(), (int) location.getY(), (int) location.getZ());
+    }
+
+    /**
+     * Sets the block at the specified coordinates.
+     * 
+     * @param x       The X coordinate
+     * @param y       The Y coordinate
+     * @param z       The Z coordinate
+     * @param blockId The block identifier (e.g., "hytale:stone")
+     */
+    public void setBlock(int x, int y, int z, String blockId) {
+        if (nativeWorld == null)
+            return;
+
+        long chunkIndex = com.hypixel.hytale.math.util.ChunkUtil.indexChunkFromBlock(x, z);
+        com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk chunk = nativeWorld.getChunk(chunkIndex);
+
+        if (chunk != null) {
+            chunk.setBlock(x, y, z, blockId);
+        }
+    }
+
+    /**
+     * Sets the block at the specified location.
+     * 
+     * @param location The location where to set the block
+     * @param blockId  The block identifier
+     */
+    public void setBlock(Location location, String blockId) {
+        if (location == null)
+            return;
+        setBlock((int) location.getX(), (int) location.getY(), (int) location.getZ(), blockId);
+    }
+
     @Override
     public int hashCode() {
         return nativeWorld != null ? nativeWorld.hashCode() : 0;

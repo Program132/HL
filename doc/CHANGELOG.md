@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.0.5] - 2026-01-18
 
 ### Added
+- **Entity API**: New `fr.hytale.loader.api.Entity` class as a base for all entities.
+  - Supports `getID()`, `getUUID()`, `getLocation()`, `teleport()`, `remove()`.
+- **World Entity Retrieval**: Added `world.getEntity(int id)` and `world.getEntity(UUID uuid)`.
+- **Player Inheritance**: `Player` now extends `Entity`, inheriting unified methods.
 - **Block API** (v1.0.5)
   - `world.setBlock(x, y, z, id)` - Set block at coordinates
   - `world.setBlock(Location, id)` - Set block at location

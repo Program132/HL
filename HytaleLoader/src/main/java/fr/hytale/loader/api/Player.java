@@ -236,6 +236,17 @@ public class Player {
     }
 
     /**
+     * Gets the world the player is currently in.
+     * 
+     * @return the World object, or null if unavailable
+     * @since 1.0.5
+     */
+    public fr.hytale.loader.api.World getWorld() {
+        Location loc = getLocation();
+        return loc != null ? loc.getWorld() : null;
+    }
+
+    /**
      * Gets the player's X position.
      * 
      * @return the X coordinate, or 0.0 if unavailable

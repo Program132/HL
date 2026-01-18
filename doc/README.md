@@ -11,6 +11,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - [Server Setup](server.md) - Server configuration
 - **[Server API](server_api.md)** - Server utility class
 - **[Player API](player_api.md)** - Complete player management reference
+- **[Block API](block_api.md)** - Block manipulation and interaction
 - **[Location API](location_api.md)** - 3D position and rotation system
 - **[World API](world_api.md)** - World wrapper and utilities
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
@@ -138,6 +139,7 @@ HL/
 │   │   │   ├── Player.java    # Player wrapper with stats
 │   │   │   ├── GameMode.java  # GameMode enum
 │   │   │   ├── Item.java      # Item wrapper
+│   │   │   ├── Block.java     # Block wrapper
 │   │   │   ├── World.java     # World wrapper
 │   │   │   ├── Location.java  # Location wrapper
 │   │   │   └── inventory/     # Inventory classes

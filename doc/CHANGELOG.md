@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file.
     - `block.getLocation()` - Get location
 ---
 
-## [1.0.4] - 2026-01-18
+## [1.0.4](https://github.com/Program132/HL/compare/V1.0.3...V1.0.4) - 2026-01-18
 
 ### Added
 
@@ -129,7 +129,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.0.3] - 2026-01-17
+## [1.0.3](https://github.com/Program132/HL/compare/V1.0.2...V1.0.3) - 2026-01-17
 
 ### Added
 

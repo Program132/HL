@@ -16,6 +16,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - **[Entity API](entity_api.md)** - Entity management and interaction
 - **[World API](world_api.md)** - World wrapper and utilities
 - **[Redis API](redis_api.md)** - Remote Redis database management
+- **[MySQL API](mysql_api.md)** - MySQL database management
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities

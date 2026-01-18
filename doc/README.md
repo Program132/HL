@@ -9,6 +9,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - [Standard Events](standard_events.md) - Player events reference
 - [Commands](commands.md) - Command system guide
 - [Server Setup](server.md) - Server configuration
+- **[Server API](server_api.md)** - Server utility class
 - **[Player API](player_api.md)** - Complete player management reference
 - **[Location API](location_api.md)** - 3D position and rotation system
 - **[World API](world_api.md)** - World wrapper and utilities

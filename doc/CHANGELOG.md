@@ -8,9 +8,14 @@ All notable changes to this project will be documented in this file.
 - **Block API** (v1.0.5)
   - `world.setBlock(x, y, z, id)` - Set block at coordinates
   - `world.setBlock(Location, id)` - Set block at location
+  - `world.setBlock(Block block)` - Set block at location
   - `world.getBlockIdentifier(x, y, z)` - Get block ID string
   - `world.getBlockIdentifier(Location)` - Get block ID from location
-
+  - **`Block`** class - OOP wrapper for blocks
+    - `world.getBlockAt(x, y, z)` - Get Block object
+    - `block.getType()` - Get identifier
+    - `block.setType(id)` - Set block type
+    - `block.getLocation()` - Get location
 ---
 
 ## [1.0.4] - 2026-01-18

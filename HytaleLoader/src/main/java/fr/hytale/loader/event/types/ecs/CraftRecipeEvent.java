@@ -18,7 +18,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.1
  */
 public class CraftRecipeEvent implements IEvent<Void> {

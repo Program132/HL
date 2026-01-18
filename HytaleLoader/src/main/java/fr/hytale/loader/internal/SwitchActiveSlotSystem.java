@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Internal ECS system for handling active slot switch events.
  *
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.2
  */
 public class SwitchActiveSlotSystem extends EntityEventSystem<EntityStore, SwitchActiveSlotEvent> {

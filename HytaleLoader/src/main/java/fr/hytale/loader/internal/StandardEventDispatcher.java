@@ -27,7 +27,7 @@ import java.util.Objects;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.0
  */
 public class StandardEventDispatcher implements SimpleListener {

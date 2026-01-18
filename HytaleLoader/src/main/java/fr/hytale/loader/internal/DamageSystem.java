@@ -22,7 +22,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.0
  */
 public class DamageSystem extends DamageEventSystem {

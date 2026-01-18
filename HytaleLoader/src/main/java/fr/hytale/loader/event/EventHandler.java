@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.0
  * @see EventPriority
  */

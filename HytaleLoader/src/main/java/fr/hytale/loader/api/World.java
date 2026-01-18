@@ -4,7 +4,7 @@ package fr.hytale.loader.api;
  * Represents a Hytale world.
  * 
  * @author HytaleLoader
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.4
  */
 public class World {

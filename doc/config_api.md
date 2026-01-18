@@ -3,7 +3,7 @@
 **Version:** 1.0.4  
 **Package:** `fr.hytale.loader.config`
 
-The Config System provides an easy-to-use YAML configuration API for plugins.
+The Config System provides an easy-to-use YAML or JSON configuration API for plugins.
 
 ---
 
@@ -14,7 +14,7 @@ public class MyPlugin extends SimplePlugin {
     
     @Override
     public void onEnable() {
-        // Get config (auto-loads from mods/MyPlugin/config.yml)
+        // Get config (auto-loads from mods/MyPlugin/config.yml or config.json)
         Config config = getConfig();
         
         // Set defaults
@@ -39,6 +39,43 @@ server:
   max-players: 20
 features:
   pvp: true
+```
+
+---
+
+## Choosing Configuration Format
+
+By default, HytaleLoader uses **YAML** (`config.yml`). 
+You can switch to **JSON** (`config.json`) by overriding the `getConfigFormat()` method in your plugin class.
+
+```java
+import fr.hytale.loader.config.ConfigFormat;
+
+public class MyPlugin extends SimplePlugin {
+
+    @Override
+    public ConfigFormat getConfigFormat() {
+        // Use JSON instead of YAML
+        return ConfigFormat.JSON;
+    }
+
+    @Override
+    public void onEnable() {
+        // Now getConfig() returns a JsonConfig linked to config.json
+        // API usage remains exactly the same!
+        getConfig().addDefault("server.name", "My JSON Server");
+        saveDefaultConfig();
+    }
+}
+```
+
+**Creates** `mods/MyPlugin/config.json`:
+```json
+{
+  "server": {
+    "name": "My JSON Server"
+  }
+}
 ```
 
 ---
@@ -261,9 +298,10 @@ Access as: `config.getString("server.database.host")`
 
 ### File Location
 
-- Default: `mods/<PluginName>/config.yml`
+### File Location
+- Default: `mods/<PluginName>/config.yml` (or `config.json` if configured)
 - Plugin names with invalid characters (`:`, `/`, `\`) are replaced with `_`
-- Example: `fr.testmod:TestMod` → `mods/fr.testmod_TestMod/config.yml`
+- Example: `fr.testmod:TestMod` → `mods/fr.testmod_TestMod/config.yml` (or `.json`)
 
 ---
 

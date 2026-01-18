@@ -262,9 +262,9 @@ database:
 public void onReload(CommandContext ctx) {
     try {
         reloadConfig();
-        ctx.sender().sendMessage(Message.raw("§aConfig reloaded!"));
+        ctx.sender().sendMessage(Message.raw("Config reloaded!"));
     } catch (IOException e) {
-        ctx.sender().sendMessage(Message.raw("§cFailed to reload config!"));
+        ctx.sender().sendMessage(Message.raw("Failed to reload config!"));
     }
 }
 ```

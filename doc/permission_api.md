@@ -252,7 +252,7 @@ public void onKick(CommandContext ctx) {
     
     // Check permission
     if (!admin.hasPermission("myplugin.kick")) {
-        admin.sendMessage("§cYou don't have permission!");
+        admin.sendMessage("You don't have permission!");
         return;
     }
     
@@ -273,10 +273,10 @@ public class VIPSystem {
     public void giveVIP(Player player, boolean isPlus) {
         if (isPlus) {
             player.addPermission(VIP_PLUS);
-            player.sendMessage("§6You are now VIP+!");
+            player.sendMessage("You are now VIP+!");
         } else {
             player.addPermission(VIP_PERM);
-            player.sendMessage("§eYou are now VIP!");
+            player.sendMessage("You are now VIP!");
         }
     }
     
@@ -309,15 +309,15 @@ public class PermissionGroups {
         switch (group.toLowerCase()) {
             case "admin":
                 player.addPermission("myplugin.admin");
-                player.sendMessage("§c[ADMIN] rank granted!");
+                player.sendMessage("[ADMIN] rank granted!");
                 break;
             case "mod":
                 player.addPermission("myplugin.moderator");
-                player.sendMessage("§9[MOD] rank granted!");
+                player.sendMessage("[MOD] rank granted!");
                 break;
             case "vip":
                 player.addPermission("myplugin.vip");
-                player.sendMessage("§6[VIP] rank granted!");
+                player.sendMessage("[VIP] rank granted!");
                 break;
         }
     }
@@ -348,7 +348,7 @@ public void onJoin(PlayerJoinEvent event) {
         // Apply permissions (sync)
         getScheduler().runTask(() -> {
             perms.forEach(player::addPermission);
-            player.sendMessage("§aPermissions loaded!");
+            player.sendMessage("Permissions loaded!");
         });
     });
 }

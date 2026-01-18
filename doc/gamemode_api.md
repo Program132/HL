@@ -105,7 +105,7 @@ public void toggleGameMode(CommandContext context) {
     GameMode newMode = (current == GameMode.SURVIVAL) ? GameMode.CREATIVE : GameMode.SURVIVAL;
     
     player.setGameMode(newMode);
-    player.sendMessage("§aGame mode changed to " + newMode);
+    player.sendMessage("Game mode changed to " + newMode);
 }
 ```
 
@@ -118,7 +118,7 @@ public void onJoin(PlayerJoinEvent event) {
     
     // Set all players to creative on join
     player.setGameMode(GameMode.CREATIVE);
-    player.sendMessage("§6Welcome! You are now in creative mode.");
+    player.sendMessage("Welcome! You are now in creative mode.");
 }
 ```
 
@@ -132,7 +132,7 @@ public void onBlockBreak(BreakBlockEvent event) {
     // Only allow breaking blocks in creative
     if (player.getGameMode() != GameMode.CREATIVE) {
         event.setCancelled(true);
-        player.sendMessage("§cYou can only break blocks in creative mode!");
+        player.sendMessage("You can only break blocks in creative mode!");
     }
 }
 ```
@@ -166,7 +166,7 @@ player.setGameMode(GameMode.CREATIVE);
 GameMode after = player.getGameMode();
 
 if (after != GameMode.CREATIVE) {
-    player.sendMessage("§cFailed to change game mode!");
+    player.sendMessage("Failed to change game mode!");
 }
 ```
 

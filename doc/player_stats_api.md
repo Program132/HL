@@ -136,7 +136,7 @@ public void onPlayerDamage(PlayerDamageEvent event) {
     if (player.hasPermission("potions.healing")) {
         float currentHealth = player.getHealth();
         player.setHealth(currentHealth + 5.0f);
-        player.sendMessage("§a+5 HP (Healing Potion)");
+        player.sendMessage("+5 HP (Healing Potion)");
     }
 }
 ```
@@ -152,10 +152,10 @@ public void onPlayerSprint(Player player) {
     if (stamina >= 10.0f) {
         // Allow sprint
         player.setStamina(stamina - 10.0f);
-        player.sendMessage("§eSprinting! Stamina: " + (stamina - 10.0f));
+        player.sendMessage("Sprinting! Stamina: " + (stamina - 10.0f));
     } else {
         // Prevent sprint
-        player.sendMessage("§cNot enough stamina!");
+        player.sendMessage("Not enough stamina!");
     }
 }
 ```
@@ -170,10 +170,10 @@ public boolean castSpell(Player player, float manaCost) {
     
     if (currentMana >= manaCost) {
         player.setMana(currentMana - manaCost);
-        player.sendMessage("§9Spell cast! Mana: " + (currentMana - manaCost));
+        player.sendMessage("Spell cast! Mana: " + (currentMana - manaCost));
         return true;
     } else {
-        player.sendMessage("§cNot enough mana! Need " + manaCost);
+        player.sendMessage("Not enough mana! Need " + manaCost);
         return false;
     }
 }
@@ -198,7 +198,7 @@ public void onPlayerDeath(PlayerDeathEvent event) {
     getScheduler().runTaskLater(() -> {
         player.setHealth(10.0f);  // Half health
         player.setStamina(50.0f); // Half stamina
-        player.sendMessage("§6You respawned with reduced stats!");
+        player.sendMessage("You respawned with reduced stats!");
     }, 100); // 5 seconds delay (100 ticks)
 }
 ```
@@ -211,19 +211,19 @@ public void onPlayerDeath(PlayerDeathEvent event) {
 @Command(name = "stats", description = "Show your stats")
 public void onStats(CommandContext ctx) {
     if (!CommandUtils.isPlayer(ctx)) {
-        ctx.sendMessage(Message.raw("§cPlayers only!"));
+        ctx.sendMessage(Message.raw("Players only!"));
         return;
     }
     
     Player player = CommandUtils.getPlayer(ctx);
     
-    player.sendMessage("§6=== Your Stats ===");
-    player.sendMessage("§cHealth: §f" + player.getHealth());
-    player.sendMessage("§aStamina: §f" + player.getStamina());
-    player.sendMessage("§bOxygen: §f" + player.getOxygen());
-    player.sendMessage("§9Mana: §f" + player.getMana());
-    player.sendMessage("§eEnergy: §f" + player.getSignatureEnergy());
-    player.sendMessage("§7Ammo: §f" + player.getAmmo());
+    player.sendMessage("=== Your Stats ===");
+    player.sendMessage("Health: " + player.getHealth());
+    player.sendMessage("Stamina: " + player.getStamina());
+    player.sendMessage("Oxygen: " + player.getOxygen());
+    player.sendMessage("Mana: " + player.getMana());
+    player.sendMessage("Energy: " + player.getSignatureEnergy());
+    player.sendMessage("Ammo: " + player.getAmmo());
 }
 ```
 
@@ -240,13 +240,13 @@ public void tickCustomZone(Player player) {
         player.setOxygen(oxygen - 1.0f);
         
         if (oxygen <= 10.0f) {
-            player.sendMessage("§c§lWARNING: Low oxygen!");
+            player.sendMessage("WARNING: Low oxygen!");
         }
     } else {
         // Deal damage when out of oxygen
         float health = player.getHealth();
         player.setHealth(health - 2.0f);
-        player.sendMessage("§4Suffocating!");
+        player.sendMessage("Suffocating!");
     }
 }
 ```

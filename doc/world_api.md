@@ -58,7 +58,7 @@ Returns the underlying native Hytale world object.
 ```java
 Location loc = player.getLocation();
 if (loc.getWorld().getName().equals("dungeon")) {
-    player.sendMessage("§cYou are in a dungeon!");
+    player.sendMessage("You are in a dungeon!");
 }
 ```
 

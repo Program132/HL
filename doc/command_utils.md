@@ -36,7 +36,7 @@ Checks if the command sender is a player (not console or other sender).
 @Command(name = "fly")
 public void onFly(CommandContext ctx) {
     if (!CommandUtils.isPlayer(ctx)) {
-        ctx.sendMessage(Message.raw("§cThis command is for players only!"));
+        ctx.sendMessage(Message.raw("This command is for players only!"));
         return;
     }
     
@@ -62,7 +62,7 @@ public void onInfo(CommandContext ctx) {
     Player player = CommandUtils.getPlayer(ctx);
     
     if (player == null) {
-        ctx.sendMessage(Message.raw("§cPlayers only!"));
+        ctx.sendMessage(Message.raw("Players only!"));
         return;
     }
     
@@ -90,10 +90,10 @@ Gets the command sender as a Player, or throws an exception if not a player.
 public void onFly(CommandContext ctx) {
     try {
         Player player = CommandUtils.requirePlayer(ctx);
-        player.sendMessage("§aFly mode enabled!");
+        player.sendMessage("Fly mode enabled!");
         // Toggle fly logic here
     } catch (IllegalStateException e) {
-        ctx.sendMessage(Message.raw("§cThis command requires a player!"));
+        ctx.sendMessage(Message.raw("This command requires a player!"));
     }
 }
 ```
@@ -110,13 +110,13 @@ Best for commands where player is required.
 @Command(name = "creative")
 public void onCreative(CommandContext ctx) {
     if (!CommandUtils.isPlayer(ctx)) {
-        ctx.sendMessage(Message.raw("§cOnly players can use this!"));
+        ctx.sendMessage(Message.raw("Only players can use this!"));
         return;
     }
     
     Player player = CommandUtils.getPlayer(ctx);
     player.setGameMode(GameMode.CREATIVE);
-    player.sendMessage("§aGamemode set to Creative!");
+    player.sendMessage("Gamemode set to Creative!");
 }
 ```
 
@@ -131,7 +131,7 @@ public void onList(CommandContext ctx) {
     
     if (player != null) {
         // Player-specific list
-        player.sendMessage("§ePlayers near you: " + getNearbyPlayers(player));
+        player.sendMessage("Players near you: " + getNearbyPlayers(player));
     } else {
         // Console list
         ctx.sendMessage(Message.raw("All players: " + getAllPlayers()));
@@ -151,7 +151,7 @@ public void onTeleport(CommandContext ctx) {
         Location target = getTargetLocation(ctx);
         player.teleport(target);
     } catch (IllegalStateException e) {
-        ctx.sendMessage(Message.raw("§cTeleport failed: not a player"));
+        ctx.sendMessage(Message.raw("Teleport failed: not a player"));
     }
 }
 ```
@@ -168,21 +168,21 @@ public void onMe(CommandContext ctx) {
     Player player = CommandUtils.getPlayer(ctx);
     
     if (player == null) {
-        ctx.sendMessage(Message.raw("§cPlayers only!"));
+        ctx.sendMessage(Message.raw("Players only!"));
         return;
     }
     
-    player.sendMessage("§6=== Your Info ===");
-    player.sendMessage("§eName: §f" + player.getName());
-    player.sendMessage("§eUUID: §f" + player.getUUID());
-    player.sendMessage("§eGameMode: §f" + player.getGameMode());
-    player.sendMessage("§ePermissions: §f" + player.getPermissions().size());
+    player.sendMessage("=== Your Info ===");
+    player.sendMessage("Name: " + player.getName());
+    player.sendMessage("UUID: " + player.getUUID());
+    player.sendMessage("GameMode: " + player.getGameMode());
+    player.sendMessage("Permissions: " + player.getPermissions().size());
     
     // Show permissions if admin
     if (player.hasPermission("myplugin.admin")) {
-        player.sendMessage("§e§lAdmin Permissions:");
+        player.sendMessage("Admin Permissions:");
         player.getPermissions().forEach(perm -> 
-            player.sendMessage("  §7- " + perm.getNode())
+            player.sendMessage("  - " + perm.getNode())
         );
     }
 }
@@ -198,7 +198,7 @@ public void onGive(CommandContext ctx) {
         
         // Check permission
         if (!player.hasPermission("myplugin.give")) {
-            player.sendMessage("§cNo permission!");
+            player.sendMessage("No permission!");
             return;
         }
         
@@ -210,10 +210,10 @@ public void onGive(CommandContext ctx) {
         ItemStack stack = new ItemStack(itemId, amount);
         player.getInventory().addItem(new Item(stack));
         
-        player.sendMessage("§aGave you " + amount + "x " + itemId);
+        player.sendMessage("Gave you " + amount + "x " + itemId);
         
     } catch (IllegalStateException e) {
-        ctx.sendMessage(Message.raw("§cThis command requires a player!"));
+        ctx.sendMessage(Message.raw("This command requires a player!"));
     }
 }
 ```
@@ -226,7 +226,7 @@ public void onGamemode(CommandContext ctx) {
     Player executor = CommandUtils.getPlayer(ctx);
     
     if (executor == null) {
-        ctx.sendMessage(Message.raw("§cConsole cannot change gamemode!"));
+        ctx.sendMessage(Message.raw("Console cannot change gamemode!"));
         return;
     }
     
@@ -239,7 +239,7 @@ public void onGamemode(CommandContext ctx) {
     // Permission check
     boolean canOthers = executor.hasPermission("myplugin.gamemode.others");
     if (target != executor && !canOthers) {
-        executor.sendMessage("§cYou can't change others' gamemode!");
+        executor.sendMessage("You can't change others' gamemode!");
         return;
     }
     
@@ -248,10 +248,10 @@ public void onGamemode(CommandContext ctx) {
     target.setGameMode(mode);
     
     if (target == executor) {
-        executor.sendMessage("§aGamemode changed to " + mode);
+        executor.sendMessage("Gamemode changed to " + mode);
     } else {
-        executor.sendMessage("§aChanged " + target.getName() + "'s gamemode to " + mode);
-        target.sendMessage("§aYour gamemode was changed to " + mode);
+        executor.sendMessage("Changed " + target.getName() + "'s gamemode to " + mode);
+        target.sendMessage("Your gamemode was changed to " + mode);
     }
 }
 ```
@@ -269,20 +269,20 @@ public void onBroadcast(CommandContext ctx) {
     if (sender != null) {
         // Player sender
         if (!sender.hasPermission("myplugin.broadcast")) {
-            sender.sendMessage("§cNo permission!");
+            sender.sendMessage("No permission!");
             return;
         }
-        prefix = "§6[§e" + sender.getName() + "§6]";
+        prefix = "[" + sender.getName() + "]";
     } else {
         // Console sender
-        prefix = "§4[§cSERVER§4]";
+        prefix = "[SERVER]";
     }
     
     // Broadcast to all
-    String broadcast = prefix + " §f" + message;
+    String broadcast = prefix + " " + message;
     Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(broadcast));
     
-    ctx.sendMessage(Message.raw("§aBroadcast sent!"));
+    ctx.sendMessage(Message.raw("Broadcast sent!"));
 }
 ```
 
@@ -298,7 +298,7 @@ public void onAdmin(CommandContext ctx) {
     Player player = CommandUtils.getPlayer(ctx);
     
     if (player == null) {
-        ctx.sendMessage(Message.raw("§cPlayers only!"));
+        ctx.sendMessage(Message.raw("Players only!"));
         return;
     }
     
@@ -307,15 +307,15 @@ public void onAdmin(CommandContext ctx) {
     Permission superPerm = Permission.of("myplugin.admin.super");
     
     if (!player.hasPermission(adminPerm)) {
-        player.sendMessage("§cYou need admin permission!");
+        player.sendMessage("You need admin permission!");
         return;
     }
     
     if (player.hasPermission(superPerm)) {
-        player.sendMessage("§6Welcome, Super Admin!");
+        player.sendMessage("Welcome, Super Admin!");
         openSuperAdminPanel(player);
     } else {
-        player.sendMessage("§eWelcome, Admin!");
+        player.sendMessage("Welcome, Admin!");
         openAdminPanel(player);
     }
 }
@@ -351,7 +351,7 @@ public void onFly(CommandContext ctx) {
     
     if (player == null) {
         // Graceful message for console
-        ctx.sendMessage(Message.raw("§7[Info] This command requires a player context."));
+        ctx.sendMessage(Message.raw("[Info] This command requires a player context."));
         return;
     }
     
@@ -367,11 +367,11 @@ public void onAdventure(CommandContext ctx) {
     try {
         Player player = CommandUtils.requirePlayer(ctx);
         player.setGameMode(GameMode.ADVENTURE);
-        player.sendMessage("§aGamemode set!");
+        player.sendMessage("Gamemode set!");
     } catch (IllegalStateException e) {
         // Console tried to use command
         getLogger().warning("Adventure command requires a player sender");
-        ctx.sendMessage(Message.raw("§cCannot set gamemode for console!"));
+        ctx.sendMessage(Message.raw("Cannot set gamemode for console!"));
     }
 }
 ```

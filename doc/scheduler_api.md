@@ -176,10 +176,10 @@ public class CountdownCommand extends SimpleCommand {
             int count = counter.getAndDecrement();
             
             if (count <= 0) {
-                player.sendMessage("§aGo!");
+                player.sendMessage("Go!");
                 task.cancel();
             } else {
-                player.sendMessage("§e" + count + "...");
+                player.sendMessage(count + "...");
             }
         }, 0, 1000); // Every second
     }
@@ -212,8 +212,8 @@ public void onJoin(PlayerJoinEvent event) {
 
 ```java
 public void teleportWithDelay(Player player, Location target) {
-    player.sendMessage("§eTeleporting in 3 seconds...");
-    player.sendMessage("§cDon't move!");
+    player.sendMessage("Teleporting in 3 seconds...");
+    player.sendMessage("Don't move!");
     
     Location startLoc = player.getLocation();
     
@@ -221,9 +221,9 @@ public void teleportWithDelay(Player player, Location target) {
         // Check if player moved
         if (player.getLocation().equals(startLoc)) {
             player.teleport(target);
-            player.sendMessage("§aTeleported!");
+            player.sendMessage("Teleported!");
         } else {
-            player.sendMessage("§cTeleport cancelled - you moved!");
+            player.sendMessage("Teleport cancelled - you moved!");
         }
     }, 3000); // 3 seconds
 }

@@ -311,15 +311,15 @@ public void onPlayerJoin(PlayerJoinEvent event) {
     Player player = event.getPlayer();
     
     // Welcome message
-    player.sendMessage("§aWelcome " + player.getName() + "!");
+    player.sendMessage("Welcome " + player.getName() + "!");
     player.sendTitleWithSubtitle("Welcome!", "Enjoy your stay");
     
     // Show player location
     Location loc = player.getLocation();
     if (loc != null) {
-        player.sendMessage(String.format("§7Position: %.2f, %.2f, %.2f", 
+        player.sendMessage(String.format("Position: %.2f, %.2f, %.2f", 
             loc.getX(), loc.getY(), loc.getZ()));
-        player.sendMessage("§7World: " + loc.getWorld().getName());
+        player.sendMessage("World: " + loc.getWorld().getName());
     }
     
     // Check inventory
@@ -330,7 +330,7 @@ public void onPlayerJoin(PlayerJoinEvent event) {
     
     // Permission check
     if (player.hasPermission("myplugin.vip")) {
-        player.sendMessage("§6Thanks for being a VIP!");
+        player.sendMessage("Thanks for being a VIP!");
         
         // Teleport VIP players to spawn
         Location spawn = new Location(loc.getWorld(), 0, 100, 0);
@@ -338,8 +338,8 @@ public void onPlayerJoin(PlayerJoinEvent event) {
     }
     
     // Show player stats
-    player.sendMessage(String.format("§cHealth: %.1f", player.getHealth()));
-    player.sendMessage(String.format("§bMana: %.1f", player.getMana()));
+    player.sendMessage(String.format("Health: %.1f", player.getHealth()));
+    player.sendMessage(String.format("Mana: %.1f", player.getMana()));
 }
 ```
 

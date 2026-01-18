@@ -6,229 +6,39 @@ import java.util.*;
 /**
  * YAML-based configuration implementation.
  * <p>
- * Provides a simple YAML parser and writer for plugin configurations.
- * Supports nested maps, lists, and basic data types.
+ * This class handles parsing and generating YAML files for configuration
+ * storage.
+ * It extends {@link BaseConfig} to leverage the common configuration logic.
+ * </p>
+ * <p>
+ * The YAML parser is simple and supports standard YAML constructs like
+ * key-value pairs, nested maps, and lists.
  * </p>
  * 
  * @author HytaleLoader
  * @version 1.0.4
  * @since 1.0.4
+ * @see BaseConfig
  */
-public class YamlConfig implements Config {
-
-    private final File file;
-    private final Map<String, Object> data;
-    private Map<String, Object> defaults;
+public class YamlConfig extends BaseConfig {
 
     /**
-     * Creates a new YAML config.
+     * Creates a new YAML configuration linked to the specified file.
      * 
-     * @param file the config file
+     * @param file the configuration file (usually ending in .yml)
      */
     public YamlConfig(File file) {
-        this.file = file;
-        this.data = new LinkedHashMap<>();
-        this.defaults = new LinkedHashMap<>();
+        super(file);
     }
 
-    @Override
-    public Object get(String path) {
-        return get(path, null);
-    }
-
-    @Override
-    public Object get(String path, Object def) {
-        if (path == null || path.isEmpty()) {
-            return def;
-        }
-
-        String[] parts = path.split("\\.");
-        Map<String, Object> current = data;
-
-        for (int i = 0; i < parts.length - 1; i++) {
-            Object next = current.get(parts[i]);
-            if (!(next instanceof Map)) {
-                // Check defaults
-                return getFromDefaults(path, def);
-            }
-            current = (Map<String, Object>) next;
-        }
-
-        Object value = current.get(parts[parts.length - 1]);
-        return value != null ? value : getFromDefaults(path, def);
-    }
-
-    private Object getFromDefaults(String path, Object def) {
-        if (defaults == null) {
-            return def;
-        }
-
-        String[] parts = path.split("\\.");
-        Map<String, Object> current = defaults;
-
-        for (int i = 0; i < parts.length - 1; i++) {
-            Object next = current.get(parts[i]);
-            if (!(next instanceof Map)) {
-                return def;
-            }
-            current = (Map<String, Object>) next;
-        }
-
-        Object value = current.get(parts[parts.length - 1]);
-        return value != null ? value : def;
-    }
-
-    @Override
-    public void set(String path, Object value) {
-        if (path == null || path.isEmpty()) {
-            return;
-        }
-
-        String[] parts = path.split("\\.");
-        Map<String, Object> current = data;
-
-        for (int i = 0; i < parts.length - 1; i++) {
-            Object next = current.get(parts[i]);
-            if (!(next instanceof Map)) {
-                Map<String, Object> newMap = new LinkedHashMap<>();
-                current.put(parts[i], newMap);
-                current = newMap;
-            } else {
-                current = (Map<String, Object>) next;
-            }
-        }
-
-        current.put(parts[parts.length - 1], value);
-    }
-
-    @Override
-    public String getString(String path) {
-        return getString(path, null);
-    }
-
-    @Override
-    public String getString(String path, String def) {
-        Object value = get(path, def);
-        return value != null ? String.valueOf(value) : def;
-    }
-
-    @Override
-    public int getInt(String path) {
-        return getInt(path, 0);
-    }
-
-    @Override
-    public int getInt(String path, int def) {
-        Object value = get(path, def);
-        if (value instanceof Number) {
-            return ((Number) value).intValue();
-        }
-        try {
-            return Integer.parseInt(String.valueOf(value));
-        } catch (NumberFormatException e) {
-            return def;
-        }
-    }
-
-    @Override
-    public double getDouble(String path) {
-        return getDouble(path, 0.0);
-    }
-
-    @Override
-    public double getDouble(String path, double def) {
-        Object value = get(path, def);
-        if (value instanceof Number) {
-            return ((Number) value).doubleValue();
-        }
-        try {
-            return Double.parseDouble(String.valueOf(value));
-        } catch (NumberFormatException e) {
-            return def;
-        }
-    }
-
-    @Override
-    public boolean getBoolean(String path) {
-        return getBoolean(path, false);
-    }
-
-    @Override
-    public boolean getBoolean(String path, boolean def) {
-        Object value = get(path, def);
-        if (value instanceof Boolean) {
-            return (Boolean) value;
-        }
-        if (value instanceof String) {
-            return Boolean.parseBoolean((String) value);
-        }
-        return def;
-    }
-
-    @Override
-    public List<?> getList(String path) {
-        return getList(path, null);
-    }
-
-    @Override
-    public List<?> getList(String path, List<?> def) {
-        Object value = get(path, def);
-        return value instanceof List ? (List<?>) value : def;
-    }
-
-    @Override
-    public List<String> getStringList(String path) {
-        List<?> list = getList(path);
-        if (list == null) {
-            return new ArrayList<>();
-        }
-
-        List<String> result = new ArrayList<>();
-        for (Object obj : list) {
-            result.add(String.valueOf(obj));
-        }
-        return result;
-    }
-
-    @Override
-    public ConfigSection getSection(String path) {
-        Object value = get(path);
-        if (value instanceof Map) {
-            return new YamlConfigSection((Map<String, Object>) value);
-        }
-        return null;
-    }
-
-    @Override
-    public boolean contains(String path) {
-        return get(path) != null;
-    }
-
-    @Override
-    public Set<String> getKeys(boolean deep) {
-        return getKeysFromMap(data, "", deep);
-    }
-
-    private Set<String> getKeysFromMap(Map<String, Object> map, String prefix, boolean deep) {
-        Set<String> keys = new LinkedHashSet<>();
-
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            String key = prefix.isEmpty() ? entry.getKey() : prefix + "." + entry.getKey();
-            keys.add(key);
-
-            if (deep && entry.getValue() instanceof Map) {
-                keys.addAll(getKeysFromMap((Map<String, Object>) entry.getValue(), key, true));
-            }
-        }
-
-        return keys;
-    }
-
-    @Override
-    public Map<String, Object> getValues() {
-        return new LinkedHashMap<>(data);
-    }
-
+    /**
+     * Saves the current configuration data to the file in YAML format.
+     * <p>
+     * Creates parent directories if they do not exist.
+     * </p>
+     * 
+     * @throws IOException if an error occurs while writing to the file
+     */
     @Override
     public void save() throws IOException {
         if (file.getParentFile() != null && !file.getParentFile().exists()) {
@@ -240,6 +50,14 @@ public class YamlConfig implements Config {
         }
     }
 
+    /**
+     * Recursively writes data to the writer in YAML format.
+     * 
+     * @param writer the writer to write to
+     * @param map    the map data to write
+     * @param indent the current indentation level
+     * @throws IOException if writing fails
+     */
     private void writeYaml(BufferedWriter writer, Map<String, Object> map, int indent) throws IOException {
         String indentStr = "  ".repeat(indent);
 
@@ -261,6 +79,12 @@ public class YamlConfig implements Config {
         }
     }
 
+    /**
+     * Formats a value for YAML output, escaping strings if necessary.
+     * 
+     * @param value the value to format
+     * @return the string representation suitable for YAML
+     */
     private String formatValue(Object value) {
         if (value == null) {
             return "null";
@@ -275,6 +99,16 @@ public class YamlConfig implements Config {
         return String.valueOf(value);
     }
 
+    /**
+     * Reloads the configuration from the file.
+     * <p>
+     * This clears the current data and re-parses the file.
+     * If the file does not exist but defaults are set, it creates the file
+     * with the default values.
+     * </p>
+     * 
+     * @throws IOException if an error occurs while reading the file
+     */
     @Override
     public void reload() throws IOException {
         data.clear();
@@ -296,18 +130,13 @@ public class YamlConfig implements Config {
         applyDefaults();
     }
 
-    private void applyDefaults() {
-        if (defaults == null || defaults.isEmpty()) {
-            return;
-        }
-
-        for (Map.Entry<String, Object> entry : defaults.entrySet()) {
-            if (!data.containsKey(entry.getKey())) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-    }
-
+    /**
+     * Parses YAML content from the reader into the root map.
+     * 
+     * @param reader the reader to read from
+     * @param root   the map to populate
+     * @throws IOException if reading fails
+     */
     private void parseYaml(BufferedReader reader, Map<String, Object> root) throws IOException {
         Stack<Map<String, Object>> stack = new Stack<>();
         Stack<Integer> indents = new Stack<>();
@@ -315,11 +144,8 @@ public class YamlConfig implements Config {
         indents.push(-1);
 
         String line;
-        int lineNumber = 0;
 
         while ((line = reader.readLine()) != null) {
-            lineNumber++;
-
             // Skip empty lines and comments
             if (line.trim().isEmpty() || line.trim().startsWith("#")) {
                 continue;
@@ -341,11 +167,17 @@ public class YamlConfig implements Config {
 
                 // Find or create list for last key
                 if (!current.isEmpty()) {
-                    Object lastValue = new ArrayList<>(current.values()).get(current.size() - 1);
+                    List<Object> values = new ArrayList<>(current.values());
+                    if (values.isEmpty())
+                        continue;
+
+                    Object lastValue = values.get(values.size() - 1);
                     if (!(lastValue instanceof List)) {
                         List<Object> list = new ArrayList<>();
                         list.add(parseValue(value));
-                        String lastKey = new ArrayList<>(current.keySet()).get(current.size() - 1);
+
+                        List<String> keys = new ArrayList<>(current.keySet());
+                        String lastKey = keys.get(keys.size() - 1);
                         current.put(lastKey, list);
                     } else {
                         ((List<Object>) lastValue).add(parseValue(value));
@@ -373,6 +205,12 @@ public class YamlConfig implements Config {
         }
     }
 
+    /**
+     * Calculates the indentation level of a line.
+     * 
+     * @param line the line to check
+     * @return the number of spaces of indentation (tabs count as 2 spaces)
+     */
     private int getIndent(String line) {
         int count = 0;
         for (char c : line.toCharArray()) {
@@ -387,6 +225,12 @@ public class YamlConfig implements Config {
         return count;
     }
 
+    /**
+     * Parses a string value into its appropriate type (Boolean, Number, String).
+     * 
+     * @param value the string value
+     * @return the parsed object
+     */
     private Object parseValue(String value) {
         if (value == null || value.equals("null")) {
             return null;
@@ -418,173 +262,5 @@ public class YamlConfig implements Config {
         }
 
         return value;
-    }
-
-    @Override
-    public File getFile() {
-        return file;
-    }
-
-    @Override
-    public void setDefaults(Map<String, Object> defaults) {
-        this.defaults = new LinkedHashMap<>(defaults);
-    }
-
-    @Override
-    public void addDefault(String path, Object value) {
-        if (defaults == null) {
-            defaults = new LinkedHashMap<>();
-        }
-
-        String[] parts = path.split("\\.");
-        Map<String, Object> current = defaults;
-
-        for (int i = 0; i < parts.length - 1; i++) {
-            Object next = current.get(parts[i]);
-            if (!(next instanceof Map)) {
-                Map<String, Object> newMap = new LinkedHashMap<>();
-                current.put(parts[i], newMap);
-                current = newMap;
-            } else {
-                current = (Map<String, Object>) next;
-            }
-        }
-
-        current.put(parts[parts.length - 1], value);
-    }
-
-    /**
-     * Inner class for config sections.
-     */
-    private static class YamlConfigSection implements ConfigSection {
-        private final Map<String, Object> data;
-
-        public YamlConfigSection(Map<String, Object> data) {
-            this.data = data;
-        }
-
-        @Override
-        public Object get(String path) {
-            return get(path, null);
-        }
-
-        @Override
-        public Object get(String path, Object def) {
-            if (path == null || path.isEmpty()) {
-                return def;
-            }
-
-            String[] parts = path.split("\\.");
-            Map<String, Object> current = data;
-
-            for (int i = 0; i < parts.length - 1; i++) {
-                Object next = current.get(parts[i]);
-                if (!(next instanceof Map)) {
-                    return def;
-                }
-                current = (Map<String, Object>) next;
-            }
-
-            Object value = current.get(parts[parts.length - 1]);
-            return value != null ? value : def;
-        }
-
-        @Override
-        public String getString(String path) {
-            return getString(path, null);
-        }
-
-        @Override
-        public String getString(String path, String def) {
-            Object value = get(path, def);
-            return value != null ? String.valueOf(value) : def;
-        }
-
-        @Override
-        public int getInt(String path) {
-            return getInt(path, 0);
-        }
-
-        @Override
-        public int getInt(String path, int def) {
-            Object value = get(path, def);
-            if (value instanceof Number) {
-                return ((Number) value).intValue();
-            }
-            try {
-                return Integer.parseInt(String.valueOf(value));
-            } catch (NumberFormatException e) {
-                return def;
-            }
-        }
-
-        @Override
-        public double getDouble(String path) {
-            return getDouble(path, 0.0);
-        }
-
-        @Override
-        public double getDouble(String path, double def) {
-            Object value = get(path, def);
-            if (value instanceof Number) {
-                return ((Number) value).doubleValue();
-            }
-            try {
-                return Double.parseDouble(String.valueOf(value));
-            } catch (NumberFormatException e) {
-                return def;
-            }
-        }
-
-        @Override
-        public boolean getBoolean(String path) {
-            return getBoolean(path, false);
-        }
-
-        @Override
-        public boolean getBoolean(String path, boolean def) {
-            Object value = get(path, def);
-            if (value instanceof Boolean) {
-                return (Boolean) value;
-            }
-            if (value instanceof String) {
-                return Boolean.parseBoolean((String) value);
-            }
-            return def;
-        }
-
-        @Override
-        public ConfigSection getSection(String path) {
-            Object value = get(path);
-            if (value instanceof Map) {
-                return new YamlConfigSection((Map<String, Object>) value);
-            }
-            return null;
-        }
-
-        @Override
-        public Set<String> getKeys(boolean deep) {
-            Set<String> keys = new LinkedHashSet<>();
-            for (String key : data.keySet()) {
-                keys.add(key);
-                if (deep && data.get(key) instanceof Map) {
-                    YamlConfigSection section = new YamlConfigSection((Map<String, Object>) data.get(key));
-                    for (String subKey : section.getKeys(true)) {
-                        keys.add(key + "." + subKey);
-                    }
-                }
-            }
-            return keys;
-        }
-
-        @Override
-        public Map<String, Object> getValues() {
-            return new LinkedHashMap<>(data);
-        }
-
-        @Override
-        public boolean contains(String path) {
-            return get(path) != null;
-        }
     }
 }

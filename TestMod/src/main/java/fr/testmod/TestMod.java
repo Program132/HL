@@ -296,16 +296,54 @@ public class TestMod extends SimplePlugin {
 
         ctx.sender().sendMessage(Message.raw("Creating magic wall..."));
 
-        for (int x = (int) p.getPositionX(); x < p.getPositionX() + 3; x++) {
-            for (int y = (int) p.getPositionY(); y < p.getPositionY() + 3; y++) {
-                Block block = new Block(loc.getWorld(), x, y, (int) loc.getZ());
+        int startX = (int) p.getPositionX();
+        int startY = (int) p.getPositionY();
+        int startZ = (int) p.getPositionZ();
+        fr.hytale.loader.api.World world = loc.getWorld();
+
+        for (int x = startX; x < startX + 3; x++) {
+            for (int y = startY; y < startY + 3; y++) {
+                Block block = new Block(world, x, y, startZ);
                 block.setType("Rock_Magma_Cooled");
 
                 System.out.println("BLOCK PLACED: " + x + ", " + y);
 
-                p.getWorld().setBlock(block);
+                world.setBlock(block);
             }
         }
-        ctx.sender().sendMessage(Message.raw("Magic wall created!"));
+
+        ctx.sendMessage(Message.raw("Magic Wall created!"));
+    }
+
+    @fr.hytale.loader.command.Command(name = "testentity", description = "Tests the entity API")
+    private void testEntityCommand(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+
+        context.sender().sendMessage(Message.raw("=== Entity API Test ==="));
+        context.sender().sendMessage(Message.raw("Entity ID: " + player.getID()));
+        context.sender().sendMessage(Message.raw("Entity UUID: " + player.getUUID()));
+        context.sender().sendMessage(Message.raw("Is Valid: " + player.isValid()));
+
+        fr.hytale.loader.api.World world = player.getWorld();
+        if (world != null) {
+            context.sender().sendMessage(Message.raw("World Name: " + world.getName()));
+
+            // Test getEntity(id)
+            fr.hytale.loader.api.Entity self = world.getEntity(player.getID());
+            if (self != null) {
+                context.sender().sendMessage(
+                        Message.raw("Self Retrieval (ID): Success (" + self.getClass().getSimpleName() + ")"));
+                if (self instanceof Player) {
+                    context.sender().sendMessage(Message.raw("Self is instance of Player: Yes"));
+                } else {
+                    context.sender().sendMessage(Message.raw("Self is instance of Player: No (Error)"));
+                }
+            } else {
+                context.sender().sendMessage(Message.raw("Self Retrieval (ID): Failed"));
+            }
+        }
     }
 }

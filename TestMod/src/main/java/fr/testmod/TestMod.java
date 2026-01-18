@@ -282,5 +282,31 @@ public class TestMod extends SimplePlugin {
             }
         }
         player.sendMessage("═══════════════════════════════");
+
+    }
+
+    @fr.hytale.loader.command.Command(name = "magicwall", description = "Creates a 3x3 magic wall")
+    public void onMagicWall(com.hypixel.hytale.server.core.command.system.CommandContext ctx) {
+        if (!CommandUtils.isPlayer(ctx))
+            return;
+        Player p = CommandUtils.getPlayer(ctx);
+        fr.hytale.loader.api.Location loc = p.getLocation();
+        if (loc == null)
+            return;
+
+        ctx.sender().sendMessage(Message.raw("Creating magic wall..."));
+
+        for (int x = (int) p.getPositionX(); x < p.getPositionX() + 3; x++) {
+            for (int y = (int) p.getPositionY(); y < p.getPositionY() + 3; y++) {
+                fr.hytale.loader.api.Location blockLoc = loc.clone();
+                // Simple wall relative to player
+                blockLoc.setX(blockLoc.getX() + 2 + x);
+                blockLoc.setY(blockLoc.getY() + y);
+                System.out.println("BLOCK PLACED: " + x + ", " + y);
+
+                blockLoc.getWorld().setBlock(blockLoc, "Rock_Magma_Cooled");
+            }
+        }
+        ctx.sender().sendMessage(Message.raw("Magic wall created!"));
     }
 }

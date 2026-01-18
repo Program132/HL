@@ -156,6 +156,16 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
         }
 
         /**
+         * Gets the preferred configuration format.
+         * Override this to use JSON instead of YAML.
+         * 
+         * @return the config format (default: YAML)
+         */
+        public fr.hytale.loader.config.ConfigFormat getConfigFormat() {
+                return fr.hytale.loader.config.ConfigFormat.YAML;
+        }
+
+        /**
          * Gets the plugin's configuration.
          * <p>
          * The config file is automatically loaded from the plugin's data folder.
@@ -171,8 +181,14 @@ public abstract class SimplePlugin extends JavaPlugin implements SimpleListener 
                                 dataFolder.mkdirs();
                         }
 
-                        File configFile = new File(dataFolder, "config.yml");
-                        config = new YamlConfig(configFile);
+                        fr.hytale.loader.config.ConfigFormat format = getConfigFormat();
+                        File configFile = new File(dataFolder, format.getFileName());
+
+                        if (format == fr.hytale.loader.config.ConfigFormat.JSON) {
+                                config = new fr.hytale.loader.config.JsonConfig(configFile);
+                        } else {
+                                config = new YamlConfig(configFile);
+                        }
 
                         try {
                                 config.reload();

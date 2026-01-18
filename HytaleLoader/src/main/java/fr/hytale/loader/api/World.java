@@ -120,6 +120,41 @@ public class World {
         setBlock((int) location.getX(), (int) location.getY(), (int) location.getZ(), blockId);
     }
 
+    /**
+     * Sets the block at the specified location in the block arguments.
+     * 
+     * @param block The block to set
+     */
+    public void setBlock(Block block) {
+        if (block == null)
+            return;
+        setBlock((int) block.getX(), (int) block.getY(), (int) block.getZ(), block.getType());
+    }
+
+    /**
+     * Gets the Block object at the specified coordinates.
+     * 
+     * @param x The X coordinate
+     * @param y The Y coordinate
+     * @param z The Z coordinate
+     * @return The Block object
+     */
+    public Block getBlockAt(int x, int y, int z) {
+        return new Block(this, x, y, z);
+    }
+
+    /**
+     * Gets the Block object at the specified location.
+     * 
+     * @param location The location
+     * @return The Block object, or null if location is invalid/different world
+     */
+    public Block getBlockAt(Location location) {
+        if (location == null || !location.getWorld().equals(this))
+            return null;
+        return getBlockAt((int) location.getX(), (int) location.getY(), (int) location.getZ());
+    }
+
     @Override
     public int hashCode() {
         return nativeWorld != null ? nativeWorld.hashCode() : 0;

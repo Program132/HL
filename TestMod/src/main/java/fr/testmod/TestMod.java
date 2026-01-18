@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.Message;
 import java.io.IOException;
 import fr.hytale.loader.config.Config;
-
+import fr.hytale.loader.api.Block;
 import fr.hytale.loader.config.ConfigFormat;
 
 public class TestMod extends SimplePlugin {
@@ -298,13 +298,12 @@ public class TestMod extends SimplePlugin {
 
         for (int x = (int) p.getPositionX(); x < p.getPositionX() + 3; x++) {
             for (int y = (int) p.getPositionY(); y < p.getPositionY() + 3; y++) {
-                fr.hytale.loader.api.Location blockLoc = loc.clone();
-                // Simple wall relative to player
-                blockLoc.setX(x);
-                blockLoc.setY(y);
+                Block block = new Block(loc.getWorld(), x, y, (int) loc.getZ());
+                block.setType("Rock_Magma_Cooled");
+
                 System.out.println("BLOCK PLACED: " + x + ", " + y);
 
-                blockLoc.getWorld().setBlock(blockLoc, "Rock_Magma_Cooled");
+                p.getWorld().setBlock(block);
             }
         }
         ctx.sender().sendMessage(Message.raw("Magic wall created!"));

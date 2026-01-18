@@ -13,6 +13,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - **[Player API](player_api.md)** - Complete player management reference
 - **[Block API](block_api.md)** - Block manipulation and interaction
 - **[Location API](location_api.md)** - 3D position and rotation system
+- **[Entity API](entity_api.md)** - Entity management and interaction
 - **[World API](world_api.md)** - World wrapper and utilities
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system

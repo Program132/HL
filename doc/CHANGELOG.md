@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **Block API** (v1.0.5)
+  - `world.setBlock(x, y, z, id)` - Set block at coordinates
+  - `world.setBlock(Location, id)` - Set block at location
+  - `world.getBlockIdentifier(x, y, z)` - Get block ID string
+  - `world.getBlockIdentifier(Location)` - Get block ID from location
+
+---
+
+## [1.0.4] - 2026-01-18
+
+### Added
 
 #### Server API
 - **`Server`** utility class - Static server operations

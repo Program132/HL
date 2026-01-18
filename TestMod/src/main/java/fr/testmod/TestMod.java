@@ -346,4 +346,17 @@ public class TestMod extends SimplePlugin {
             }
         }
     }
+
+    @fr.hytale.loader.command.Command(name = "antelope")
+    private void onAntelope(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+        fr.hytale.loader.api.World world = player.getWorld();
+        if (world == null)
+            return;
+
+        world.spawnEntity(player.getLocation(), "Antelope");
+    }
 }

@@ -237,6 +237,66 @@ public class World {
     }
 
     /**
+     * Spawns an entity at the specified location.
+     * 
+     * @param location   The location to spawn the entity
+     * @param entityType The type of entity (e.g. "Antelope", "Bat_Ice")
+     * @return The spawned Entity, or null if failed
+     */
+    public Entity spawnEntity(Location location, String entityType) {
+        if (nativeWorld == null || location == null || entityType == null)
+            return null;
+
+        try {
+            return spawnEntityInternal(location, entityType);
+        } catch (IllegalStateException e) {
+            String msg = e.getMessage();
+            if (msg != null && msg.contains("Assert not in thread")) {
+                final java.util.concurrent.CompletableFuture<Entity> future = new java.util.concurrent.CompletableFuture<>();
+                nativeWorld.execute(() -> {
+                    try {
+                        future.complete(spawnEntityInternal(location, entityType));
+                    } catch (Exception ex) {
+                        future.completeExceptionally(ex);
+                    }
+                });
+                try {
+                    return future.join();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return null;
+                }
+            }
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Entity spawnEntityInternal(Location location, String entityType) {
+        com.hypixel.hytale.server.npc.NPCPlugin npcPlugin = com.hypixel.hytale.server.npc.NPCPlugin.get();
+        if (npcPlugin == null)
+            return null;
+
+        com.hypixel.hytale.math.vector.Vector3d pos = new com.hypixel.hytale.math.vector.Vector3d(location.getX(),
+                location.getY(), location.getZ());
+        com.hypixel.hytale.math.vector.Vector3f rot = new com.hypixel.hytale.math.vector.Vector3f(0, location.getYaw(),
+                location.getPitch());
+
+        com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = nativeWorld
+                .getEntityStore().getStore();
+
+        it.unimi.dsi.fastutil.Pair<com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>, com.hypixel.hytale.server.core.universe.world.npc.INonPlayerCharacter> pair = npcPlugin
+                .spawnNPC(store, entityType, null, pos, rot);
+
+        if (pair != null && pair.first() != null) {
+            return createEntityFromRef(pair.first());
+        }
+        return null;
+    }
+
+    /**
      * Helper to create an API Entity from a Ref.
      */
     private Entity createEntityFromRef(

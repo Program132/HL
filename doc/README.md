@@ -9,6 +9,9 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - [Standard Events](standard_events.md) - Player events reference
 - [Commands](commands.md) - Command system guide
 - [Server Setup](server.md) - Server configuration
+- **[Player API](player_api.md)** - Complete player management reference
+- **[Location API](location_api.md)** - 3D position and rotation system
+- **[World API](world_api.md)** - World wrapper and utilities
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities
@@ -30,11 +33,36 @@ UUID uuid = player.getUUID();
 // Messaging
 player.sendMessage("Hello!");
 
+// Location & Teleportation
+Location loc = player.getLocation();
+player.teleport(new Location(loc.getWorld(), 100, 64, 200));
+
 // Inventory
 Inventory inv = player.getInventory();
 
 // Permissions
 boolean hasPermission = player.hasPermission("myplugin.admin");
+
+// Stats
+float health = player.getHealth();
+player.setHealth(20.0f);
+```
+
+### 🌍 **Location & World API**
+```java
+// Get player location
+Location loc = player.getLocation();
+double x = loc.getX();
+double y = loc.getY();
+double z = loc.getZ();
+World world = loc.getWorld();
+
+// Create and teleport
+Location spawn = new Location(world, 0, 100, 0, 0, 0);
+player.teleport(spawn);
+
+// Distance calculations
+double distance = loc1.distance(loc2);
 ```
 
 ### 📦 **Item & Inventory API**
@@ -102,15 +130,32 @@ public void teleportCommand(CommandContext context) {
 ## Project Structure
 
 ```
-HytaleLoader/
-├── src/main/java/fr/hytale/loader/
-│   ├── api/              # Public API (Player, Item)
-│   │   └── inventory/    # Inventory classes
-│   ├── command/          # Command system
-│   ├── event/            # Event system
-│   │   └── types/        # Event classes
-│   ├── internal/         # Internal dispatchers
-│   └── plugin/           # Plugin base classes
+HL/
+├── HytaleLoader/              # Core library
+│   ├── src/main/java/fr/hytale/loader/
+│   │   ├── api/               # Public API
+│   │   │   ├── Player.java    # Player wrapper with stats
+│   │   │   ├── GameMode.java  # GameMode enum
+│   │   │   ├── Item.java      # Item wrapper
+│   │   │   ├── World.java     # World wrapper
+│   │   │   ├── Location.java  # Location wrapper
+│   │   │   └── inventory/     # Inventory classes
+│   │   ├── command/           # Command system
+│   │   │   ├── CommandUtils.java  # Command utilities
+│   │   │   └── SimpleCommand.java # Command base
+│   │   │   └── CommandScanner.java # Command scannar
+│   │   │   └── SimpleCommand.java # Command base
+│   │   ├── event/             # Event system
+│   │   │   └── types/         # Event classes (Join, Quit, Chat, etc.)
+│   │   ├── internal/          # Internal dispatchers
+│   │   ├── permission/        # Permission system
+│   │   │   ├── Permission.java       # Permission object
+│   │   │   └── PermissionManager.java # Permission storage
+│   │   ├── plugin/            # Plugin base classes
+│   │   │   └── SimplePlugin.java # Plugin base with Scheduler
+│   │   └── scheduler/         # Task scheduling
+│   │       ├── Scheduler.java      # Scheduler implementation
+│   │       └── ScheduledTask.java  # Task wrapper
 ```
 
 ## Installation
@@ -121,7 +166,7 @@ Add HytaleLoader as a dependency in your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <scope>provided</scope>
 </dependency>
 ```

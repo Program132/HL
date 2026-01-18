@@ -52,6 +52,35 @@ Returns the underlying native Hytale world object.
 - Thread-safe world manipulation via `world.execute()`
 - Accessing native-only features
 
+
+## Block Manipulation (v1.0.5)
+
+The World API allows getting and setting blocks programmatically.
+
+### setBlock()
+Change a block at specific coordinates.
+
+```java
+// Using coordinates
+world.setBlock(100, 64, 200, "hytale:stone");
+
+// Using Location
+world.setBlock(location, "Rock_Magma_Cooled"); // Supports custom IDs
+```
+
+### getBlockIdentifier()
+Get the identifier of a block as a string.
+
+```java
+// Check block type
+String blockId = world.getBlockIdentifier(location);
+// Returns "hytale:air" if location is empty or invalid
+
+if (blockId.equals("hytale:stone")) {
+    // It's a stone block
+}
+```
+
 ## Common Use Cases
 
 ### Checking World Name

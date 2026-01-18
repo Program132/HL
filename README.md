@@ -8,16 +8,30 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 
 ## Features
 
--   **Annotation-based Event Handling**: Use `@EventHandler` to easily register event listeners without manually managing the `EventRegistry`.
--   **Annotation-based Command Registration**: Use `@Command` to define commands with metadata (names, aliases, permissions) directly on methods.
--   **SimplePlugin Base Class**: Extend `SimplePlugin` to automatically handle lifecycle events and component registration.
--   **Player API**: Simplified wrapper around Hytale's player system with inventory, permissions, and stats management.
--   **Player Stats API** ⭐ NEW: Access and modify health, stamina, oxygen, mana, signature energy, and ammo (thread-safe).
--   **Scheduler System**: Execute tasks immediately, delayed, or periodically (sync and async).
--   **Permission System**: Hierarchical permission management with wildcards support.
--   **Command Utilities**: Helper methods for command development (player checks, PlayerRef access).
--   **Item & Inventory System**: Easy-to-use API for managing inventories and items.
--   **Maven Support**: Easily integrate into your project using Maven.
+### Core Systems
+- **Annotation-based Event Handling**: Use `@EventHandler` to easily register event listeners
+- **Annotation-based Command Registration**: Use `@Command` to define commands with metadata
+- **SimplePlugin Base Class**: Automatic lifecycle management and component registration
+- **Configuration System**: YAML and JSON config support with automatic loading
+
+### Player & World APIs
+- **Player API**: Comprehensive player management with inventory, permissions, and stats
+- **Entity API** Base entity class with location, teleportation, and removal
+- **World API** World wrapper with block manipulation and entity spawning
+- **Block API** Block class
+- **Location API**: 3D position and rotation handling
+- **Player Stats API**: Health, stamina, oxygen, mana management (thread-safe)
+
+### Data Storage 
+- **Redis API**: Connection pooling, String/Hash/List/Set operations
+- **MySQL API**: Connection pooling, prepared statements, transactions, batch operations
+
+### Advanced Features
+- **Scheduler System**: Execute tasks immediately, delayed, or periodically (sync and async)
+- **Permission System**: Hierarchical permission management with wildcards
+- **Command Utilities**: Helper methods for command development
+- **Item & Inventory System**: Easy-to-use API for managing inventories and items
+- **Maven Support**: Easily integrate into your project
 
 ## Installation
 
@@ -37,12 +51,14 @@ Add the following to your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
     <scope>provided</scope>
 </dependency>
 ```
 
 ## Quick Start
+
+### Basic Plugin
 
 ```java
 public class MyMod extends SimplePlugin {
@@ -61,27 +77,14 @@ public class MyMod extends SimplePlugin {
         Player player = event.getPlayer();
         player.sendMessage("Welcome " + player.getName() + "!");
         
-        // Access stats (NEW v1.0.3)
-        float health = player.getHealth();
-        player.sendMessage("Your health: " + health);
-        
-        // Access inventory
-        Inventory inv = player.getInventory();
-        player.sendMessage("You have " + inv.getItems().size() + " items");
+        // Get player location
+        Location loc = player.getLocation();
+        player.sendMessage("You are at: " + loc.getX() + ", " + loc.getY() + ", " + loc.getZ());
     }
 
     @Command(name = "hello", description = "Says hello")
     public void onHello(CommandContext ctx) {
         ctx.sender().sendMessage(Message.raw("Hello World!"));
-    }
-    
-    @Command(name = "heal", permission = "myplugin.heal")
-    public void onHeal(CommandContext ctx) {
-        if (CommandUtils.isPlayer(ctx)) {
-            Player player = CommandUtils.getPlayer(ctx);
-            player.setHealth(100);  // Full health
-            player.sendMessage("§aYou have been healed!");
-        }
     }
 }
 ```
@@ -90,25 +93,40 @@ public class MyMod extends SimplePlugin {
 
 Comprehensive documentation is available in the `doc/` directory:
 
--   [📖 README](doc/README.md) - Complete documentation overview
--   [📝 Changelog](doc/CHANGELOG.md) - Version history
--   [🚀 Getting Started](doc/getting_started.md) - Installation and first plugin
--   [🎪 Event System](doc/events.md) - Event system guide
--   [👤 Player API](doc/player_api.md) - Player API reference
--   [📊 Player Stats API](doc/player_stats_api.md) - Stats management (NEW v1.0.3)
--   [🕐 Scheduler API](doc/scheduler_api.md) - Task scheduling
--   [🔐 Permission API](doc/permission_api.md) - Permission system
--   [🛠️ Command Utils](doc/command_utils.md) - Command utilities
--   [📦 Standard Events](doc/standard_events.md) - Available events
--   [⚔️ Command System](doc/commands.md) - Command registration
--   [🎮 GameMode API](doc/gamemode_api.md) - GameMode API
--   [JavaDoc](https://program132.github.io/HL/) - Javadoc
+### Getting Started
+- [📖 README](doc/README.md) - Complete documentation overview
+- [🚀 Getting Started](doc/getting_started.md) - Installation and first plugin
+- [📝 Changelog](doc/CHANGELOG.md) - Version history
+
+### Core APIs
+- [👤 Player API](doc/player_api.md) - Player management
+- [🌍 World API](doc/world_api.md) - World manipulation
+- [🧱 Block API](doc/block_api.md) - Block operations
+- [📍 Location API](doc/location_api.md) - Position and rotation
+- [👾 Entity API](doc/entity_api.md) - Entity management
+- [📊 Player Stats API](doc/player_stats_api.md) - Health, stamina, mana
+
+### Data Storage
+- [🔴 Redis API](doc/redis_api.md) - Redis database
+- [🐬 MySQL API](doc/mysql_api.md) - MySQL database
+
+### Systems
+- [🎪 Event System](doc/events.md) - Event handling
+- [⚔️ Command System](doc/commands.md) - Command registration
+- [🕐 Scheduler API](doc/scheduler_api.md) - Task scheduling
+- [🔐 Permission API](doc/permission_api.md) - Permissions
+- [🛠️ Command Utils](doc/command_utils.md) - Command helpers
+- [📝 Config API](doc/config_api.md) - Configuration system
+
+### Reference
+- [📦 Standard Events](doc/standard_events.md) - Available events
+- [JavaDoc](https://program132.github.io/HL/) - Full API reference
 
 ## Development Workflow
 
-If you want to compile & copy your mod, use this command (Windows):
+To compile and deploy your mod (Windows):
 ```powershell
-mvn clean install -f HytaleLoader/pom.xml; mvn clean package -f TestMod/pom.xml; Copy-Item -Force TestMod/target/TestMod-1.0.3.jar server/mods/
+mvn clean install -f HytaleLoader/pom.xml; mvn clean package -f TestMod/pom.xml; Copy-Item -Force TestMod/target/TestMod-1.0.5.jar server/mods/
 ```
 
 ## Project Structure
@@ -118,28 +136,22 @@ HL/
 ├── HytaleLoader/              # Core library
 │   ├── src/main/java/fr/hytale/loader/
 │   │   ├── api/               # Public API
-│   │   │   ├── Player.java    # Player wrapper with stats
-│   │   │   ├── GameMode.java  # GameMode enum
-│   │   │   ├── Item.java      # Item wrapper
+│   │   │   ├── Player.java    # Player wrapper
+│   │   │   ├── Entity.java    # Entity wrapper
 │   │   │   ├── World.java     # World wrapper
+│   │   │   ├── Block.java     # Block wrapper
 │   │   │   ├── Location.java  # Location wrapper
 │   │   │   └── inventory/     # Inventory classes
+│   │   ├── datastorage/       # Data storage
+│   │   │   ├── RedisClient.java   # Redis client
+│   │   │   └── MySQLClient.java   # MySQL client
 │   │   ├── command/           # Command system
-│   │   │   ├── CommandUtils.java  # Command utilities
-│   │   │   └── SimpleCommand.java # Command base
-│   │   │   └── CommandScanner.java # Command scannar
-│   │   │   └── SimpleCommand.java # Command base
 │   │   ├── event/             # Event system
-│   │   │   └── types/         # Event classes (Join, Quit, Chat, etc.)
-│   │   ├── internal/          # Internal dispatchers
+│   │   ├── config/            # Configuration system
 │   │   ├── permission/        # Permission system
-│   │   │   ├── Permission.java       # Permission object
-│   │   │   └── PermissionManager.java # Permission storage
-│   │   ├── plugin/            # Plugin base classes
-│   │   │   └── SimplePlugin.java # Plugin base with Scheduler
-│   │   └── scheduler/         # Task scheduling
-│   │       ├── Scheduler.java      # Scheduler implementation
-│   │       └── ScheduledTask.java  # Task wrapper
+│   │   ├── scheduler/         # Task scheduling
+│   │   └── plugin/            # Plugin base classes
+└── TestMod/                   # Example mod
 ```
 
 ## Contributing
@@ -150,15 +162,7 @@ Contributions are welcome! Feel free to:
 - Improve documentation
 - Share your plugins made with HytaleLoader
 
-## Version History
-
-- **1.0.3**: Player Stats API, Scheduler, Permissions, Command Utils
-- **1.0.2**: More events (+ fixes), Player API & Gamemode API
-- **1.0.1**: Item & Inventory API, Complete Javadoc
-- **1.0.0**: Initial release with events and commands
-
 See [CHANGELOG.md](doc/CHANGELOG.md) for detailed version history.
-
 
 ## Support
 

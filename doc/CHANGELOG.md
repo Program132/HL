@@ -16,6 +16,12 @@ All notable changes to this project will be documented in this file.
   - Full support for String, Hash, List, and Set operations
   - Methods: `set()`, `get()`, `hset()`, `hget()`, `lpush()`, `sadd()`, etc.
   - Automatic error handling and thread-safe operations
+- **MySQL API**
+  - `MySQLClient` class for MySQL database management
+  - Connection pooling with HikariCP 5.1.0
+  - Prepared statements for SQL injection prevention
+  - Methods: `query()`, `execute()`, `insert()`, `transaction()`
+  - Batch operations and transaction support
 - **Block API**
   - `world.setBlock(x, y, z, id)` - Set block at coordinates
   - `world.setBlock(Location, id)` - Set block at location

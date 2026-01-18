@@ -30,7 +30,7 @@ import fr.hytale.loader.permission.PermissionManager;
  * @version 1.0.4
  * @since 1.0.1
  */
-public class Player {
+public class Player extends Entity {
 
     private final com.hypixel.hytale.server.core.entity.entities.Player nativePlayer;
     private final PlayerRef playerRef;
@@ -42,6 +42,7 @@ public class Player {
      * @param playerRef    the player reference
      */
     public Player(com.hypixel.hytale.server.core.entity.entities.Player nativePlayer, PlayerRef playerRef) {
+        super(nativePlayer);
         this.nativePlayer = nativePlayer;
         this.playerRef = playerRef;
     }
@@ -88,8 +89,9 @@ public class Player {
      * 
      * @return the player's unique identifier
      */
+    @Override
     public java.util.UUID getUUID() {
-        return playerRef != null ? playerRef.getUuid() : null;
+        return playerRef != null ? playerRef.getUuid() : super.getUUID();
     }
 
     // === Messaging ===
@@ -174,77 +176,7 @@ public class Player {
         }
     }
 
-    // === Location & Teleport ===
-
-    /**
-     * Gets the player's current location.
-     * 
-     * @return the player's location, or null if unavailable
-     */
-    public Location getLocation() {
-        try {
-            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
-            if (world == null) {
-                System.out.println("[DEBUG] world is NULL!");
-                return null;
-            }
-
-            // Must access components from world thread
-            final Location[] result = new Location[1];
-            final java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(1);
-
-            world.execute(() -> {
-                try {
-                    Ref ref = nativePlayer.getReference();
-                    if (ref != null && ref.isValid()) {
-                        Store<EntityStore> store = ref.getStore();
-
-                        // Get TransformComponent using getComponentType()
-                        com.hypixel.hytale.server.core.modules.entity.component.TransformComponent transform = (com.hypixel.hytale.server.core.modules.entity.component.TransformComponent) store
-                                .getComponent(ref,
-                                        com.hypixel.hytale.server.core.modules.entity.component.TransformComponent
-                                                .getComponentType());
-
-                        if (transform != null) {
-                            com.hypixel.hytale.math.vector.Vector3d position = transform.getPosition();
-                            double x = position.getX();
-                            double y = position.getY();
-                            double z = position.getZ();
-
-                            com.hypixel.hytale.math.vector.Vector3f rotation = transform.getRotation();
-                            float yaw = rotation.getYaw();
-                            float pitch = rotation.getPitch();
-
-                            result[0] = new Location(world, x, y, z, yaw, pitch);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    latch.countDown(); // Signal completion
-                }
-            });
-
-            // Wait for the world.execute() to finish (max 1 second)
-            latch.await(1, java.util.concurrent.TimeUnit.SECONDS);
-
-            return result[0];
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Gets the world the player is currently in.
-     * 
-     * @return the World object, or null if unavailable
-     * @since 1.0.5
-     */
-    public fr.hytale.loader.api.World getWorld() {
-        Location loc = getLocation();
-        return loc != null ? loc.getWorld() : null;
-    }
+    // === Helper Methods ===
 
     /**
      * Gets the player's X position.
@@ -294,65 +226,6 @@ public class Player {
     public float getPitch() {
         Location loc = getLocation();
         return loc != null ? loc.getPitch() : 0.0f;
-    }
-
-    /**
-     * Teleports the player to a location.
-     * 
-     * @param location the target location
-     */
-    public void teleport(Location location) {
-        if (location == null) {
-            return;
-        }
-
-        try {
-            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
-            if (world == null) {
-                return;
-            }
-
-            world.execute(() -> {
-                try {
-                    Ref ref = nativePlayer.getReference();
-                    if (ref != null && ref.isValid()) {
-                        Store<EntityStore> store = ref.getStore();
-
-                        // Create Transform for teleport destination
-                        com.hypixel.hytale.math.vector.Vector3d position = new com.hypixel.hytale.math.vector.Vector3d(
-                                location.getX(), location.getY(), location.getZ());
-                        com.hypixel.hytale.math.vector.Vector3f rotation = new com.hypixel.hytale.math.vector.Vector3f(
-                                location.getYaw(), location.getPitch(), 0.0f);
-                        com.hypixel.hytale.math.vector.Transform transform = new com.hypixel.hytale.math.vector.Transform(
-                                position, rotation);
-
-                        // Create Teleport component
-
-                        com.hypixel.hytale.server.core.modules.entity.teleport.Teleport teleport = new com.hypixel.hytale.server.core.modules.entity.teleport.Teleport(
-                                world, transform);
-                        store.addComponent(ref,
-                                com.hypixel.hytale.server.core.modules.entity.teleport.Teleport.getComponentType(),
-                                teleport);
-                    }
-                } catch (Exception e) {
-                    // Ignore teleport errors
-                }
-            });
-        } catch (Exception e) {
-            // Silently fail
-        }
-    }
-
-    /**
-     * Teleports the player to coordinates.
-     * 
-     * @param x the X coordinate
-     * @param y the Y coordinate
-     * @param z the Z coordinate
-     */
-    public void teleport(double x, double y, double z) {
-        com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
-        teleport(new Location(world, x, y, z));
     }
 
     // === Health & Stats ===

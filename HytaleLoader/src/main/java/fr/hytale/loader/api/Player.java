@@ -653,6 +653,101 @@ public class Player extends Entity {
                 true);
     }
 
+    // === Sound API ===
+
+    /**
+     * Plays a sound to the player (2D, no location).
+     * 
+     * @param sound  The sound identifier (e.g. "my.sound.effect")
+     * @param volume The volume (1.0 is normal)
+     * @param pitch  The pitch (1.0 is normal)
+     * @since 1.0.6
+     */
+    public void playSound(String sound, float volume, float pitch) {
+        playSound(sound, SoundCategory.SFX, volume, pitch);
+    }
+
+    /**
+     * Plays a sound to the player (2D, no location).
+     * 
+     * @param sound    The sound identifier
+     * @param category The sound category
+     * @param volume   The volume
+     * @param pitch    The pitch
+     * @since 1.0.6
+     */
+    public void playSound(String sound, SoundCategory category, float volume, float pitch) {
+        if (sound == null || category == null || playerRef == null)
+            return;
+
+        int soundIndex = com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent.getAssetMap()
+                .getIndex(sound);
+        if (soundIndex == 0)
+            return;
+
+        com.hypixel.hytale.server.core.universe.world.SoundUtil.playSoundEvent2dToPlayer(
+                playerRef,
+                soundIndex,
+                category.toNative(),
+                volume,
+                pitch);
+    }
+
+    /**
+     * Plays a sound to the player at a specific location.
+     * <p>
+     * Only this player will hear the sound.
+     * </p>
+     * 
+     * @param location The location to play the sound at
+     * @param sound    The sound identifier
+     * @param volume   The volume
+     * @param pitch    The pitch
+     * @since 1.0.6
+     */
+    public void playSound(Location location, String sound, float volume, float pitch) {
+        playSound(location, sound, SoundCategory.SFX, volume, pitch);
+    }
+
+    /**
+     * Plays a sound to the player at a specific location.
+     * <p>
+     * Only this player will hear the sound.
+     * </p>
+     * 
+     * @param location The location to play the sound at
+     * @param sound    The sound identifier
+     * @param category The sound category
+     * @param volume   The volume
+     * @param pitch    The pitch
+     * @since 1.0.6
+     */
+    public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
+        if (location == null || sound == null || category == null || playerRef == null)
+            return;
+
+        int soundIndex = com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent.getAssetMap()
+                .getIndex(sound);
+        if (soundIndex == 0)
+            return;
+
+        if (nativePlayer != null && nativePlayer.getWorld() != null) {
+            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
+            world.execute(() -> {
+                com.hypixel.hytale.server.core.universe.world.SoundUtil.playSoundEvent3dToPlayer(
+                        playerRef.getReference(),
+                        soundIndex,
+                        category.toNative(),
+                        location.getX(),
+                        location.getY(),
+                        location.getZ(),
+                        volume,
+                        pitch,
+                        (com.hypixel.hytale.component.ComponentAccessor) world.getEntityStore().getStore());
+            });
+        }
+    }
+
     // === Utility ===
 
     @Override

@@ -10,19 +10,19 @@ import java.util.Map;
  * Provides Minecraft-style color codes and methods to parse colored text into
  * Hytale Messages via JSON.
  * </p>
- * 
+ *
  * <p>
  * <b>Usage Examples:</b>
  * </p>
- * 
+ *
  * <pre>
  * // Using utility method (Recommended)
- * Message msg1 = ChatColor.colorize("&aHello &cWorld");
- * 
+ * Message msg1 = ChatColor.colorize("&amp;aHello &amp;cWorld");
+ *
  * // Using constants
  * String msg2 = ChatColor.RED + "Error!";
  * </pre>
- * 
+ *
  * @author HytaleLoader
  * @version 1.0.6
  * @since 1.0.6
@@ -30,29 +30,51 @@ import java.util.Map;
 public class ChatColor {
 
     // Color constants
+    /** Black color code (&amp;0) */
     public static final String BLACK = "&0";
+    /** Dark Blue color code (&amp;1) */
     public static final String DARK_BLUE = "&1";
+    /** Dark Green color code (&amp;2) */
     public static final String DARK_GREEN = "&2";
+    /** Dark Aqua color code (&amp;3) */
     public static final String DARK_AQUA = "&3";
+    /** Dark Red color code (&amp;4) */
     public static final String DARK_RED = "&4";
+    /** Dark Purple color code (&amp;5) */
     public static final String DARK_PURPLE = "&5";
+    /** Gold color code (&amp;6) */
     public static final String GOLD = "&6";
+    /** Gray color code (&amp;7) */
     public static final String GRAY = "&7";
+    /** Dark Gray color code (&amp;8) */
     public static final String DARK_GRAY = "&8";
+    /** Blue color code (&amp;9) */
     public static final String BLUE = "&9";
+    /** Green color code (&amp;a) */
     public static final String GREEN = "&a";
+    /** Aqua color code (&amp;b) */
     public static final String AQUA = "&b";
+    /** Red color code (&amp;c) */
     public static final String RED = "&c";
+    /** Light Purple color code (&amp;d) */
     public static final String LIGHT_PURPLE = "&d";
+    /** Yellow color code (&amp;e) */
     public static final String YELLOW = "&e";
+    /** White color code (&amp;f) */
     public static final String WHITE = "&f";
 
     // Formatting
+    /** Obfuscated format code (&amp;k) */
     public static final String OBFUSCATED = "&k";
+    /** Bold format code (&amp;l) */
     public static final String BOLD = "&l";
+    /** Strikethrough format code (&amp;m) */
     public static final String STRIKETHROUGH = "&m";
+    /** Underline format code (&amp;n) */
     public static final String UNDERLINE = "&n";
+    /** Italic format code (&amp;o) */
     public static final String ITALIC = "&o";
+    /** Reset format code (&amp;r) */
     public static final String RESET = "&r";
 
     private static final Map<Character, String> COLOR_NAMES = new HashMap<>();

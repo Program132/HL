@@ -130,6 +130,61 @@ You can optionally specify a `SoundCategory` (e.g. `SoundCategory.MUSIC`, `Sound
 world.playSound(location, "SFX_Bow_T1_Block_Impact", SoundCategory.HOSTILE, 1.0f, 1.0f);
 ```
 
+```java
+world.playSound(location, "SFX_Bow_T1_Block_Impact", SoundCategory.HOSTILE, 1.0f, 1.0f);
+```
+
+## Particle API
+
+### playParticle(Location, String)
+```java
+// Play a particle effect visible to everyone nearby
+world.playParticle(location, "Totem_Slow_AttachOnStatue");
+```
+Plays a particle effect at a specific location using the native `ParticleUtil`.
+
+- **Visible to:** All players within range (~75 blocks).
+
+## Weather API
+
+### setWeather(WeatherType)
+```java
+// Force sunny weather using Enum
+world.setWeather(WeatherType.CLEAR);
+
+// Force rain using Enum
+world.setWeather(WeatherType.RAIN);
+
+// Reset to dynamic weather
+world.setWeather((WeatherType) null);
+```
+Sets the forced weather for the world using the `WeatherType` enum.
+
+### setWeather(String)
+```java
+// Force custom weather by ID
+world.setWeather("Zone1_Sunny");
+
+// Reset to dynamic weather
+world.setWeather((String) null);
+```
+Sets the forced weather for the world using a string ID. Useful for custom weathers or ones not in the enum.
+
+### getWeather()
+```java
+WeatherType weather = world.getWeather();
+if (weather == WeatherType.CLEAR) {
+    // defaults to clear
+}
+```
+Gets the current forced weather as a `WeatherType`. Returns `null` if dynamic or unknown.
+
+### getWeatherName()
+```java
+String weatherName = world.getWeatherName();
+```
+Gets the current forced weather ID as a string, or `null` if using dynamic weather.
+
 ---
 
 ## Common Use Cases

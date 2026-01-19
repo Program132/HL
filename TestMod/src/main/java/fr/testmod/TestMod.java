@@ -50,6 +50,7 @@ public class TestMod extends SimplePlugin {
                         .log("[TESTMOD] Failed to save config: " + e.getMessage());
             }
         }
+
     }
 
     @Override
@@ -359,4 +360,55 @@ public class TestMod extends SimplePlugin {
 
         world.spawnEntity(player.getLocation(), "Antelope");
     }
+
+    @fr.hytale.loader.command.Command(name = "customui", description = "Open Custom UI Test")
+    private void onCustomUI2(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+
+        // Create a custom UI using the UI file
+        fr.hytale.loader.api.ui.CustomUI ui = new fr.hytale.loader.api.ui.CustomUI(
+                "Pages/HelloWorldUI.ui", // full path:Common/UI/Custom/Pages/HelloWorldUI.ui, only need
+                                         // Pages/HelloWorldUI.ui
+                fr.hytale.loader.api.ui.CustomUI.CustomUILifetime.CAN_DISMISS);
+
+        // Open the UI
+        if (player.openCustomUI(ui)) {
+            player.sendMessage("Custom UI opened!");
+        } else {
+            player.sendMessage("Failed to open custom UI");
+        }
+    }
+
+    @fr.hytale.loader.command.Command(name = "interactiveui", description = "Open Interactive UI Test")
+    private void onInteractiveUI(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+
+        // Create an interactive UI with event handlers
+        fr.hytale.loader.api.ui.InteractiveUI ui = new fr.hytale.loader.api.ui.InteractiveUI(
+                "Pages/InteractiveMenuUI.ui");
+
+        // Handle button events - the eventId matches the button #id in the UI file
+        ui.onButtonClick("actionButton", (p, data) -> {
+            p.sendMessage("Button clicked!");
+        });
+
+        ui.onButtonClick("closeButton", (p, data) -> {
+            p.sendMessage("Menu closed");
+            p.closeCustomUI();
+        });
+
+        // Open the UI
+        if (player.openInteractiveUI(ui)) {
+            player.sendMessage("Interactive UI opened! Try clicking the buttons.");
+        } else {
+            player.sendMessage("Failed to open interactive UI");
+        }
+    }
+
 }

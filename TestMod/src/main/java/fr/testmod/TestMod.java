@@ -80,8 +80,13 @@ public class TestMod extends SimplePlugin {
             inv.addItem(item);
         }
 
+        // Test ChatColor in messages (already using sendColoredMessage)
         getScheduler().runTask(() -> {
-            player.sendMessage("Welcome!");
+            player.sendColoredMessage("§6=§e====§6=");
+            player.sendColoredMessage("§aWelcome to the server!§r");
+            player.sendColoredMessage("§7Testing §cdifferent §9colors");
+            player.sendColoredMessage("&6Gold &eYellow &aGreen &cRed &9Blue");
+            player.sendColoredMessage("§6=§e====§6=");
         });
 
         getScheduler().runTaskLater(() -> {

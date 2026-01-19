@@ -27,7 +27,7 @@ import fr.hytale.loader.permission.PermissionManager;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.5
+ * @version 1.0.6
  * @since 1.0.1
  */
 public class Player extends Entity {
@@ -461,6 +461,23 @@ public class Player extends Entity {
         } catch (Exception e) {
             // Silently fail
         }
+    }
+
+    /**
+     * Sends a colored message to this player.
+     * <p>
+     * Parses Minecraft-style color codes (§ or &) and creates a properly formatted
+     * Message.
+     * </p>
+     * 
+     * @param text the text with color codes (§ or &)
+     * @since 1.0.6
+     */
+    public void sendColoredMessage(String text) {
+        if (text == null || playerRef == null) {
+            return;
+        }
+        playerRef.sendMessage(ChatColor.colorize(text));
     }
 
     // === Permissions & Operators ===

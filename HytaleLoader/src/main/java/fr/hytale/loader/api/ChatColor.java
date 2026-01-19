@@ -1,17 +1,14 @@
 package fr.hytale.loader.api;
 
 import com.hypixel.hytale.server.core.Message;
-import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Utility class for working with colored text and messages in Hytale.
  * <p>
  * Provides Minecraft-style color codes and methods to parse colored text into
- * Hytale Messages.
+ * Hytale Messages via JSON.
  * </p>
  * 
  * <p>
@@ -20,7 +17,7 @@ import java.util.Map;
  * 
  * <pre>
  * // Using utility method (Recommended)
- * Message msg1 = ChatColor.colorize("&amp;aHello &amp;cWorld");
+ * Message msg1 = ChatColor.colorize("&aHello &cWorld");
  * 
  * // Using constants
  * String msg2 = ChatColor.RED + "Error!";
@@ -33,71 +30,63 @@ import java.util.Map;
 public class ChatColor {
 
     // Color constants
-    /** Black color code (&amp;0) */
-    public static final Color BLACK = new Color(0, 0, 0);
-    /** Dark Blue color code (&amp;1) */
-    public static final Color DARK_BLUE = new Color(0, 0, 170);
-    /** Dark Green color code (&amp;2) */
-    public static final Color DARK_GREEN = new Color(0, 170, 0);
-    /** Dark Aqua color code (&amp;3) */
-    public static final Color DARK_AQUA = new Color(0, 170, 170);
-    /** Dark Red color code (&amp;4) */
-    public static final Color DARK_RED = new Color(170, 0, 0);
-    /** Dark Purple color code (&amp;5) */
-    public static final Color DARK_PURPLE = new Color(170, 0, 170);
-    /** Gold color code (&amp;6) */
-    public static final Color GOLD = new Color(255, 170, 0);
-    /** Gray color code (&amp;7) */
-    public static final Color GRAY = new Color(170, 170, 170);
-    /** Dark Gray color code (&amp;8) */
-    public static final Color DARK_GRAY = new Color(85, 85, 85);
-    /** Blue color code (&amp;9) */
-    public static final Color BLUE = new Color(85, 85, 255);
-    /** Green color code (&amp;a) */
-    public static final Color GREEN = new Color(85, 255, 85);
-    /** Aqua color code (&amp;b) */
-    public static final Color AQUA = new Color(85, 255, 255);
-    /** Red color code (&amp;c) */
-    public static final Color RED = new Color(255, 85, 85);
-    /** Light Purple color code (&amp;d) */
-    public static final Color LIGHT_PURPLE = new Color(255, 85, 255);
-    /** Yellow color code (&amp;e) */
-    public static final Color YELLOW = new Color(255, 255, 85);
-    /** White color code (&amp;f) */
-    public static final Color WHITE = new Color(255, 255, 255);
+    public static final String BLACK = "&0";
+    public static final String DARK_BLUE = "&1";
+    public static final String DARK_GREEN = "&2";
+    public static final String DARK_AQUA = "&3";
+    public static final String DARK_RED = "&4";
+    public static final String DARK_PURPLE = "&5";
+    public static final String GOLD = "&6";
+    public static final String GRAY = "&7";
+    public static final String DARK_GRAY = "&8";
+    public static final String BLUE = "&9";
+    public static final String GREEN = "&a";
+    public static final String AQUA = "&b";
+    public static final String RED = "&c";
+    public static final String LIGHT_PURPLE = "&d";
+    public static final String YELLOW = "&e";
+    public static final String WHITE = "&f";
 
-    // Color code mapping
-    private static final Map<Character, Color> COLOR_MAP = new HashMap<>();
+    // Formatting
+    public static final String OBFUSCATED = "&k";
+    public static final String BOLD = "&l";
+    public static final String STRIKETHROUGH = "&m";
+    public static final String UNDERLINE = "&n";
+    public static final String ITALIC = "&o";
+    public static final String RESET = "&r";
+
+    private static final Map<Character, String> COLOR_NAMES = new HashMap<>();
 
     static {
-        COLOR_MAP.put('0', BLACK);
-        COLOR_MAP.put('1', DARK_BLUE);
-        COLOR_MAP.put('2', DARK_GREEN);
-        COLOR_MAP.put('3', DARK_AQUA);
-        COLOR_MAP.put('4', DARK_RED);
-        COLOR_MAP.put('5', DARK_PURPLE);
-        COLOR_MAP.put('6', GOLD);
-        COLOR_MAP.put('7', GRAY);
-        COLOR_MAP.put('8', DARK_GRAY);
-        COLOR_MAP.put('9', BLUE);
-        COLOR_MAP.put('a', GREEN);
-        COLOR_MAP.put('b', AQUA);
-        COLOR_MAP.put('c', RED);
-        COLOR_MAP.put('d', LIGHT_PURPLE);
-        COLOR_MAP.put('e', YELLOW);
-        COLOR_MAP.put('f', WHITE);
+        COLOR_NAMES.put('0', "black");
+        COLOR_NAMES.put('1', "dark_blue");
+        COLOR_NAMES.put('2', "dark_green");
+        COLOR_NAMES.put('3', "dark_aqua");
+        COLOR_NAMES.put('4', "dark_red");
+        COLOR_NAMES.put('5', "dark_purple");
+        COLOR_NAMES.put('6', "gold");
+        COLOR_NAMES.put('7', "gray");
+        COLOR_NAMES.put('8', "dark_gray");
+        COLOR_NAMES.put('9', "blue");
+        COLOR_NAMES.put('a', "green");
+        COLOR_NAMES.put('b', "aqua");
+        COLOR_NAMES.put('c', "red");
+        COLOR_NAMES.put('d', "light_purple");
+        COLOR_NAMES.put('e', "yellow");
+        COLOR_NAMES.put('f', "white");
     }
 
     // Prevent instantiation
     private ChatColor() {
+        throw new UnsupportedOperationException("ChatColor is a utility class");
     }
 
     /**
      * Parses a string with Minecraft-style color codes and returns a Hytale
      * {@link Message}.
      * <p>
-     * Supports both '&amp;' and '§' as color code prefixes.
-     * It handles colors, bold (&amp;l), and italic (&amp;o).
+     * Supports both '&amp;' and '&sect;' as color code prefixes.
+     * It handles colors, bold (&amp;l), italic (&amp;o), and underline (&amp;n).
      * </p>
      * 
      * @param text the text with color codes (e.g., "&amp;aGreen &amp;cRed")
@@ -105,113 +94,91 @@ public class ChatColor {
      */
     public static Message colorize(String text) {
         if (text == null || text.isEmpty()) {
-            return new Message.Text("");
+            return Message.raw("");
         }
 
-        // Translate alternate color codes to section symbol just in case, but we handle
-        // both
-        String processedText = translateAlternateColorCodes('&', text);
+        // Convert to section symbol for consistent parsing
+        String processed = text.replace('&', '§');
 
-        Message.Builder messageBuilder = Message.builder();
+        // Simple parser to JSON
+        StringBuilder json = new StringBuilder("{\"text\":\"\",\"extra\":[");
 
-        String[] parts = processedText.split("(?=§[0-9a-fA-FlLoOrR])");
+        String[] parts = processed.split("(?=§)");
 
-        Color currentColor = null; // Default color
+        String color = null;
         boolean bold = false;
         boolean italic = false;
+        boolean underlined = false;
 
         for (String part : parts) {
-            if (part.isEmpty())
-                continue;
-
             String content = part;
+            if (part.startsWith("§") && part.length() >= 2) {
+                char code = Character.toLowerCase(part.charAt(1));
 
-            // Check if this part starts with a color code
-            if (part.startsWith("§")) {
-                if (part.length() >= 2) {
-                    char code = Character.toLowerCase(part.charAt(1));
+                if (COLOR_NAMES.containsKey(code)) {
+                    color = COLOR_NAMES.get(code);
+                    bold = false;
+                    italic = false;
+                    underlined = false;
+                } else if (code == 'l') {
+                    bold = true;
+                } else if (code == 'o') {
+                    italic = true;
+                } else if (code == 'n') {
+                    underlined = true;
+                } else if (code == 'r') {
+                    color = null;
+                    bold = false;
+                    italic = false;
+                    underlined = false;
+                }
 
-                    if (COLOR_MAP.containsKey(code)) {
-                        currentColor = COLOR_MAP.get(code);
-                        // Reset formats when color changes (Minecraft behavior)
-                        bold = false;
-                        italic = false;
-                    } else if (code == 'l') {
-                        bold = true;
-                    } else if (code == 'o') {
-                        italic = true;
-                    } else if (code == 'r') {
-                        currentColor = null; // Reset
-                        bold = false;
-                        italic = false;
-                    }
-
-                    // Remove the code from the content
-                    if (part.length() > 2) {
-                        content = part.substring(2);
-                    } else {
-                        content = ""; // Just a code, no text
-                    }
+                if (part.length() > 2) {
+                    content = part.substring(2);
+                } else {
+                    content = "";
                 }
             }
 
             if (!content.isEmpty()) {
-                Message.Text textComponent = new Message.Text(content);
-                if (currentColor != null) {
-                    textComponent.color(currentColor);
+                json.append("{");
+                json.append("\"text\":\"").append(escapeJson(content)).append("\"");
+
+                if (color != null) {
+                    json.append(",\"color\":\"").append(color).append("\"");
                 }
                 if (bold) {
-                    textComponent.bold(true);
+                    json.append(",\"bold\":true");
                 }
                 if (italic) {
-                    textComponent.italic(true);
+                    json.append(",\"italic\":true");
                 }
-                messageBuilder.add(textComponent);
+                if (underlined) {
+                    json.append(",\"underlined\":true");
+                }
+
+                json.append("},");
             }
         }
 
-        return messageBuilder.build();
-    }
-
-    /**
-     * Translates '&amp;' color codes to '§' in a string.
-     * 
-     * @param altColorChar the alternate color character to replace (usually
-     *                     '&amp;')
-     * @param text         the text with '&amp;' codes
-     * @return the text with '§' codes
-     */
-    public static String translateAlternateColorCodes(char altColorChar, String text) {
-        char[] b = text.toCharArray();
-        for (int i = 0; i < b.length - 1; i++) {
-            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
-                b[i] = '§';
-                b[i + 1] = Character.toLowerCase(b[i + 1]);
-            }
+        // Remove trailing comma if exists
+        if (json.length() > 0 && json.charAt(json.length() - 1) == ',') {
+            json.deleteCharAt(json.length() - 1);
         }
-        return new String(b);
-    }
 
-    /**
-     * Strips all color codes from a string.
-     * 
-     * @param text the colored text
-     * @return the text without color codes
-     */
-    public static String stripColor(String text) {
-        if (text == null) {
-            return null;
+        json.append("]}");
+
+        try {
+            return Message.parse(json.toString());
+        } catch (Exception e) {
+            // Fallback to raw text if parsing fails
+            return Message.raw(processed);
         }
-        return text.replaceAll("§[0-9a-flonmr]", "");
     }
 
-    /**
-     * Gets a Color from a color code character.
-     * 
-     * @param code the color code (0-9, a-f)
-     * @return the Color, or null if not found
-     */
-    public static Color getColorFromCode(char code) {
-        return COLOR_MAP.get(Character.toLowerCase(code));
+    private static String escapeJson(String s) {
+        if (s == null)
+            return "";
+        return s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }

@@ -343,4 +343,54 @@ public class World {
     public int hashCode() {
         return nativeWorld != null ? nativeWorld.hashCode() : 0;
     }
+
+    // === Sound API ===
+
+    /**
+     * Plays a sound at a specific location for all nearby players.
+     * 
+     * @param location The location to play the sound at
+     * @param sound    The sound identifier (e.g. "my.sound.effect")
+     * @param volume   The volume (1.0 is normal)
+     * @param pitch    The pitch (1.0 is normal)
+     * @since 1.0.6
+     */
+    public void playSound(Location location, String sound, float volume, float pitch) {
+        playSound(location, sound, SoundCategory.SFX, volume, pitch);
+    }
+
+    /**
+     * Plays a sound at a specific location for all nearby players.
+     * 
+     * @param location The location to play the sound at
+     * @param sound    The sound identifier
+     * @param category The sound category
+     * @param volume   The volume
+     * @param pitch    The pitch
+     * @since 1.0.6
+     */
+    public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
+        if (location == null || sound == null || category == null || nativeWorld == null)
+            return;
+
+        if (!location.getWorld().equals(this))
+            return;
+
+        int soundIndex = com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent.getAssetMap()
+                .getIndex(sound);
+        if (soundIndex == 0)
+            return;
+
+        nativeWorld.execute(() -> {
+            com.hypixel.hytale.server.core.universe.world.SoundUtil.playSoundEvent3d(
+                    soundIndex,
+                    category.toNative(),
+                    location.getX(),
+                    location.getY(),
+                    location.getZ(),
+                    volume,
+                    pitch,
+                    (com.hypixel.hytale.component.ComponentAccessor) nativeWorld.getEntityStore().getStore());
+        });
+    }
 }

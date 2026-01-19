@@ -200,6 +200,26 @@ public class WebRequest {
     }
 
     /**
+     * Performs an asynchronous PUT request with a body.
+     * 
+     * @param body the request body
+     * @return a CompletableFuture that will contain the response body
+     */
+    public CompletableFuture<String> putAsync(String body) {
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .timeout(timeout)
+                .PUT(HttpRequest.BodyPublishers.ofString(body));
+
+        // Add headers
+        headers.forEach(requestBuilder::header);
+
+        HttpRequest request = requestBuilder.build();
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body);
+    }
+
+    /**
      * Performs a synchronous DELETE request.
      * 
      * @return the response body as a String
@@ -219,6 +239,25 @@ public class WebRequest {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         return response.body();
+    }
+
+    /**
+     * Performs an asynchronous DELETE request.
+     * 
+     * @return a CompletableFuture that will contain the response body
+     */
+    public CompletableFuture<String> deleteAsync() {
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .timeout(timeout)
+                .DELETE();
+
+        // Add headers
+        headers.forEach(requestBuilder::header);
+
+        HttpRequest request = requestBuilder.build();
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body);
     }
 
     /**

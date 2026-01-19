@@ -110,6 +110,28 @@ Entity entityByUuid = world.getEntity(uuid);
 These methods are thread-safe and will handle cross-thread synchronization automatically.
 
 
+## Sound API
+
+### playSound(Location, String, float, float)
+```java
+// Play a sound in the world (audible to everyone nearby)
+world.playSound(location, "SFX_Bow_T1_Block_Impact", 1.0f, 1.0f);
+```
+Plays a 3D sound at a specific location.
+
+- **Audible to:** All players near the location.
+- **Volume**: 1.0 is default.
+- **Pitch**: 1.0 is default.
+
+### SoundCategory
+You can optionally specify a `SoundCategory` (e.g. `SoundCategory.MUSIC`, `SoundCategory.HOSTILE`) to categorize the sound.
+
+```java
+world.playSound(location, "SFX_Bow_T1_Block_Impact", SoundCategory.HOSTILE, 1.0f, 1.0f);
+```
+
+---
+
 ## Common Use Cases
 
 ### Checking World Name

@@ -16,17 +16,17 @@ import java.util.Map;
  * 
  * <h3>Usage Examples:</h3>
  * 
- * <pre>{@code
- * // Direct color constants
- * player.sendMessage(Message.raw("Error!").color(ChatColor.RED));
+ * <p>
+ * <b>Usage Examples:</b>
+ * </p>
  * 
- * // Parse color codes
- * Message msg = ChatColor.colorize("&6Gold &eYellow &cRed");
- * player.sendMessage(msg);
+ * <pre>
+ * // Using utility method (Recommended)
+ * Message msg1 = ChatColor.colorize("&amp;aHello &amp;cWorld");
  * 
- * // Using player helper method
- * player.sendColoredMessage("&aGreen text &cRed text");
- * }</pre>
+ * // Using constants
+ * String msg2 = ChatColor.RED + "Error!";
+ * </pre>
  * 
  * @author HytaleLoader
  * @version 1.0.6
@@ -34,22 +34,38 @@ import java.util.Map;
  */
 public class ChatColor {
 
-    // Minecraft color palette (RGB values)
+    // Color constants
+    /** Black color code (&amp;0) */
     public static final Color BLACK = new Color(0, 0, 0);
+    /** Dark Blue color code (&amp;1) */
     public static final Color DARK_BLUE = new Color(0, 0, 170);
+    /** Dark Green color code (&amp;2) */
     public static final Color DARK_GREEN = new Color(0, 170, 0);
+    /** Dark Aqua color code (&amp;3) */
     public static final Color DARK_AQUA = new Color(0, 170, 170);
+    /** Dark Red color code (&amp;4) */
     public static final Color DARK_RED = new Color(170, 0, 0);
+    /** Dark Purple color code (&amp;5) */
     public static final Color DARK_PURPLE = new Color(170, 0, 170);
+    /** Gold color code (&amp;6) */
     public static final Color GOLD = new Color(255, 170, 0);
+    /** Gray color code (&amp;7) */
     public static final Color GRAY = new Color(170, 170, 170);
+    /** Dark Gray color code (&amp;8) */
     public static final Color DARK_GRAY = new Color(85, 85, 85);
+    /** Blue color code (&amp;9) */
     public static final Color BLUE = new Color(85, 85, 255);
+    /** Green color code (&amp;a) */
     public static final Color GREEN = new Color(85, 255, 85);
+    /** Aqua color code (&amp;b) */
     public static final Color AQUA = new Color(85, 255, 255);
+    /** Red color code (&amp;c) */
     public static final Color RED = new Color(255, 85, 85);
+    /** Light Purple color code (&amp;d) */
     public static final Color LIGHT_PURPLE = new Color(255, 85, 255);
+    /** Yellow color code (&amp;e) */
     public static final Color YELLOW = new Color(255, 255, 85);
+    /** White color code (&amp;f) */
     public static final Color WHITE = new Color(255, 255, 255);
 
     // Color code mapping
@@ -74,108 +90,108 @@ public class ChatColor {
         COLOR_MAP.put('f', WHITE);
     }
 
-    /**
-     * Parses a string with Minecraft color codes and returns a formatted Message.
-     * <p>
-     * Supports both '&' and '§' as color code prefixes.
-     * Color codes: 0-9, a-f for colors; l=bold, o=italic, r=reset
-     * </p>
-     * 
-     * @param text the text with color codes (e.g., "&aGreen &cRed")
-     * @return a formatted Hytale Message with colors applied
-     */
-    public static Message colorize(String text) {
-        if (text == null || text.isEmpty()) {
-            return Message.raw("");
-        }
-
-        // Convert & to §
-        text = text.replace('&', '§');
-
-        List<Message> parts = new ArrayList<>();
-        StringBuilder currentText = new StringBuilder();
-        Color currentColor = null;
-        boolean bold = false;
-        boolean italic = false;
-
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-
-            if (c == '§' && i + 1 < text.length()) {
-                // Flush current text
-                if (currentText.length() > 0) {
-                    Message part = Message.raw(currentText.toString());
-                    if (currentColor != null) {
-                        part = part.color(currentColor);
-                    }
-                    if (bold) {
-                        part = part.bold(true);
-                    }
-                    if (italic) {
-                        part = part.italic(true);
-                    }
-                    parts.add(part);
-                    currentText = new StringBuilder();
-                }
-
-                // Parse color code
-                char code = Character.toLowerCase(text.charAt(i + 1));
-
-                if (code == 'r') {
-                    // Reset
-                    currentColor = null;
-                    bold = false;
-                    italic = false;
-                } else if (code == 'l') {
-                    bold = true;
-                } else if (code == 'o') {
-                    italic = true;
-                } else if (COLOR_MAP.containsKey(code)) {
-                    currentColor = COLOR_MAP.get(code);
-                }
-
-                i++; // Skip next character
-            } else {
-                currentText.append(c);
-            }
-        }
-
-        // Flush remaining text
-        if (currentText.length() > 0) {
-            Message part = Message.raw(currentText.toString());
-            if (currentColor != null) {
-                part = part.color(currentColor);
-            }
-            if (bold) {
-                part = part.bold(true);
-            }
-            if (italic) {
-                part = part.italic(true);
-            }
-            parts.add(part);
-        }
-
-        // Join all parts
-        if (parts.isEmpty()) {
-            return Message.raw("");
-        } else if (parts.size() == 1) {
-            return parts.get(0);
-        } else {
-            return Message.join(parts.toArray(new Message[0]));
-        }
+    // Prevent instantiation
+    private ChatColor() {
     }
 
     /**
-     * Translates '&' color codes to '§' in a string.
+     * Parses a string with Minecraft-style color codes and returns a Hytale
+     * {@link Message}.
+     * <p>
+     * Supports both '&amp;' and '§' as color code prefixes.
+     * It handles colors, bold (&amp;l), and italic (&amp;o).
+     * </p>
      * 
-     * @param text the text with '&' codes
+     * @param text the text with color codes (e.g., "&amp;aGreen &amp;cRed")
+     * @return a formatted {@link Message} object ready to be sent to a player
+     */
+    public static Message colorize(String text) {
+        if (text == null || text.isEmpty()) {
+            return new Message.Text("");
+        }
+
+        // Translate alternate color codes to section symbol just in case, but we handle
+        // both
+        String processedText = translateAlternateColorCodes('&', text);
+
+        Message.Builder messageBuilder = Message.builder();
+
+        String[] parts = processedText.split("(?=§[0-9a-fA-FlLoOrR])");
+
+        Color currentColor = null; // Default color
+        boolean bold = false;
+        boolean italic = false;
+
+        for (String part : parts) {
+            if (part.isEmpty())
+                continue;
+
+            String content = part;
+
+            // Check if this part starts with a color code
+            if (part.startsWith("§")) {
+                if (part.length() >= 2) {
+                    char code = Character.toLowerCase(part.charAt(1));
+
+                    if (COLOR_MAP.containsKey(code)) {
+                        currentColor = COLOR_MAP.get(code);
+                        // Reset formats when color changes (Minecraft behavior)
+                        bold = false;
+                        italic = false;
+                    } else if (code == 'l') {
+                        bold = true;
+                    } else if (code == 'o') {
+                        italic = true;
+                    } else if (code == 'r') {
+                        currentColor = null; // Reset
+                        bold = false;
+                        italic = false;
+                    }
+
+                    // Remove the code from the content
+                    if (part.length() > 2) {
+                        content = part.substring(2);
+                    } else {
+                        content = ""; // Just a code, no text
+                    }
+                }
+            }
+
+            if (!content.isEmpty()) {
+                Message.Text textComponent = new Message.Text(content);
+                if (currentColor != null) {
+                    textComponent.color(currentColor);
+                }
+                if (bold) {
+                    textComponent.bold(true);
+                }
+                if (italic) {
+                    textComponent.italic(true);
+                }
+                messageBuilder.add(textComponent);
+            }
+        }
+
+        return messageBuilder.build();
+    }
+
+    /**
+     * Translates '&amp;' color codes to '§' in a string.
+     * 
+     * @param altColorChar the alternate color character to replace (usually
+     *                     '&amp;')
+     * @param text         the text with '&amp;' codes
      * @return the text with '§' codes
      */
-    public static String translateAlternateColorCodes(String text) {
-        if (text == null) {
-            return null;
+    public static String translateAlternateColorCodes(char altColorChar, String text) {
+        char[] b = text.toCharArray();
+        for (int i = 0; i < b.length - 1; i++) {
+            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
+                b[i] = '§';
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
+            }
         }
-        return text.replace('&', '§');
+        return new String(b);
     }
 
     /**
@@ -199,10 +215,5 @@ public class ChatColor {
      */
     public static Color getColorFromCode(char code) {
         return COLOR_MAP.get(Character.toLowerCase(code));
-    }
-
-    // Private constructor to prevent instantiation
-    private ChatColor() {
-        throw new UnsupportedOperationException("ChatColor is a utility class");
     }
 }

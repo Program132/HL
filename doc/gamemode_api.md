@@ -1,8 +1,5 @@
 # GameMode API Reference
 
-**Version:** 1.0.2 (In Development)  
-**Status:** 🚧 Work in Progress
-
 Complete reference for the HytaleLoader GameMode API.
 
 ## Overview

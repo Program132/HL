@@ -1,8 +1,5 @@
 # Permission API Documentation
 
-**Version:** 1.0.3  
-**Package:** `fr.hytale.loader.permission`
-
 The Permission API provides a comprehensive permission management system for HytaleLoader plugins.
 
 ---

@@ -1,8 +1,5 @@
 # Scheduler API Documentation
 
-**Version:** 1.0.3  
-**Package:** `fr.hytale.loader.scheduler`
-
 The Scheduler API provides task scheduling and execution capabilities for HytaleLoader plugins.
 
 ---

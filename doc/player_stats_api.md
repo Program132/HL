@@ -1,8 +1,5 @@
 # Player Stats API Documentation
 
-**Version:** 1.0.3  
-**Package:** `fr.hytale.loader.api`
-
 The Player Stats API provides methods to read and modify player statistics such as health, stamina, oxygen, mana, signature energy, and ammo.
 
 ---

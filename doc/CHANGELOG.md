@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
   - Supports `getID()`, `getUUID()`, `getLocation()`, `teleport()`, `remove()`.
 - **World Entity Retrieval**: Added `world.getEntity(int id)` and `world.getEntity(UUID uuid)`.
 - **Player Inheritance**: `Player` now extends `Entity`, inheriting unified methods.
-- Added `World.spawnEntity(Location, String) method.`
+- Added `World.spawnEntity(Location, String)` method.
 - **Redis API**
   - `RedisClient` class for remote Redis database management
   - Connection pooling with Jedis 5.1.0

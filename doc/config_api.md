@@ -1,8 +1,5 @@
 # Config System API Documentation
 
-**Version:** 1.0.4  
-**Package:** `fr.hytale.loader.config`
-
 The Config System provides an easy-to-use YAML or JSON configuration API for plugins.
 
 ---

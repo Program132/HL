@@ -278,7 +278,7 @@ Plays a 3D sound at a specific location, audible only to this player.
 ### playParticle(Location, String)
 ```java
 // Play a particle effect only visible to this player
-player.playParticle(player.getLocation(), "lx_sparkle_01");
+player.playParticle(player.getLocation(), "Totem_Slow_AttachOnStatue");
 ```
 Plays a particle effect at a specific location.
 

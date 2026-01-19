@@ -748,6 +748,40 @@ public class Player extends Entity {
         }
     }
 
+    // === Particle API ===
+
+    /**
+     * Plays a particle effect to the player at a specific location.
+     * <p>
+     * Only this player will see the particle.
+     * </p>
+     *
+     * @param location     The location to play the particle at
+     * @param particleName The particle identifier (e.g. "lx_sparkle_01")
+     * @since 1.0.6
+     */
+    public void playParticle(Location location, String particleName) {
+        if (location == null || particleName == null || playerRef == null)
+            return;
+
+        if (nativePlayer != null && nativePlayer.getWorld() != null) {
+            com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
+            world.execute(() -> {
+                com.hypixel.hytale.math.vector.Vector3d pos = new com.hypixel.hytale.math.vector.Vector3d(
+                        location.getX(), location.getY(), location.getZ());
+
+                java.util.List<com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>> players = new java.util.ArrayList<>();
+                players.add(playerRef.getReference());
+
+                com.hypixel.hytale.server.core.universe.world.ParticleUtil.spawnParticleEffect(
+                        particleName,
+                        pos,
+                        players,
+                        (com.hypixel.hytale.component.ComponentAccessor) world.getEntityStore().getStore());
+            });
+        }
+    }
+
     // === Utility ===
 
     @Override

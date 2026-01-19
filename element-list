@@ -1,7 +1,9 @@
 fr.hytale.loader.api
 fr.hytale.loader.api.inventory
+fr.hytale.loader.api.ui
 fr.hytale.loader.command
 fr.hytale.loader.config
+fr.hytale.loader.datastorage
 fr.hytale.loader.event
 fr.hytale.loader.event.types.ecs
 fr.hytale.loader.event.types.player

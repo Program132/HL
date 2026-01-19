@@ -393,4 +393,113 @@ public class World {
                     (com.hypixel.hytale.component.ComponentAccessor) nativeWorld.getEntityStore().getStore());
         });
     }
+
+    // === Particle API ===
+
+    /**
+     * Plays a particle effect at a specific location for all nearby players.
+     *
+     * @param location     The location to play the particle at
+     * @param particleName The particle identifier (e.g. "lx_sparkle_01")
+     * @since 1.0.6
+     */
+    public void playParticle(Location location, String particleName) {
+        if (location == null || particleName == null || nativeWorld == null)
+            return;
+
+        if (!location.getWorld().equals(this))
+            return;
+
+        nativeWorld.execute(() -> {
+            com.hypixel.hytale.math.vector.Vector3d pos = new com.hypixel.hytale.math.vector.Vector3d(
+                    location.getX(), location.getY(), location.getZ());
+
+            com.hypixel.hytale.server.core.universe.world.ParticleUtil.spawnParticleEffect(
+                    particleName,
+                    pos,
+                    (com.hypixel.hytale.component.ComponentAccessor) nativeWorld.getEntityStore().getStore());
+        });
+    }
+
+    // === Weather API ===
+
+    /**
+     * Sets the weather for this world.
+     *
+     * @param weatherName The name of the weather asset (e.g. "sunny", "rain",
+     *                    "storm")
+     *                    Pass null to reset to dynamic weather.
+     * @since 1.0.6
+     */
+    /**
+     * Sets the weather for this world.
+     *
+     * @param weather The weather type to set.
+     *                Pass null to reset to dynamic weather.
+     * @since 1.0.6
+     */
+    public void setWeather(WeatherType weather) {
+        setWeather(weather != null ? weather.getAssetName() : null);
+    }
+
+    /**
+     * Sets the weather for this world.
+     *
+     * @param weatherName The name of the weather asset (e.g. "Zone1_Sunny",
+     *                    "Zone1_Rain").
+     *                    Pass null to reset to dynamic weather.
+     * @since 1.0.6
+     */
+    public void setWeather(String weatherName) {
+        if (nativeWorld == null)
+            return;
+
+        nativeWorld.execute(() -> {
+            com.hypixel.hytale.server.core.universe.world.WorldConfig config = nativeWorld.getWorldConfig();
+            config.setForcedWeather(weatherName);
+            config.markChanged();
+
+            // Also update WeatherResource to ensure immediate effect/logic consistency
+            try {
+                com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> accessor = (com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>) nativeWorld
+                        .getEntityStore().getStore();
+
+                com.hypixel.hytale.builtin.weather.resources.WeatherResource weatherResource = (com.hypixel.hytale.builtin.weather.resources.WeatherResource) accessor
+                        .getResource(
+                                com.hypixel.hytale.builtin.weather.resources.WeatherResource.getResourceType());
+
+                if (weatherResource != null) {
+                    weatherResource.setForcedWeather(weatherName);
+                }
+            } catch (Exception e) {
+                // Ignore if WeatherResource is not available or casting fails
+            }
+        });
+    }
+
+    /**
+     * Gets the current forced weather name for this world.
+     *
+     * @return The weather name, or null if dynamic weather is active.
+     * @since 1.0.6
+     */
+    public String getWeatherName() {
+        if (nativeWorld == null)
+            return null;
+        return nativeWorld.getWorldConfig().getForcedWeather();
+    }
+
+    /**
+     * Gets the current forced weather type for this world.
+     *
+     * @return The WeatherType, or null if dynamic weather is active or the type is
+     *         unknown to the API.
+     * @since 1.0.6
+     */
+    public WeatherType getWeather() {
+        String name = getWeatherName();
+        if (name == null)
+            return null;
+        return WeatherType.fromAssetName(name);
+    }
 }

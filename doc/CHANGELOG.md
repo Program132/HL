@@ -14,6 +14,14 @@ All notable changes to this project will be documented in this file.
   - Added support for Minecraft-style color codes (`&` and `§`)
   - Added `ChatColor.colorize(String)` utility method
   - Added `Player.sendColoredMessage(String)` for easy colored messaging
+- **Sound API**
+  - Added `Player.playSound(String sound, float volume, float pitch)`
+  - Added `Player.playSound(String sound, SoundCategory category, float volume, float pitch)`
+  - Added `Player.playSound(Location location, String sound, float volume, float pitch)`
+  - Added `Player.playSound(Location location, String sound, SoundCategory category, float volume, float pitch)`
+  - Added `World.playSound(Location location, String sound, float volume, float pitch)`
+  - Added `World.playSound(Location location, String sound, SoundCategory category, float volume, float pitch)`
+  - Added `SoundCategory` enum wrapper
 
 ### Changed
 

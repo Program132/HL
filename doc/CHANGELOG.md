@@ -22,6 +22,14 @@ All notable changes to this project will be documented in this file.
   - Added `World.playSound(Location location, String sound, float volume, float pitch)`
   - Added `World.playSound(Location location, String sound, SoundCategory category, float volume, float pitch)`
   - Added `SoundCategory` enum wrapper
+- **Updated Player & World API (Particle)**
+  - Added `Player.playParticle(Location location, String particleName)`
+  - Added `World.playParticle(Location location, String particleName)`
+- **Updated World API (Weather)**
+  - Added `WeatherType` enum
+  - Updated `World.setWeather(WeatherType weather)`
+  - Added `World.getWeatherName()` (formerly getWeather)
+  - Added `World.getWeather()` returning WeatherType
 
 ### Changed
 

@@ -17,7 +17,9 @@ import java.util.concurrent.CompletableFuture;
  * and timeouts.
  * </p>
  * 
- * <h3>Usage Examples:</h3>
+ * <p>
+ * <b>Usage Examples:</b>
+ * </p>
  * 
  * <pre>{@code
  * // Synchronous GET request

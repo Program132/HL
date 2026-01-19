@@ -14,8 +14,6 @@ import java.util.Map;
  * Hytale Messages.
  * </p>
  * 
- * <h3>Usage Examples:</h3>
- * 
  * <p>
  * <b>Usage Examples:</b>
  * </p>

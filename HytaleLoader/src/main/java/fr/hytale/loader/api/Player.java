@@ -466,11 +466,12 @@ public class Player extends Entity {
     /**
      * Sends a colored message to this player.
      * <p>
-     * Parses Minecraft-style color codes (§ or &) and creates a properly formatted
+     * Parses Minecraft-style color codes (&sect; or &amp;) and creates a properly
+     * formatted
      * Message.
      * </p>
      * 
-     * @param text the text with color codes (§ or &)
+     * @param text the text with color codes (&sect; or &amp;)
      * @since 1.0.6
      */
     public void sendColoredMessage(String text) {

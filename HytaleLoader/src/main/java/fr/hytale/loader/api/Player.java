@@ -656,4 +656,110 @@ public class Player extends Entity {
     public int hashCode() {
         return getUUID() != null ? getUUID().hashCode() : 0;
     }
+
+    // === Custom UI ===
+
+    /**
+     * Opens a custom UI for this player.
+     * <p>
+     * The UI file must exist in the resources at the specified path.
+     * </p>
+     * 
+     * @param customUI The custom UI to open
+     * @return true if the UI was opened successfully, false otherwise
+     * @since 1.0.5
+     */
+    public boolean openCustomUI(fr.hytale.loader.api.ui.CustomUI customUI) {
+        if (nativePlayer == null || playerRef == null) {
+            return false;
+        }
+
+        try {
+            getWorld().getNative().execute(() -> {
+                try {
+                    com.hypixel.hytale.component.Ref<EntityStore> ref = playerRef.getReference();
+                    com.hypixel.hytale.component.Store<EntityStore> store = ref.getStore();
+
+                    com.hypixel.hytale.server.core.entity.entities.player.pages.BasicCustomUIPage page = customUI
+                            .createNativePage(playerRef);
+
+                    nativePlayer.getPageManager().openCustomPage(ref, store, page);
+                } catch (Exception e) {
+                    System.err.println("[Player] Error opening custom UI:");
+                    e.printStackTrace();
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            System.err.println("[Player] Error in openCustomUI:");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Opens an interactive UI with event handling for this player.
+     * <p>
+     * Interactive UIs can handle button clicks, text inputs, and other events.
+     * </p>
+     * 
+     * @param interactiveUI The interactive UI to open
+     * @return true if the UI was opened successfully, false otherwise
+     * @since 1.0.5
+     */
+    public boolean openInteractiveUI(fr.hytale.loader.api.ui.InteractiveUI interactiveUI) {
+        if (nativePlayer == null || playerRef == null) {
+            return false;
+        }
+
+        try {
+            getWorld().getNative().execute(() -> {
+                try {
+                    com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = playerRef
+                            .getReference();
+                    com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = ref
+                            .getStore();
+
+                    com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage page = interactiveUI
+                            .createNativePage(playerRef, this);
+
+                    nativePlayer.getPageManager().openCustomPage(ref, store, page);
+                } catch (Exception e) {
+                    System.err.println("[Player] Error opening interactive UI:");
+                    e.printStackTrace();
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            System.err.println("[Player] Error in openInteractiveUI:");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Closes the current active UI for this player.
+     * 
+     * @since 1.0.5
+     */
+    public void closeCustomUI() {
+        if (nativePlayer == null || playerRef == null)
+            return;
+
+        try {
+            getWorld().getNative().execute(() -> {
+                com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> ref = playerRef
+                        .getReference();
+                com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> store = ref
+                        .getStore();
+
+                // Set page to None to close it
+                nativePlayer.getPageManager().setPage(ref, store,
+                        com.hypixel.hytale.protocol.packets.interface_.Page.None);
+            });
+        } catch (Exception e) {
+            System.err.println("[Player] Error closing custom UI:");
+            e.printStackTrace();
+        }
+    }
 }

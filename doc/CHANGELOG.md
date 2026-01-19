@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **WebRequest API** 
+  - GET Requests: `get()`, `getAsync()`
+  - POST Requests: `post()`, `postAsync()`
+  - PUT Requests: `put()`, `putAsync()`
+  - DELETE Requests: `delete()`, `deleteAsync()`
+- **ChatColor API**
+  - Added support for Minecraft-style color codes (`&` and `§`)
+  - Added `ChatColor.colorize(String)` utility method
+  - Added `Player.sendColoredMessage(String)` for easy colored messaging
+
+### Changed
+
+- Updated `@version` tags to 1.0.6 in all classes
+
+
+## [1.0.5](https://github.com/Program132/HL/compare/V1.0.4...V1.0.5) - 2026-01-19
+
+### Added
 - **UI API**
   - Added `CustomUI` for creating custom UIs (basic UIs, without interaction)
   - Added `InteractiveUI` for creating custom UIs with buttons and event handling.
@@ -37,6 +55,10 @@ All notable changes to this project will be documented in this file.
     - `block.getType()` - Get identifier
     - `block.setType(id)` - Set block type
     - `block.getLocation()` - Get location
+
+### Changed
+- Updated `@version` tags to 1.0.5 in all classes
+
 ---
 
 ## [1.0.4](https://github.com/Program132/HL/compare/V1.0.3...V1.0.4) - 2026-01-18

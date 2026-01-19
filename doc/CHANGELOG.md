@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **UI API**
+  - Added `CustomUI` for creating custom UIs (basic UIs, without interaction)
+  - Added `InteractiveUI` for creating custom UIs with buttons and event handling.
+  - Added `Player.closeCustomUI()` to close active UIs.
 - **Entity API**: New `fr.hytale.loader.api.Entity` class as a base for all entities.
   - Supports `getID()`, `getUUID()`, `getLocation()`, `teleport()`, `remove()`.
 - **World Entity Retrieval**: Added `world.getEntity(int id)` and `world.getEntity(UUID uuid)`.
@@ -16,10 +20,6 @@ All notable changes to this project will be documented in this file.
   - Full support for String, Hash, List, and Set operations
   - Methods: `set()`, `get()`, `hset()`, `hget()`, `lpush()`, `sadd()`, etc.
   - Automatic error handling and thread-safe operations
-- **UI API**
-  - Added `CustomUI` for creating custom UIs (basic UIs, without interaction)
-  - Added `InteractiveUI` for creating custom UIs with buttons and event handling.
-  - Added `Player.closeCustomUI()` to close active UIs.
 - **MySQL API**
   - `MySQLClient` class for MySQL database management
   - Connection pooling with HikariCP 5.1.0

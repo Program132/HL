@@ -19,6 +19,7 @@ import java.io.IOException;
 import fr.hytale.loader.config.Config;
 import fr.hytale.loader.api.Block;
 import fr.hytale.loader.config.ConfigFormat;
+import fr.hytale.loader.utils.WebRequest;
 
 public class TestMod extends SimplePlugin {
 
@@ -51,6 +52,9 @@ public class TestMod extends SimplePlugin {
             }
         }
 
+        new WebRequest("https://api.github.com/zen")
+                .getAsync()
+                .thenAccept(response -> System.out.println("GitHub Zen: " + response));
     }
 
     @Override

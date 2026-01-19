@@ -1,0 +1,56 @@
+@BtnStyle = TextButtonStyle(
+  Default: (Background: #4CAF50, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+  Hovered: (Background: #45a049, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+  Pressed: (Background: #388E3C, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center))
+);
+
+@CloseBtnStyle = TextButtonStyle(
+  Default: (Background: #f44336, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+  Hovered: (Background: #d32f2f, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+  Pressed: (Background: #b71c1c, LabelStyle: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center))
+);
+
+Group {
+  Anchor: (Width: 400, Height: 250);
+  Background: #1a1a1a(0.95);
+  LayoutMode: Top;
+  Padding: (Full: 20);
+  
+  // Title
+  Label {
+    Text: "Interactive Menu";
+    Anchor: (Height: 40);
+    Style: (FontSize: 24, TextColor: #ffffff, HorizontalAlignment: Center);
+  }
+  
+  // Subtitle
+  Label {
+    Text: "Click a button below to trigger an action";
+    Anchor: (Height: 30);
+    Style: (FontSize: 14, TextColor: #aaaaaa, HorizontalAlignment: Center);
+  }
+  
+  Group { Anchor: (Height: 20); }
+  
+  // Buttons Container using indentation
+  Group {
+    LayoutMode: Top;
+    Anchor: (Height: 100);
+    
+    // Action Button
+    TextButton #actionButton {
+      Text: "Click Me!";
+      Anchor: (Width: 200, Height: 40);
+      Style: @BtnStyle;
+    }
+    
+    Group { Anchor: (Height: 10); }
+    
+    // Close Button
+    TextButton #closeButton {
+      Text: "Close Menu";
+      Anchor: (Width: 200, Height: 40);
+      Style: @CloseBtnStyle;
+    }
+  }
+}

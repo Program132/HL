@@ -420,4 +420,14 @@ public class TestMod extends SimplePlugin {
         }
     }
 
+    @fr.hytale.loader.command.Command(name = "testsound", description = "Test playing a sound")
+    private void testSound(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+        player.playSound("SFX_Bow_T1_Block_Impact", 1.0f, 1.0f);
+        player.sendMessage("Playing sound: SFX_Bow_T1_Block_Impact");
+    }
+
 }

@@ -430,4 +430,32 @@ public class TestMod extends SimplePlugin {
         player.sendMessage("Playing sound: SFX_Bow_T1_Block_Impact");
     }
 
+    @fr.hytale.loader.command.Command(name = "testparticle", description = "Test playing a particle")
+    private void testParticle(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+        // Play 'Totem_Slow_AttachOnStatue' particle at the player's location
+        player.playParticle(player.getLocation(), "Totem_Slow_AttachOnStatue");
+        player.sendMessage("Playing particle: Totem_Slow_AttachOnStatue");
+    }
+
+    @fr.hytale.loader.command.Command(name = "testweather", description = "Test setting weather")
+    private void testWeather(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+        fr.hytale.loader.api.World world = player.getWorld();
+
+        if (world.getWeather() == null) {
+            world.setWeather(fr.hytale.loader.api.WeatherType.RAIN);
+            player.sendMessage("Weather set to RAIN");
+        } else {
+            world.setWeather((fr.hytale.loader.api.WeatherType) null);
+            player.sendMessage("Weather reset to dynamic");
+        }
+    }
+
 }

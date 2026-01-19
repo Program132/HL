@@ -17,6 +17,7 @@ Welcome to HytaleLoader - a powerful plugin loader and API wrapper for Hytale se
 - **[World API](world_api.md)** - World wrapper and utilities
 - **[Redis API](redis_api.md)** - Remote Redis database management
 - **[MySQL API](mysql_api.md)** - MySQL database management
+- **[UI API](ui_api.md)**
 - **[Scheduler API](scheduler_api.md)** - Task scheduling and execution
 - **[Permission API](permission_api.md)** - Permission management system
 - **[Command Utils](command_utils.md)** - Command helper utilities
@@ -146,6 +147,7 @@ HL/
 │   │   │   ├── World.java     # World wrapper
 │   │   │   ├── Location.java  # Location wrapper
 │   │   │   └── inventory/     # Inventory classes
+│   │   │   └── ui/            # UI classes
 │   │   ├── command/           # Command system
 │   │   │   ├── CommandUtils.java  # Command utilities
 │   │   │   └── SimpleCommand.java # Command base

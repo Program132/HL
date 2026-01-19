@@ -246,6 +246,31 @@ player.clearPermissions();
 ```
 Removes all permissions from the player.
 
+## Sound API
+
+### playSound(String, float, float)
+```java
+// Play a sound to the player (2D)
+player.playSound("SFX_Bow_T1_Block_Impact", 1.0f, 1.0f);
+```
+Plays a sound effect to the player. The sound is 2D (no location).
+
+### playSound(String, SoundCategory, float, float)
+```java
+// Play a sound with a specific category
+player.playSound("SFX_Bow_T1_Block_Impact", SoundCategory.MUSIC, 1.0f, 1.0f);
+```
+Plays a sound to the player with a specific `SoundCategory`.
+
+### playSound(Location, String, float, float)
+```java
+// Play a sound at a localized position (only this player hears it)
+player.playSound(player.getLocation(), "SFX_Bow_T1_Block_Impact", 1.0f, 1.0f);
+```
+Plays a 3D sound at a specific location, audible only to this player.
+
+---
+
 ## Connection
 
 ### kick(String)

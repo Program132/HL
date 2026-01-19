@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.5
+ * @version 1.0.6
  * @since 1.0.0
  */
 public class PlayerChatEvent implements IEvent<Void> {

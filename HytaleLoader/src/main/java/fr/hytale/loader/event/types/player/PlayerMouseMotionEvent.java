@@ -16,7 +16,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.5
+ * @version 1.0.6
  * @since 1.0.2
  */
 public class PlayerMouseMotionEvent implements IEvent<Void> {

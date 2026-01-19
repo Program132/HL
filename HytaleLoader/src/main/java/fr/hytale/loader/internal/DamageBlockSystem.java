@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Internal ECS system for handling block damage events.
  *
  * @author HytaleLoader
- * @version 1.0.5
+ * @version 1.0.6
  * @since 1.0.2
  */
 public class DamageBlockSystem extends EntityEventSystem<EntityStore, DamageBlockEvent> {

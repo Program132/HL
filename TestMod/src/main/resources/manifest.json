@@ -1,7 +1,7 @@
 {
   "Group": "fr.testmod",
   "Name": "TestMod",
-  "Version": "1.0.1",
+  "Version": "1.0.5",
   "Description": "A simple test mod using SimpleHytaleLib",
   "Authors": [
     {
@@ -17,6 +17,6 @@
   "OptionalDependencies": {},
   "LoadBefore": {},
   "DisabledByDefault": false,
-  "IncludesAssetPack": false,
+  "IncludesAssetPack": true,
   "SubPlugins": []
 }

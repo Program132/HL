@@ -479,4 +479,17 @@ public class TestMod extends SimplePlugin {
         player.sendMessage("Current Weather: " + (wType != null ? wType.name() : "Dynamic"));
     }
 
+    @fr.hytale.loader.command.Command(name = "testargs", description = "Test Argument Parsing")
+    private void testArgs(com.hypixel.hytale.server.core.command.system.CommandContext context,
+            @fr.hytale.loader.command.Arg(name = "message", description = "A text message") String message,
+            @fr.hytale.loader.command.Arg(name = "count", description = "A number") int count,
+            @fr.hytale.loader.command.Arg(name = "enable", description = "A boolean flag", optional = true) boolean enable) {
+
+        Player player = CommandUtils.getPlayer(context);
+        player.sendMessage("Received args:");
+        player.sendMessage("- Message: " + message);
+        player.sendMessage("- Count: " + count);
+        player.sendMessage("- Enable: " + enable);
+    }
+
 }

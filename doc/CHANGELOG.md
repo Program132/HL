@@ -37,6 +37,8 @@ All notable changes to this project will be documented in this file.
   - Added `World.getTimeHour()`
   - Added `World.isDay()`
   - Added `World.setTimePaused(boolean paused)`
+- **Commands System**
+  - Added **Automatic Command Argument Parsing** via `@Arg` annotation (Support for Required/Optional args, String, Int, Boolean, Float).
 
 ### Changed
 

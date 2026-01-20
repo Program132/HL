@@ -353,7 +353,6 @@ public class World {
      * @param sound    The sound identifier (e.g. "my.sound.effect")
      * @param volume   The volume (1.0 is normal)
      * @param pitch    The pitch (1.0 is normal)
-     * @since 1.0.6
      */
     public void playSound(Location location, String sound, float volume, float pitch) {
         playSound(location, sound, SoundCategory.SFX, volume, pitch);
@@ -367,7 +366,6 @@ public class World {
      * @param category The sound category
      * @param volume   The volume
      * @param pitch    The pitch
-     * @since 1.0.6
      */
     public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
         if (location == null || sound == null || category == null || nativeWorld == null)
@@ -401,7 +399,6 @@ public class World {
      *
      * @param location     The location to play the particle at
      * @param particleName The particle identifier (e.g. "lx_sparkle_01")
-     * @since 1.0.6
      */
     public void playParticle(Location location, String particleName) {
         if (location == null || particleName == null || nativeWorld == null)
@@ -429,14 +426,6 @@ public class World {
      * @param weatherName The name of the weather asset (e.g. "sunny", "rain",
      *                    "storm")
      *                    Pass null to reset to dynamic weather.
-     * @since 1.0.6
-     */
-    /**
-     * Sets the weather for this world.
-     *
-     * @param weather The weather type to set.
-     *                Pass null to reset to dynamic weather.
-     * @since 1.0.6
      */
     public void setWeather(WeatherType weather) {
         setWeather(weather != null ? weather.getAssetName() : null);
@@ -448,7 +437,6 @@ public class World {
      * @param weatherName The name of the weather asset (e.g. "Zone1_Sunny",
      *                    "Zone1_Rain").
      *                    Pass null to reset to dynamic weather.
-     * @since 1.0.6
      */
     public void setWeather(String weatherName) {
         if (nativeWorld == null)
@@ -481,7 +469,6 @@ public class World {
      * Gets the current forced weather name for this world.
      *
      * @return The weather name, or null if dynamic weather is active.
-     * @since 1.0.6
      */
     public String getWeatherName() {
         if (nativeWorld == null)
@@ -494,12 +481,121 @@ public class World {
      *
      * @return The WeatherType, or null if dynamic weather is active or the type is
      *         unknown to the API.
-     * @since 1.0.6
      */
     public WeatherType getWeather() {
         String name = getWeatherName();
         if (name == null)
             return null;
         return WeatherType.fromAssetName(name);
+    }
+
+    // === Time API ===
+
+    /**
+     * Sets the time of day using a convenient enum.
+     *
+     * @param time The time preset to set (e.g. Time.NOON)
+     */
+    public void setTime(Time time) {
+        if (time != null) {
+            setTime(time.getPercent());
+        }
+    }
+
+    /**
+     * Sets the time of day as a percentage (0.0 to 1.0).
+     * 0.0 is Midnight, 0.5 is Noon.
+     *
+     * @param percent The percentage of the day passed
+     */
+    public void setTime(float percent) {
+        if (nativeWorld == null)
+            return;
+
+        nativeWorld.execute(() -> {
+            try {
+                // Update Resource
+                com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> accessor = (com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>) nativeWorld
+                        .getEntityStore().getStore();
+
+                com.hypixel.hytale.server.core.modules.time.WorldTimeResource timeResource = (com.hypixel.hytale.server.core.modules.time.WorldTimeResource) accessor
+                        .getResource(
+                                com.hypixel.hytale.server.core.modules.time.WorldTimeResource.getResourceType());
+
+                if (timeResource != null) {
+                    timeResource.setDayTime(percent, nativeWorld, nativeWorld.getEntityStore().getStore());
+                }
+
+                // Update WorldConfig to keep getters in sync
+                long nanosPerDay = java.time.temporal.ChronoUnit.DAYS.getDuration().toNanos();
+                java.time.Instant oldGameTime = nativeWorld.getWorldConfig().getGameTime();
+                java.time.Instant dayStart = oldGameTime.truncatedTo(java.time.temporal.ChronoUnit.DAYS);
+                java.time.Instant newGameTime = dayStart.plusNanos((long) (percent * nanosPerDay));
+
+                // Ensure we move forward in time if the new time is earlier in the day than
+                // current
+                if (newGameTime.isBefore(oldGameTime)) {
+                    newGameTime = newGameTime.plus(1L, java.time.temporal.ChronoUnit.DAYS);
+                }
+
+                nativeWorld.getWorldConfig().setGameTime(newGameTime);
+                nativeWorld.getWorldConfig().markChanged();
+
+            } catch (Exception e) {
+                // Ignore failure
+            }
+        });
+    }
+
+    /**
+     * Sets whether the daylight cycle is paused.
+     *
+     * @param paused true to pause time, false to resume
+     */
+    public void setTimePaused(boolean paused) {
+        if (nativeWorld == null)
+            return;
+
+        nativeWorld.execute(() -> {
+            nativeWorld.getWorldConfig().setGameTimePaused(paused);
+            nativeWorld.getWorldConfig().markChanged();
+
+            // Force update via resource if possible to send packets immediately
+            try {
+                com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> accessor = (com.hypixel.hytale.component.ComponentAccessor<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>) nativeWorld
+                        .getEntityStore().getStore();
+
+                com.hypixel.hytale.server.core.modules.time.WorldTimeResource timeResource = (com.hypixel.hytale.server.core.modules.time.WorldTimeResource) accessor
+                        .getResource(
+                                com.hypixel.hytale.server.core.modules.time.WorldTimeResource.getResourceType());
+
+                if (timeResource != null) {
+                    timeResource.broadcastTimePacket(nativeWorld.getEntityStore().getStore());
+                }
+            } catch (Exception e) {
+                // Ignore
+            }
+        });
+    }
+
+    /**
+     * Gets the current hour of the day (0-23).
+     *
+     * @return the current hour
+     */
+    public int getTimeHour() {
+        if (nativeWorld == null)
+            return 0;
+        return nativeWorld.getWorldConfig().getGameTime().atZone(java.time.ZoneOffset.UTC).getHour();
+    }
+
+    /**
+     * Checks if it is currently day time (between 06:00 and 18:00).
+     *
+     * @return true if it is day, false if it is night.
+     */
+    public boolean isDay() {
+        int hour = getTimeHour();
+        return hour >= 6 && hour < 18;
     }
 }

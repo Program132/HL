@@ -16,23 +16,41 @@ Annotate a method to turn it into a command executor.
 
 ### usage
 
-The method must accept a single `CommandContext` parameter.
+The method must accept `CommandContext` as the first parameter. You can then add parameters annotated with `@Arg` to automatically define and parse arguments.
 
+**Supported Argument Types:**
+* `String`
+* `int` / `Integer`
+* `float` / `Float`
+* `boolean` / `Boolean`
+* `double` / `Double` (mapped to Float)
+
+**Example:**
 ```java
 import fr.hytale.loader.command.Command;
+import fr.hytale.loader.command.Arg;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
-import com.hypixel.hytale.server.core.Message;
 
 public class MyCommands {
 
-    @Command(name = "greet", aliases = {"hi", "hello"}, description = "Greets the player")
-    public void onGreet(CommandContext ctx) {
-        ctx.sender().sendMessage(Message.raw("Greetings!"));
-    }
-    
-    @Command(name = "admin", permission = "mymod.admin")
-    public void onAdmin(CommandContext ctx) {
-        ctx.sender().sendMessage(Message.raw("Hello Admin!"));
+@Command(name = "test", description = "Hello World")
+public void onGreet(CommandContext ctx) {
+    ctx.sender().sendMessage("Hello World!");
+}
+
+@Command(name = "greet", description = "Greets a target")
+public void onGreet(CommandContext ctx, 
+                    @Arg(name = "target", description = "Who to greet") String target) {
+    ctx.sender().sendMessage("Hello " + target + "!");
+}
+
+@Command(name = "giveitem", description = "Give item with count")
+public void onGive(CommandContext ctx,
+                   @Arg(name = "item", description = "Item name") String item,
+                   @Arg(name = "count", description = "Amount", optional = true) int count) {
+    // 'count' will be 0 if not provided (default for int)
+    int finalCount = count > 0 ? count : 1; 
+        ctx.sender().sendMessage("Giving " + finalCount + "x " + item);
     }
 }
 ```

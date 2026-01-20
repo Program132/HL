@@ -30,6 +30,13 @@ All notable changes to this project will be documented in this file.
   - Updated `World.setWeather(WeatherType weather)`
   - Added `World.getWeatherName()` (formerly getWeather)
   - Added `World.getWeather()` returning WeatherType
+- **Updated World API (Time)**
+  - Added `Time` enum (Preset times like DAWN, NOON, MIDNIGHT...)
+  - Added `World.setTime(Time time)`
+  - Added `World.setTime(float percent)`
+  - Added `World.getTimeHour()`
+  - Added `World.isDay()`
+  - Added `World.setTimePaused(boolean paused)`
 
 ### Changed
 

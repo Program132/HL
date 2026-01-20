@@ -458,4 +458,25 @@ public class TestMod extends SimplePlugin {
         }
     }
 
+    @fr.hytale.loader.command.Command(name = "testtime", description = "Test Time API")
+    private void testTime(com.hypixel.hytale.server.core.command.system.CommandContext context) {
+        if (!CommandUtils.isPlayer(context))
+            return;
+
+        Player player = CommandUtils.getPlayer(context);
+        fr.hytale.loader.api.World world = player.getWorld();
+
+        if (world.isDay()) {
+            world.setTime(fr.hytale.loader.api.Time.MIDNIGHT);
+            player.sendMessage("It was day, changing to NIGHT (Midnight).");
+        } else {
+            world.setTime(fr.hytale.loader.api.Time.NOON);
+            player.sendMessage("It was night, changing to DAY (Noon).");
+        }
+
+        // Also log the weather for info
+        fr.hytale.loader.api.WeatherType wType = world.getWeather();
+        player.sendMessage("Current Weather: " + (wType != null ? wType.name() : "Dynamic"));
+    }
+
 }

@@ -187,6 +187,52 @@ Gets the current forced weather ID as a string, or `null` if using dynamic weath
 
 ---
 
+## Time API
+
+### setTime(Time)
+```java
+// Set time to NOON (12:00)
+world.setTime(Time.NOON);
+
+// Set time to MIDNIGHT (00:00)
+world.setTime(Time.MIDNIGHT);
+```
+Sets the world time using the `Time` enum.
+
+### setTime(float)
+```java
+// Set time to 6:00 AM (0.25)
+world.setTime(0.25f);
+```
+Sets the world time as a percentage of the day (0.0 to 1.0), where 0.0 is Midnight and 0.5 is Noon.
+
+### setTimePaused(boolean)
+```java
+// Freeze time
+world.setTimePaused(true);
+
+// Resume day/night cycle
+world.setTimePaused(false);
+```
+Pauses or resumes the daylight cycle.
+
+### getTimeHour()
+```java
+int hour = world.getTimeHour();
+player.sendMessage("It is " + hour + "h");
+```
+Gets the current hour of the day (0-23).
+
+### isDay()
+```java
+if (world.isDay()) {
+    player.sendMessage("It is day time");
+}
+```
+Checks if it is currently day time (between 6:00 and 18:00).
+
+---
+
 ## Common Use Cases
 
 ### Checking World Name

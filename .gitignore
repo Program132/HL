@@ -41,8 +41,7 @@ Thumbs.db
 # --- Hytale Server / Project Specific ---
 # Local libraries
 libs/
-HytaleServer.jar.src/
-HytaleServer.jar.src.zip
+1.0.0-HytaleServer.jar.src/
 
 # Server run directory (logs, world, etc.)
 server/
@@ -66,3 +65,5 @@ hytale-downloader.exe
 # IntelliJ IDEA
 
 .idea
+
+*.zip

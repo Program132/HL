@@ -6,6 +6,20 @@
 
 This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may change.
 
+## Hytale Version Compatibility
+
+**Note:** HytaleLoader can be incomaptible if you don't download the correct version for your Hytale version. You can find the correct version in the [releases](https://github.com/Program132/HL/releases) page.
+
+| HytaleLoader Version | Hytale Version |
+|----------------------|----------------|
+| [1.0.6](https://github.com/Program132/HL/releases/tag/V1.0.6)                | 1.0.0          |
+| [1.0.5](https://github.com/Program132/HL/releases/tag/V1.0.5)                | 1.0.0          |
+| [1.0.4](https://github.com/Program132/HL/releases/tag/V1.0.4)                | 1.0.0          |
+| [1.0.3](https://github.com/Program132/HL/releases/tag/V1.0.3)                | 1.0.0          |
+| [1.0.2](https://github.com/Program132/HL/releases/tag/V1.0.2)                | 1.0.0          |
+| [1.0.1](https://github.com/Program132/HL/releases/tag/V1.0.1)                | 1.0.0          |
+| [1.0.0](https://github.com/Program132/HL/releases/tag/V1.0.0)                | 1.0.0          |
+
 ## Features
 
 ### Core Systems
@@ -21,6 +35,9 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 - **Block API** Block class
 - **Location API**: 3D position and rotation handling
 - **Player Stats API**: Health, stamina, oxygen, mana management (thread-safe)
+- **Particle API**: Particle effects to players / world
+- **Sound API**: Sound effects to players
+- **Weather & Time API**: Weather and time management (day, night, rain, etc.)
 
 ### Data Storage 
 - **Redis API**: Connection pooling, String/Hash/List/Set operations
@@ -32,6 +49,7 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 - **Command Utilities**: Helper methods for command development
 - **Item & Inventory System**: Easy-to-use API for managing inventories and items
 - **Maven Support**: Easily integrate into your project
+- **WebRequest API**: Perform web requests using WebRequests class
 
 ## Installation
 
@@ -136,21 +154,29 @@ HL/
 ├── HytaleLoader/              # Core library
 │   ├── src/main/java/fr/hytale/loader/
 │   │   ├── api/               # Public API
-│   │   │   ├── Player.java    # Player wrapper
-│   │   │   ├── Entity.java    # Entity wrapper
-│   │   │   ├── World.java     # World wrapper
+│   │   │   ├── inventory/     # Inventory classes
+│   │   │   ├── ui/            # UI classes
 │   │   │   ├── Block.java     # Block wrapper
+│   │   │   ├── ChatColor.java # Chat color enums
+│   │   │   ├── Entity.java    # Entity wrapper
+│   │   │   ├── GameMode.java  # GameMode enum
+│   │   │   ├── Item.java      # Item wrapper
 │   │   │   ├── Location.java  # Location wrapper
-│   │   │   └── inventory/     # Inventory classes
-│   │   ├── datastorage/       # Data storage
-│   │   │   ├── RedisClient.java   # Redis client
-│   │   │   └── MySQLClient.java   # MySQL client
+│   │   │   ├── Player.java    # Player wrapper
+│   │   │   ├── Server.java    # Server wrapper
+│   │   │   ├── SoundCategory.java # Sound categories
+│   │   │   ├── Time.java      # Time wrapper
+│   │   │   ├── WeatherType.java # Weather types
+│   │   │   └── World.java     # World wrapper
 │   │   ├── command/           # Command system
-│   │   ├── event/             # Event system
 │   │   ├── config/            # Configuration system
+│   │   ├── datastorage/       # Data storage
+│   │   ├── event/             # Event system
+│   │   ├── internal/          # Internal dispatchers
 │   │   ├── permission/        # Permission system
+│   │   ├── plugin/            # Plugin base classes
 │   │   ├── scheduler/         # Task scheduling
-│   │   └── plugin/            # Plugin base classes
+│   │   └── utils/             # Utilities
 └── TestMod/                   # Example mod
 ```
 

@@ -140,30 +140,41 @@ HL/
 ├── HytaleLoader/              # Core library
 │   ├── src/main/java/fr/hytale/loader/
 │   │   ├── api/               # Public API
-│   │   │   ├── Player.java    # Player wrapper with stats
+│   │   │   ├── inventory/     # Inventory classes
+│   │   │   ├── ui/            # UI classes
+│   │   │   ├── Block.java     # Block wrapper
+│   │   │   ├── ChatColor.java # Chat color enums
+│   │   │   ├── Entity.java    # Entity wrapper
 │   │   │   ├── GameMode.java  # GameMode enum
 │   │   │   ├── Item.java      # Item wrapper
-│   │   │   ├── Block.java     # Block wrapper
-│   │   │   ├── World.java     # World wrapper
 │   │   │   ├── Location.java  # Location wrapper
-│   │   │   └── inventory/     # Inventory classes
-│   │   │   └── ui/            # UI classes
+│   │   │   ├── Player.java    # Player wrapper
+│   │   │   ├── Server.java    # Server wrapper
+│   │   │   ├── SoundCategory.java # Sound categories
+│   │   │   ├── Time.java      # Time wrapper
+│   │   │   ├── WeatherType.java # Weather types
+│   │   │   └── World.java     # World wrapper
 │   │   ├── command/           # Command system
+│   │   │   ├── Arg.java           # Argument annotation
+│   │   │   ├── Command.java       # Command annotation
+│   │   │   ├── CommandScanner.java# Command scanner
 │   │   │   ├── CommandUtils.java  # Command utilities
 │   │   │   └── SimpleCommand.java # Command base
-│   │   │   └── CommandScanner.java # Command scannar
-│   │   │   └── SimpleCommand.java # Command base
+│   │   ├── config/            # Configuration system
+│   │   ├── datastorage/       # Data storage
+│   │   │   ├── MySQLClient.java   # MySQL client
+│   │   │   └── RedisClient.java   # Redis client
 │   │   ├── event/             # Event system
-│   │   │   └── types/         # Event classes (Join, Quit, Chat, etc.)
 │   │   ├── internal/          # Internal dispatchers
 │   │   ├── permission/        # Permission system
-│   │   │   ├── Permission.java       # Permission object
+│   │   │   ├── Permission.java        # Permission object
 │   │   │   └── PermissionManager.java # Permission storage
 │   │   ├── plugin/            # Plugin base classes
-│   │   │   └── SimplePlugin.java # Plugin base with Scheduler
-│   │   └── scheduler/         # Task scheduling
-│   │       ├── Scheduler.java      # Scheduler implementation
-│   │       └── ScheduledTask.java  # Task wrapper
+│   │   ├── scheduler/         # Task scheduling
+│   │   │   ├── Scheduler.java     # Scheduler implementation
+│   │   │   └── ScheduledTask.java # Task wrapper
+│   │   └── utils/             # Utilities
+└── TestMod/                   # Example mod
 ```
 
 ## Installation

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * </p>
  *
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.2
  */
 public class BreakBlockSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {

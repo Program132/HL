@@ -20,7 +20,7 @@ import java.util.Set;
  * }</pre>
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.4
  */
 public interface ConfigSection {

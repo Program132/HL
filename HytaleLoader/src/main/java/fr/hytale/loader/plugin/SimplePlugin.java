@@ -22,7 +22,7 @@ import java.io.IOException;
  * </p>
  *
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.0
  */
 public abstract class SimplePlugin extends JavaPlugin implements SimpleListener {

@@ -7,7 +7,7 @@ package fr.hytale.loader.config;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.4
  */
 public enum ConfigFormat {

@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Internal ECS system for handling item drop events.
  *
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.2
  */
 public class DropItemSystem extends EntityEventSystem<EntityStore, DropItemEvent.Drop> {

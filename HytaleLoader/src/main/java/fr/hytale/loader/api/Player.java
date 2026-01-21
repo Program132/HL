@@ -27,7 +27,7 @@ import fr.hytale.loader.permission.PermissionManager;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.1
  */
 public class Player extends Entity {

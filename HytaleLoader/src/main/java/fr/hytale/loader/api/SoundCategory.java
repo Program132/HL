@@ -4,7 +4,7 @@ package fr.hytale.loader.api;
  * Represents the category of a sound.
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.6
  */
 public enum SoundCategory {

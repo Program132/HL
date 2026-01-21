@@ -16,7 +16,7 @@ import fr.hytale.loader.api.Player;
  * </p>
  *
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.1
  */
 public class BreakBlockEvent implements IEvent<Void> {

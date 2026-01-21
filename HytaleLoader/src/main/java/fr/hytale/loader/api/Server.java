@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Provides access to online players, broadcasting, and world management.
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.4
  */
 public class Server {

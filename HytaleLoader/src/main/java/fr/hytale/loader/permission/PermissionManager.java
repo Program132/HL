@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * </p>
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.3
  */
 public class PermissionManager {

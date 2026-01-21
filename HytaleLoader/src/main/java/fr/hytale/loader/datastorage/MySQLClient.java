@@ -37,7 +37,7 @@ import java.util.Map;
  * </pre>
  * 
  * @author HytaleLoader
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.5
  */
 public class MySQLClient {

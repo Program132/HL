@@ -228,6 +228,56 @@ public class Player extends Entity {
         return loc != null ? loc.getPitch() : 0.0f;
     }
 
+    // === Teleportation ===
+
+    /**
+     * Teleports the player to a location.
+     * <p>
+     * Overridden to handle player rotation (including pitch) correctly.
+     * </p>
+     * 
+     * @param location The target location
+     */
+    @Override
+    public void teleport(Location location) {
+        if (location == null || nativePlayer == null)
+            return;
+
+        com.hypixel.hytale.server.core.universe.world.World world = nativePlayer.getWorld();
+        if (world == null)
+            return;
+
+        world.execute(() -> {
+            try {
+                Ref<EntityStore> ref = (Ref<EntityStore>) playerRef.getReference();
+                if (ref != null && ref.isValid()) {
+                    Store<EntityStore> store = ref.getStore();
+
+                    com.hypixel.hytale.math.vector.Vector3d position = new com.hypixel.hytale.math.vector.Vector3d(
+                            location.getX(), location.getY(), location.getZ());
+                    com.hypixel.hytale.math.vector.Vector3f rotation = new com.hypixel.hytale.math.vector.Vector3f(
+                            0.0f, location.getYaw(), 0.0f); // Body only needs YAW
+
+                    // We also need full rotation for head
+                    com.hypixel.hytale.math.vector.Vector3f headRotation = new com.hypixel.hytale.math.vector.Vector3f(
+                            location.getYaw(), location.getPitch(), 0.0f);
+
+                    com.hypixel.hytale.server.core.modules.entity.teleport.Teleport teleport = com.hypixel.hytale.server.core.modules.entity.teleport.Teleport
+                            .createForPlayer(
+                                    world,
+                                    position,
+                                    headRotation);
+
+                    store.addComponent(ref,
+                            com.hypixel.hytale.server.core.modules.entity.teleport.Teleport.getComponentType(),
+                            teleport);
+                }
+            } catch (Exception e) {
+                // Ignore
+            }
+        });
+    }
+
     // === Health & Stats ===
 
     /**

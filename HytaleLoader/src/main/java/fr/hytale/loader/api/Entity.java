@@ -174,7 +174,7 @@ public class Entity {
                             position, rotation);
 
                     com.hypixel.hytale.server.core.modules.entity.teleport.Teleport teleport = new com.hypixel.hytale.server.core.modules.entity.teleport.Teleport(
-                            world, transform);
+                            world, transform.getPosition(), transform.getRotation());
                     store.addComponent(ref,
                             com.hypixel.hytale.server.core.modules.entity.teleport.Teleport.getComponentType(),
                             teleport);

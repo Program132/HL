@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.hypixel.hytale</groupId>
       <artifactId>HytaleServer</artifactId>
-      <version>1.0.0</version>
+      <version>2026.01.17</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

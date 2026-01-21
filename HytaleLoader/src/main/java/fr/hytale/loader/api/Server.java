@@ -77,6 +77,9 @@ public class Server {
             return null;
         }
 
+        // result[0] will be null if:
+        // 1. The player entity component was not found in the store
+        // 2. The world execution timed out or failed
         if (result[0] == null) {
             return null;
         }

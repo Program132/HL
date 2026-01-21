@@ -240,32 +240,40 @@ public class TestMod extends SimplePlugin {
             return;
         }
 
+        int i = 1; // Debug step counter
+
+        // Helper to send and log
+        java.util.function.BiConsumer<String, Integer> sendAndLog = (msg, step) -> {
+            player.sendMessage(msg);
+            System.out.println("[Debug-ServInfo-" + step + "] " + msg);
+        };
+
         // Header
-        player.sendMessage("═══════════════════════════════");
-        player.sendMessage("         SERVER INFO");
-        player.sendMessage("═══════════════════════════════");
-        player.sendMessage("");
+        sendAndLog.accept("===============================", i++);
+        sendAndLog.accept("         SERVER INFO", i++);
+        sendAndLog.accept("===============================", i++);
+        sendAndLog.accept("", i++);
 
         // Players section
         int onlineCount = fr.hytale.loader.api.Server.getOnlineCount();
-        player.sendMessage("Players Online: " + onlineCount);
+        sendAndLog.accept("Players Online: " + onlineCount, i++);
 
         if (onlineCount > 0) {
             List<Player> players = fr.hytale.loader.api.Server.getOnlinePlayers();
             StringBuilder playerNames = new StringBuilder("   ");
-            for (int i = 0; i < players.size(); i++) {
-                playerNames.append(players.get(i).getName());
-                if (i < players.size() - 1) {
+            for (int k = 0; k < players.size(); k++) {
+                playerNames.append(players.get(k).getName());
+                if (k < players.size() - 1) {
                     playerNames.append(", ");
                 }
             }
-            player.sendMessage(playerNames.toString());
+            sendAndLog.accept(playerNames.toString(), i++);
         }
-        player.sendMessage("");
+        sendAndLog.accept("", i++);
 
         // Worlds section
         List<fr.hytale.loader.api.World> worlds = fr.hytale.loader.api.Server.getWorlds();
-        player.sendMessage("Loaded Worlds: " + worlds.size());
+        sendAndLog.accept("Loaded Worlds: " + worlds.size(), i++);
 
         fr.hytale.loader.api.World defaultWorld = fr.hytale.loader.api.Server.getDefaultWorld();
         String defaultWorldName = defaultWorld != null ? defaultWorld.getName() : "unknown";
@@ -276,23 +284,24 @@ public class TestMod extends SimplePlugin {
             int playerCount = playersInWorld.size();
 
             String isDefault = worldName.equals(defaultWorldName) ? " [DEFAULT]" : "";
-            player.sendMessage(String.format("   • %s (%d players)%s",
-                    worldName, playerCount, isDefault));
+            // Use standard dash instead of bullet point
+            String worldInfo = String.format("   - %s (%d players)%s", worldName, playerCount, isDefault);
+
+            sendAndLog.accept(worldInfo, i++);
 
             // Show players in this world if any
             if (playerCount > 0 && playerCount <= 5) {
                 StringBuilder worldPlayers = new StringBuilder("     Players: ");
-                for (int i = 0; i < playersInWorld.size(); i++) {
-                    worldPlayers.append(playersInWorld.get(i).getName());
-                    if (i < playersInWorld.size() - 1) {
+                for (int k = 0; k < playersInWorld.size(); k++) {
+                    worldPlayers.append(playersInWorld.get(k).getName());
+                    if (k < playersInWorld.size() - 1) {
                         worldPlayers.append(", ");
                     }
                 }
-                player.sendMessage(worldPlayers.toString());
+                sendAndLog.accept(worldPlayers.toString(), i++);
             }
         }
-        player.sendMessage("═══════════════════════════════");
-
+        sendAndLog.accept("===============================", i++);
     }
 
     @fr.hytale.loader.command.Command(name = "magicwall", description = "Creates a 3x3 magic wall")

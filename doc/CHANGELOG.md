@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.0.6](https://github.com/Program132/HL/compare/V1.0.5...V1.0.6) - 2026-01-21
 
 ### Added
 - **WebRequest API** 

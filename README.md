@@ -12,13 +12,14 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 
 | HytaleLoader Version | Hytale Version |
 |----------------------|----------------|
-| [1.0.6](https://github.com/Program132/HL/releases/tag/V1.0.6)                | 1.0.0          |
-| [1.0.5](https://github.com/Program132/HL/releases/tag/V1.0.5)                | 1.0.0          |
-| [1.0.4](https://github.com/Program132/HL/releases/tag/V1.0.4)                | 1.0.0          |
-| [1.0.3](https://github.com/Program132/HL/releases/tag/V1.0.3)                | 1.0.0          |
-| [1.0.2](https://github.com/Program132/HL/releases/tag/V1.0.2)                | 1.0.0          |
-| [1.0.1](https://github.com/Program132/HL/releases/tag/V1.0.1)                | 1.0.0          |
-| [1.0.0](https://github.com/Program132/HL/releases/tag/V1.0.0)                | 1.0.0          |
+| 1.0.7 (Unreleased) | 2026.01.17 |
+| [1.0.6](https://github.com/Program132/HL/releases/tag/V1.0.6)                | 1.0.0 (2026.01.13)          |
+| [1.0.5](https://github.com/Program132/HL/releases/tag/V1.0.5)                | 1.0.0 (2026.01.13)          |
+| [1.0.4](https://github.com/Program132/HL/releases/tag/V1.0.4)                | 1.0.0 (2026.01.13)          |
+| [1.0.3](https://github.com/Program132/HL/releases/tag/V1.0.3)                | 1.0.0 (2026.01.13)          |
+| [1.0.2](https://github.com/Program132/HL/releases/tag/V1.0.2)                | 1.0.0 (2026.01.13)          |
+| [1.0.1](https://github.com/Program132/HL/releases/tag/V1.0.1)                | 1.0.0 (2026.01.13)          |
+| [1.0.0](https://github.com/Program132/HL/releases/tag/V1.0.0)                | 1.0.0 (2026.01.13)          |
 
 ## Features
 

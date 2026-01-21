@@ -42,6 +42,7 @@ Thumbs.db
 # Local libraries
 libs/
 1.0.0-HytaleServer.jar.src/
+HytaleServer.jar.src
 
 # Server run directory (logs, world, etc.)
 server/

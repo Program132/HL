@@ -423,9 +423,8 @@ public class World {
     /**
      * Sets the weather for this world.
      *
-     * @param weatherName The name of the weather asset (e.g. "sunny", "rain",
-     *                    "storm")
-     *                    Pass null to reset to dynamic weather.
+     * @param weather The weather type to set (e.g. WeatherType.CLEAR).
+     *                Pass null to reset to dynamic weather.
      */
     public void setWeather(WeatherType weather) {
         setWeather(weather != null ? weather.getAssetName() : null);

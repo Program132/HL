@@ -11,3 +11,4 @@ fr.hytale.loader.internal
 fr.hytale.loader.permission
 fr.hytale.loader.plugin
 fr.hytale.loader.scheduler
+fr.hytale.loader.utils

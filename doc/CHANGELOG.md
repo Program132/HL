@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.7 (Unrealsed)
+
+### Fixed
+- Teleportation system (`rtp`command got tested and the methods got updated)
+- Entity system got updated (due to teleportation)
+- Player system got updated (due to teleportation)
+
+### Added
+- **Gradle Support** (read [README.md](../README.md))
+
+### Changed
+- Updated `@version` tags to 1.0.7 in all classes
+
 ## [1.0.6](https://github.com/Program132/HL/compare/V1.0.5...V1.0.6) - 2026-01-21
 
 ### Added

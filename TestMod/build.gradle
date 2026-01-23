@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'fr.testmod'
+version = '1.0.7'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'com.hypixel.hytale:HytaleServer:2026.01.17'
+    implementation project(':HytaleLoader')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    exclude 'META-INF/versions/**/module-info.class'
+}

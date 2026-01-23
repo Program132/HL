@@ -21,44 +21,39 @@ This is an unofficial modding tool for Hytale. Hytale is in alpha and APIs may c
 | [1.0.1](https://github.com/Program132/HL/releases/tag/V1.0.1)                | 1.0.0 (2026.01.13)          |
 | [1.0.0](https://github.com/Program132/HL/releases/tag/V1.0.0)                | 1.0.0 (2026.01.13)          |
 
-## Features
-
-### Core Systems
-- **Annotation-based Event Handling**: Use `@EventHandler` to easily register event listeners
-- **Annotation-based Command Registration**: Use `@Command` to define commands with metadata
-- **SimplePlugin Base Class**: Automatic lifecycle management and component registration
-- **Configuration System**: YAML and JSON config support with automatic loading
-
-### Player & World APIs
-- **Player API**: Comprehensive player management with inventory, permissions, and stats
-- **Entity API** Base entity class with location, teleportation, and removal
-- **World API** World wrapper with block manipulation and entity spawning
-- **Block API** Block class
-- **Location API**: 3D position and rotation handling
-- **Player Stats API**: Health, stamina, oxygen, mana management (thread-safe)
-- **Particle API**: Particle effects to players / world
-- **Sound API**: Sound effects to players
-- **Weather & Time API**: Weather and time management (day, night, rain, etc.)
-
-### Data Storage 
-- **Redis API**: Connection pooling, String/Hash/List/Set operations
-- **MySQL API**: Connection pooling, prepared statements, transactions, batch operations
-
-### Advanced Features
-- **Scheduler System**: Execute tasks immediately, delayed, or periodically (sync and async)
-- **Permission System**: Hierarchical permission management with wildcards
-- **Command Utilities**: Helper methods for command development
-- **Item & Inventory System**: Easy-to-use API for managing inventories and items
-- **Maven Support**: Easily integrate into your project
-- **WebRequest API**: Perform web requests using WebRequests class
-
-## Installation
+## Installation (Gradle)
 
 ### Building locally
-
+    
 ```bash
 git clone https://github.com/Program132/HL.git
-cd HytaleLoader
+cd HL
+./gradlew build
+```
+
+### Adding dependency
+
+Add the following to your `build.gradle`:
+
+```groovy
+repositories {
+    mavenLocal()
+    // ...
+}
+
+dependencies {
+    compileOnly 'com.hypixel.hytale:HytaleServer:2026.01.17'
+    implementation 'fr.hytale.loader:HytaleLoader:1.0.7'
+}
+```
+
+## Installation (Maven)
+
+### Building locally
+    
+```bash
+git clone https://github.com/Program132/HL.git
+cd HL/HytaleLoader
 mvn clean install
 ```
 
@@ -70,7 +65,7 @@ Add the following to your `pom.xml`:
 <dependency>
     <groupId>fr.hytale.loader</groupId>
     <artifactId>HytaleLoader</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.7</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -142,11 +137,6 @@ Comprehensive documentation is available in the `doc/` directory:
 - [JavaDoc](https://program132.github.io/HL/) - Full API reference
 
 ## Development Workflow
-
-To compile and deploy your mod (Windows):
-```powershell
-mvn clean install -f HytaleLoader/pom.xml; mvn clean package -f TestMod/pom.xml; Copy-Item -Force TestMod/target/TestMod-1.0.5.jar server/mods/
-```
 
 ## Project Structure
 

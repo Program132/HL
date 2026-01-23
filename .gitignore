@@ -67,4 +67,11 @@ hytale-downloader.exe
 
 .idea
 
+# Other
+
 *.zip
+
+# Gradle
+.gradle/
+build
+gradle
